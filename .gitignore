@@ -21,3 +21,26 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+# Ignore build artifacts
+dist/
+build/
+__pycache__/
+
+# Ignore distribution files
+*.egg-info/
+*.whl
+
+# Ignore virtual environment
+venv/
+
+# Ignore PyCharm settings
+.idea/
+
+# Ignore PyCharm module files
+*.iml
+
+# Ignore compiled Python files
+*.pyc
+*.pyo
