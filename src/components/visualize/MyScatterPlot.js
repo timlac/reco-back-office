@@ -3,36 +3,22 @@ import {
     ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip
 } from 'recharts';
 
-const data = [
-    {index: 0, frequency: 12},
-    {index: 1, frequency: 9},
-    {index: 2, frequency: 14},
-    {index: 3, frequency: 5},
-    {index: 4, frequency: 7},
-    {index: 5, frequency: 3},
-    {index: 100, frequency: 2},
-    {index: 200, frequency: 15},
-    {index: 300, frequency: 8},
-    {index: 400, frequency: 12},
-    {index: 500, frequency: 4},
-    {index: 1000, frequency: 5},
-    {index: 1500, frequency: 8},
-    {index: 2000, frequency: 3},
-    {index: 2500, frequency: 17},
-    {index: 3000, frequency: 6},
-    {index: 3500, frequency: 10},
-    {index: 4000, frequency: 13},
-    {index: 4500, frequency: 9},
-    {index: 5000, frequency: 4},
-    // Add more data points as needed
-];
 
-export function FrequencyCalculator(users) {
-    // Create an object to store filename counts
+export function FrequencyCalculator(existingUsers, videoData) {
+
+    // Initialize an empty object to store the filename dictionary
     const filenameCounts = {};
 
+    // Iterate through the dataArray
+    for (const item of videoData) {
+        // Extract the filename from each item
+        const filename = item.filename;
+        // Add the filename as a key to the filenameDictionary with an initial value of 0
+        filenameCounts[filename] = 0;
+    }
+
     // Iterate through the jsonData array
-    for (const item of users) {
+    for (const item of existingUsers) {
         // Check if the 'items' property is an array
         if (Array.isArray(item.items)) {
             // Iterate through the 'items' array
@@ -74,9 +60,10 @@ const CustomTooltip = ({active, payload}) => {
 
 
 const MyScatterPlot = (props) => {
-    const users = props.data
+    const existingUsers = props.existingUsers
+    const videoData = props.videoData
 
-    const filenameCounts = FrequencyCalculator(users)
+    const filenameCounts = FrequencyCalculator(existingUsers, videoData)
 
     const dataForVisualization = Object.entries(filenameCounts).map(([filename,frequency], index) => ({
         index: index,
@@ -86,11 +73,7 @@ const MyScatterPlot = (props) => {
 
     console.log(dataForVisualization)
 
-    // const frequencyTable = []
-    //
-    // for (let i = 0; i < filenameCounts.length; i++) {
-    //     const item = {"filename": filenameCounts, }
-    // }
+    const yAxisTicks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
     return (
         <ScatterChart
@@ -101,8 +84,8 @@ const MyScatterPlot = (props) => {
             }}
         >
             <CartesianGrid/>
-            <XAxis type="number" dataKey="index" name="Filename Index"/>
-            <YAxis type="number" dataKey="frequency" name="Frequency"/>
+            <XAxis type="number" dataKey="index" name="Filename Index" domain={[0, "dataMax"]}/>
+            <YAxis type="number" dataKey="frequency" name="Frequency" ticks={yAxisTicks}/>
             <Tooltip content={<CustomTooltip />} />
             <Scatter name="Filename Frequencies" data={dataForVisualization} fill="#8884d8"/>
         </ScatterChart>

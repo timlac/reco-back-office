@@ -7,6 +7,7 @@ import LogoutButton from "./components/login/LogOutButton";
 
 import api from "./services/api";
 import CreateUser from "./components/create/CreateUser";
+import {UserCoordinator} from "./components/create/UserCoordinator";
 
 
 const ProtectedPage = () => {
@@ -52,7 +53,7 @@ const AppRoutes = () => {
         element={
           isAuthenticated
             ? <div>
-              <CreateUser/>
+              <UserCoordinator/>
               </div>
             : <Navigate to="/" />
         }

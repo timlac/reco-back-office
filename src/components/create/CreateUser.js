@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import api from "../../services/api";
-import {repeatedSampling, sample} from "./Sample";
+import {repeatedSampling} from "./Sample";
 import MyScatterPlot from "../visualize/MyScatterPlot";
 
 
-const CreateUser = () => {
+
+const CreateUser = (props) => {
 
     const [userName, setUserName] = useState("")
-    const [videoData, setVideoData] = useState([])
 
-    const [existingUsers, setExistingUsers] = useState([])
+    const videoData = props.videoData
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -44,33 +44,6 @@ const CreateUser = () => {
         setUserName(e.target.value)
     }
 
-    const fetchVideos = api.get("videos")
-
-    useEffect(() => {
-        if (videoData.length === 0) {
-            console.log("invoking fetchVideos")
-            fetchVideos
-                .then(response => {
-                    console.log(response.data)
-                    setVideoData(response.data)
-
-                }
-            ).catch(err => console.log(err));
-        }
-    }, [videoData]);
-
-
-    const fetchUsers = api.get("users")
-
-    useEffect(() => {
-        fetchUsers
-            .then(response => {
-                console.log(response.data)
-                setExistingUsers(response.data)
-            }
-            ).catch(err => console.log(err));
-    }, []);
-
     return <div>
         <div>Create a new user:</div>
         <form onSubmit={handleSubmit}>
@@ -84,19 +57,6 @@ const CreateUser = () => {
         </form>
 
         <div>Here are some S3 objects</div>
-
-        <MyScatterPlot data={existingUsers}/>
-
-      {/*  <ul>*/}
-      {/*  {videoData.slice(0, 10).map((video, index) => (*/}
-      {/*    <li key={index}>{video}</li>*/}
-      {/*  ))}*/}
-      {/*</ul>*/}
-      {/*  <div>{videoData.length}</div>*/}
-
-
-
-
     </div>
 
 }
