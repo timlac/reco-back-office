@@ -1,22 +1,16 @@
 import React from 'react';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
 
-const MyHistogram = ({filenameCounts}) => {
+const MyHistogram = ({frequencyDict}) => {
 
-    const frequencyDistribution = Object.values(filenameCounts).reduce((acc, freq) => {
-        acc[freq] = (acc[freq] || 0) + 1;
-        return acc;
-    }, {});
-
-    console.log("frequencyDistribution")
-    console.log(frequencyDistribution)
 
     // Convert frequencyDistribution to array format for recharts
-    const chartData = Object.entries(frequencyDistribution).map(([numOccurrences, count]) => ({
-        numOccurrences: `${numOccurrences} times`,
-        count
+    const chartData = Object.entries(frequencyDict).map(([key, val]) => ({
+        numOccurrences: key,
+        count: val.length
     }));
 
+    console.log("chartData")
     console.log(chartData)
 
     return (

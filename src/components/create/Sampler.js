@@ -38,14 +38,14 @@ function getSamplingData(filenameCounts, videoData) {
 /**
  * This function performs repeated sampling three times over while not producing any duplicate samples
  * @param {array} videoData an array with video file names and their corresponding meta information
- * @param filenameCounts
+ * @param frequencyDict
  * @returns {array} of video file names.
  */
-export function repeatedSampling(videoData, filenameCounts) {
+export function repeatedSampling(videoData, frequencyDict) {
 
     console.log("in repeatedSampling")
 
-    const videoDataMinCount = getSamplingData(filenameCounts, videoData)
+    const videoDataMinCount = getSamplingData(frequencyDict, videoData)
 
     console.log(videoDataMinCount)
 

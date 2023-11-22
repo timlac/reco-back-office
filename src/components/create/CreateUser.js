@@ -10,13 +10,13 @@ const CreateUser = (props) => {
 
     const [userName, setUserName] = useState("")
 
-    const filenameCounts = props.filenameCounts
+    const frequencyDict = props.frequencyDict
     const videoData = props.videoData
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        const allSamples = repeatedSampling(videoData, filenameCounts)
+        const allSamples = repeatedSampling(videoData, frequencyDict)
 
         const items = []
 

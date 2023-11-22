@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import api from "../../services/api";
 import MyScatterPlot from "../visualize/MyScatterPlot";
 import CreateUser from "./CreateUser";
-import {FrequencyCalculator} from "./FrequencyCalculator";
+import {CreateFrequencyDict, FrequencyCalculator} from "./FrequencyCalculator";
 import MyHistogram from "../visualize/MyHistogram";
 
 
@@ -11,12 +11,22 @@ export const UserCoordinator = () => {
     const [videoData, setVideoData] = useState([])
     const [existingUsers, setExistingUsers] = useState([])
     const [filenameCounts, setFilenameCounts] = useState({})
+    const [frequencyDict, setFrequencyDict] = useState({})
 
 
     useEffect(() => {
         // Check if both videoData and existingUsers are loaded
         if (videoData.length > 0 && existingUsers.length > 0) {
-            setFilenameCounts(FrequencyCalculator(existingUsers, videoData));
+            const filenameCounts = FrequencyCalculator(existingUsers, videoData);
+
+            setFilenameCounts(filenameCounts)
+
+            const frequencyDict = CreateFrequencyDict(filenameCounts)
+
+            setFrequencyDict(frequencyDict)
+
+            console.log("frequencydict")
+            console.log(frequencyDict)
 
         }
     }, [videoData, existingUsers])
@@ -46,8 +56,8 @@ export const UserCoordinator = () => {
 
     return (
         <div>
-            <CreateUser filenameCounts={filenameCounts} videoData={videoData}/>
-            <MyHistogram filenameCounts={filenameCounts}/>
+            <CreateUser frequencyDict={frequencyDict} videoData={videoData}/>
+            <MyHistogram frequencyDict={frequencyDict}/>
         </div>
     )
 }

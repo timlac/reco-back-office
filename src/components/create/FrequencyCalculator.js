@@ -36,3 +36,18 @@ export function FrequencyCalculator(existingUsers, videoData) {
     console.log(filenameCounts);
     return filenameCounts
 }
+
+
+export function CreateFrequencyDict(filenameCounts) {
+    return Object.entries(filenameCounts).reduce((acc, [filename, count]) => {
+        // If the count key doesn't exist in the accumulator, initialize it with an empty array
+        if (!acc[count]) {
+            acc[count] = [];
+        }
+
+        // Add the filename to the array for this count
+        acc[count].push(filename);
+
+        return acc;
+    }, {});
+}
