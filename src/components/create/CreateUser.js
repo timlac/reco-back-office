@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import api from "../../services/api";
-import {repeatedSampling} from "./Sampler";
+import {repeatedSampling} from "./GetSample";
 
 
 // Now I want to make sure that no videos currently in users is sampled.

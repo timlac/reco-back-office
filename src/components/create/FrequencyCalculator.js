@@ -13,6 +13,9 @@ export function FrequencyCalculator(existingUsers, videoData) {
         filenameCounts[filename] = 0;
     }
 
+    console.log("existingUsers")
+    console.log(existingUsers)
+
     // Iterate through the jsonData array
     for (const item of existingUsers) {
         // Check if the 'items' property is an array

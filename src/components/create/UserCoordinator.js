@@ -10,13 +10,16 @@ export const UserCoordinator = () => {
 
     const [videoData, setVideoData] = useState([])
     const [existingUsers, setExistingUsers] = useState([])
+
+    const [didFetchExistingUsers, setDidFetchExistingUsers] = useState(false)
+
     const [filenameCounts, setFilenameCounts] = useState({})
     const [frequencyDict, setFrequencyDict] = useState({})
 
 
     useEffect(() => {
         // Check if both videoData and existingUsers are loaded
-        if (videoData.length > 0 && existingUsers.length > 0) {
+        if (videoData.length > 0 && didFetchExistingUsers) {
             const filenameCounts = FrequencyCalculator(existingUsers, videoData);
 
             setFilenameCounts(filenameCounts)
@@ -37,7 +40,6 @@ export const UserCoordinator = () => {
         api.get("videos")
             .then(response => {
                     setVideoData(response.data)
-
                 }
             ).catch(err => console.log(err));
 
@@ -49,6 +51,7 @@ export const UserCoordinator = () => {
         api.get("users")
             .then(response => {
                     setExistingUsers(response.data)
+                    setDidFetchExistingUsers(true)
                 }
             ).catch(err => console.log(err));
     }, []);
