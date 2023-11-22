@@ -1,20 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import api from "../../services/api";
-import {repeatedSampling} from "./Sample";
-import MyScatterPlot from "../visualize/MyScatterPlot";
+import {repeatedSampling} from "./Sampler";
 
+
+// Now I want to make sure that no videos currently in users is sampled.
 
 
 const CreateUser = (props) => {
 
     const [userName, setUserName] = useState("")
 
+    const filenameCounts = props.filenameCounts
     const videoData = props.videoData
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        const allSamples = repeatedSampling(videoData)
+        const allSamples = repeatedSampling(videoData, filenameCounts)
 
         const items = []
 
@@ -22,6 +24,7 @@ const CreateUser = (props) => {
 
             const filename = allSamples[i]
             const row = videoData.find((row) => row.filename === filename)
+
 
             const item = {
                 "filename": filename,
@@ -38,6 +41,7 @@ const CreateUser = (props) => {
         }
 
         api.post("users", body).then(console.log).catch(error => console.log(error))
+        setUserName("")
     }
 
     const handleChange = (e) => {
