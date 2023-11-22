@@ -20,51 +20,60 @@ const lodash = require('lodash');
  */
 export function repeatedSampling(videoData, frequencyDict) {
 
-    // Convert the keys to numbers (since they are likely string representations of numbers)
-    // and find the minimum key
-    const minCount = Math.min(...Object.keys(frequencyDict).map(Number));
-
-    // Get the filenames associated with the minimum count
-    const filenamesWithMinCount = frequencyDict[minCount];
-
-    console.log("filenamesWithMinCount")
-    console.log(filenamesWithMinCount)
-
-
-    const videoDataMinCount= videoData.filter((row) => filenamesWithMinCount.includes(row.filename));
+    // if (emotionCategories.length < 44) {
+    //     // Need to retrieve fillers from higher up, but just from emotions not in current set
+    //     // Get the filenames associated with the minimum count
+    //     const filenamesWithHigherCount = frequencyDict[minCount + 1];
+    //     const videoDataHigherCount = videoData.filter((row) => filenamesWithHigherCount.includes(row.filename));
+    // }
 
     const totalSamplesNeeded = 132; // Adjust this number as needed
-    const allSamples = getUniqueSamples(videoDataMinCount, totalSamplesNeeded);
+    const allSamples = getUniqueSamples(videoData, frequencyDict, totalSamplesNeeded);
 
     return allSamples
-
-    // console.log("videoDataMinCount")
-    // console.log(videoDataMinCount)
-    //
-    // const samples1 = getSample(videoDataMinCount);
-    //
-    // // Filter videoData to exclude rows that match samples1
-    // const videoDataFiltered1 = videoDataMinCount.filter((row) => !samples1.includes(row.filename));
-    //
-    // // Obtain samples2 based on the filtered data
-    // const samples2 = getSample(videoDataFiltered1);
-    //
-    // // Filter videoDataFiltered1 to exclude rows that match samples2 for the third sampling
-    // const videoDataFiltered2 = videoDataFiltered1.filter((row) => !samples2.includes(row.filename));
-    //
-    // // Obtain samples3 based on the second filtered data
-    // const samples3 = getSample(videoDataFiltered2);
-
-    // return samples1.concat(samples2, samples3);
 }
 
-function getUniqueSamples(data, totalSamples) {
+function getUniqueSamples(videoData, frequencyDict, totalSamples) {
     const sampledSet = new Set();
     let results = [];
 
     while (results.length < totalSamples) {
-        const remainingData = data.filter(row => !sampledSet.has(row.filename));
-        const newSamples = getSample(remainingData);
+
+        // and find the minimum key
+        const minCount = Math.min(...Object.keys(frequencyDict).map(Number));
+
+        // Get the filenames associated with the minimum count
+        const filenamesWithMinCount = frequencyDict[minCount];
+
+        const videoDataMinCount = videoData.filter((row) => filenamesWithMinCount.includes(row.filename));
+
+
+        const remainingData = videoDataMinCount.filter(row => !sampledSet.has(row.filename));
+        let newSamples = getSample(remainingData);
+
+        console.log("new samples")
+        console.log(newSamples)
+        // These new samples will not be long enough, maybe I can just collect some more here.
+
+        if (newSamples.length < 44){
+            const moreFilenames = frequencyDict[minCount + 1]
+
+            const remainingData = moreFilenames.filter(row => !sampledSet.has(row.filename));
+            const fillerSamples = getSample(remainingData);
+
+            // TODO: The current problem is that newSamples is just list of filenames, and as such does not have any emotion ids.
+            // I need to either change the sampling method such that it returns the metadata objects.
+            // Or I can create some function that retrieves the emotions or the metadata in general from the videoData object.
+            // This might be a good idea actually it doesn't really make sense to pass around the metadata object everywhere the way I do now. 
+
+            // Assuming each video object has a unique identifier in the 'id' property
+            const existingEmotionIds = new Set(newSamples.map(video => video.emotion_id));
+
+            console.log(existingEmotionIds)
+
+            newSamples = fillerSamples.filter(video => !existingEmotionIds.has(video.emotion_id))
+        }
+
         newSamples.forEach(sample => {
             sampledSet.add(sample);
             results.push(sample);
@@ -84,6 +93,11 @@ function getUniqueSamples(data, totalSamples) {
 }
 
 export function getSample(videoDataToSample) {
+    // Maybe I should try to sample the complete video metadata instead of just the video ids...
+    // or create some kind of general method to retrieve the metadata
+
+
+
     // Get unique categories (emotion_id)
     const categories = lodash.uniq(videoDataToSample.map((row) => row.emotion_id));
 
