@@ -1,35 +1,36 @@
 import React, {useEffect, useState} from 'react';
 import api from "../../services/api";
 import {repeatedSampling} from "./GetSample";
+import {filename2MetaData} from "../../services/videoMetaDataHelper";
 
 
 // Now I want to make sure that no videos currently in users is sampled.
 
 
-const CreateUser = (props) => {
+const CreateUser = ( {frequencyDict, fetchUsers} ) => {
 
     const [userName, setUserName] = useState("")
 
-    const frequencyDict = props.frequencyDict
-    const videoData = props.videoData
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        const allSamples = repeatedSampling(videoData, frequencyDict)
+        console.log("in handle submit")
+
+        const allSamples = repeatedSampling(frequencyDict)
 
         const items = []
 
         for (let i = 0; i < allSamples.length; i++) {
 
             const filename = allSamples[i]
-            const row = videoData.find((row) => row.filename === filename)
+            const metaData = filename2MetaData[filename]
 
 
             const item = {
                 "filename": filename,
-                "video_id": row["video_id"],
-                "emotion_id": row["emotion_id"],
+                "video_id": metaData["video_id"],
+                "emotion_id": metaData["emotion_id"],
                 "reply": "",
             }
             items.push(item)
@@ -40,7 +41,14 @@ const CreateUser = (props) => {
             "items": items
         }
 
-        api.post("users", body).then(console.log).catch(error => console.log(error))
+        // This does not work properly.
+        // Need to make sure fetchUsers is invoked after the post request
+        api.post("users", body)
+            .then(
+                fetchUsers()
+                .catch(err => console.log(err)))
+            .catch(error => console.log(error))
+
         setUserName("")
     }
 

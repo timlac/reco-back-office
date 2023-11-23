@@ -1,20 +1,16 @@
+import {filename2MetaData} from "../../services/videoMetaDataHelper";
 
 
-export function FrequencyCalculator(existingUsers, videoData) {
+export function FrequencyCalculator(existingUsers) {
+
+    console.log("In FrequencyCalculator")
 
     // Initialize an empty object to store the filename dictionary
     const filenameCounts = {};
 
-    // Iterate through the dataArray
-    for (const item of videoData) {
-        // Extract the filename from each item
-        const filename = item.filename;
-        // Add the filename as a key to the filenameDictionary with an initial value of 0
+    for (const filename of Object.keys(filename2MetaData)) {
         filenameCounts[filename] = 0;
     }
-
-    console.log("existingUsers")
-    console.log(existingUsers)
 
     // Iterate through the jsonData array
     for (const item of existingUsers) {
@@ -36,7 +32,6 @@ export function FrequencyCalculator(existingUsers, videoData) {
     }
 
     // Now, filenameCounts contains the counts of each filename
-    console.log(filenameCounts);
     return filenameCounts
 }
 
@@ -54,3 +49,6 @@ export function CreateFrequencyDict(filenameCounts) {
         return acc;
     }, {});
 }
+
+
+

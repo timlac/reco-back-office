@@ -4,11 +4,11 @@ import MyScatterPlot from "../visualize/MyScatterPlot";
 import CreateUser from "./CreateUser";
 import {CreateFrequencyDict, FrequencyCalculator} from "./FrequencyCalculator";
 import MyHistogram from "../visualize/MyHistogram";
+import {fetchVideoData} from "../../services/videoMetaDataHelper";
 
 
 export const UserCoordinator = () => {
 
-    const [videoData, setVideoData] = useState([])
     const [existingUsers, setExistingUsers] = useState([])
 
     const [didFetchExistingUsers, setDidFetchExistingUsers] = useState(false)
@@ -17,10 +17,20 @@ export const UserCoordinator = () => {
     const [frequencyDict, setFrequencyDict] = useState({})
 
 
+    const [metaDataIsLoaded, setMetaDataIsLoaded] = useState(false)
+
+    useEffect(() => {
+        fetchVideoData()
+            .then(() => setMetaDataIsLoaded(true))
+            .catch(error => {
+                console.error('Error fetching video data:', error);
+            });
+    }, []);
+
     useEffect(() => {
         // Check if both videoData and existingUsers are loaded
-        if (videoData.length > 0 && didFetchExistingUsers) {
-            const filenameCounts = FrequencyCalculator(existingUsers, videoData);
+        if (metaDataIsLoaded && didFetchExistingUsers) {
+            const filenameCounts = FrequencyCalculator(existingUsers);
 
             setFilenameCounts(filenameCounts)
 
@@ -32,34 +42,25 @@ export const UserCoordinator = () => {
             console.log(frequencyDict)
 
         }
-    }, [videoData, existingUsers])
+    }, [metaDataIsLoaded, existingUsers])
 
 
-    useEffect(() => {
-        console.log("Get on videos")
-        api.get("videos")
-            .then(response => {
-                    setVideoData(response.data)
-                }
-            ).catch(err => console.log(err));
-
-    }, []);
-
+    const fetchUsers = async () => {
+        console.log("invoking fetch users")
+        const response = await api.get("users")
+        setExistingUsers(response.data)
+        setDidFetchExistingUsers(true)
+    }
 
     useEffect(() => {
-        console.log("Get on users")
-        api.get("users")
-            .then(response => {
-                    setExistingUsers(response.data)
-                    setDidFetchExistingUsers(true)
-                }
-            ).catch(err => console.log(err));
+        fetchUsers()
+            .catch(err => console.log(err));
     }, []);
 
 
     return (
         <div>
-            <CreateUser frequencyDict={frequencyDict} videoData={videoData}/>
+            <CreateUser frequencyDict={frequencyDict} fetchUsers={fetchUsers}/>
             <MyHistogram frequencyDict={frequencyDict}/>
         </div>
     )

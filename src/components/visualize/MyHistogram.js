@@ -10,9 +10,6 @@ const MyHistogram = ({frequencyDict}) => {
         count: val.length
     }));
 
-    console.log("chartData")
-    console.log(chartData)
-
     return (
         <BarChart width={800} height={400} data={chartData}>
             <CartesianGrid strokeDasharray="3 3"/>
