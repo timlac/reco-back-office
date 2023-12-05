@@ -4,7 +4,7 @@ let filename2MetaData = {}; // This will hold your video data once fetched
 
 const fetchVideoData = async () => {
     try {
-        const response = await api.get("videos")
+        const response = await api.get("video_metadata")
         const videoMetaData = await response.data;
 
         filename2MetaData = videoMetaData.reduce((acc, video) => {

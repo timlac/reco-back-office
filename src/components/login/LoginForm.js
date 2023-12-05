@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../contexts/AuthContext";
-import { signIn } from "../../libs/CognitoConstruct";
+import {setNewPassword, signIn} from "../../libs/CognitoConstruct";
 
 
 const LoginForm = () => {
@@ -11,7 +11,6 @@ const LoginForm = () => {
         newPassword: '', // For new password challenge
     });
     const [newPasswordRequired, setNewPasswordRequired] = useState(false);
-    const [user, setUser] = useState(null); // Store the cognitoUser object
     const [error, setError] = useState("")
 
     const navigate = useNavigate();
@@ -31,7 +30,7 @@ const LoginForm = () => {
         const { username, password } = formData;
 
         try{
-            await signIn(username, password)
+            await signIn(username, password, setNewPasswordRequired)
             auth.login(username); // Update the login context state
             navigate('/protected'); // Navigate to the protected route
         } catch (err) {
@@ -41,20 +40,7 @@ const LoginForm = () => {
 
     const handleNewPassword = async (event) => {
         event.preventDefault();
-        if (!user) {
-            console.error('Cognito user is not available.');
-            return;
-        }
-        // Assume cognitoUser is in scope, you'd need to make it accessible here.
-        user.completeNewPasswordChallenge(formData.newPassword, {}, {
-            onSuccess: (session) => {
-                console.log('Password updated successfully!', session);
-                setNewPasswordRequired(false);
-            },
-            onFailure: (err) => {
-                console.error('Error updating password:', err);
-            },
-        });
+        setNewPassword(formData.newPassword, setNewPasswordRequired)
     };
 
     return (

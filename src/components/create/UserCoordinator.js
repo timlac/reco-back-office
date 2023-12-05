@@ -1,25 +1,26 @@
 import React, {useEffect, useState} from "react";
 import api from "../../services/api";
-import MyScatterPlot from "../visualize/MyScatterPlot";
 import CreateUser from "./CreateUser";
 import {CreateFrequencyDict, FrequencyCalculator} from "./FrequencyCalculator";
 import MyHistogram from "../visualize/MyHistogram";
 import {fetchVideoData} from "../../services/videoMetaDataHelper";
 
+import {getEmotionInSweFromId} from 'nexa-js-sentimotion-mapper';
 
 export const UserCoordinator = () => {
 
-    const [existingUsers, setExistingUsers] = useState([])
+    const [users, setUsers] = useState([])
 
-    const [didFetchExistingUsers, setDidFetchExistingUsers] = useState(false)
+    const [didFetchUsers, setDidFetchUsers] = useState(false)
 
-    const [filenameCounts, setFilenameCounts] = useState({})
+    const [fetchNewUsers, setFetchNewUsers] = useState(false)
+
     const [frequencyDict, setFrequencyDict] = useState({})
-
 
     const [metaDataIsLoaded, setMetaDataIsLoaded] = useState(false)
 
     useEffect(() => {
+        console.log("fetching video data")
         fetchVideoData()
             .then(() => setMetaDataIsLoaded(true))
             .catch(error => {
@@ -28,11 +29,11 @@ export const UserCoordinator = () => {
     }, []);
 
     useEffect(() => {
-        // Check if both videoData and existingUsers are loaded
-        if (metaDataIsLoaded && didFetchExistingUsers) {
-            const filenameCounts = FrequencyCalculator(existingUsers);
-
-            setFilenameCounts(filenameCounts)
+        // Check if both videoData and users are loaded
+        if (metaDataIsLoaded && didFetchUsers) {
+            const filenameCounts = FrequencyCalculator(users);
+            console.log("filenameCounts")
+            console.log(filenameCounts)
 
             const frequencyDict = CreateFrequencyDict(filenameCounts)
 
@@ -42,25 +43,36 @@ export const UserCoordinator = () => {
             console.log(frequencyDict)
 
         }
-    }, [metaDataIsLoaded, existingUsers])
+    }, [metaDataIsLoaded, users, didFetchUsers])
 
 
     const fetchUsers = async () => {
         console.log("invoking fetch users")
         const response = await api.get("users")
-        setExistingUsers(response.data)
-        setDidFetchExistingUsers(true)
+        console.log(response.data)
+
+        setUsers(response.data)
+        setDidFetchUsers(true)
+
+        console.log(users)
     }
 
     useEffect(() => {
-        fetchUsers()
-            .catch(err => console.log(err));
-    }, []);
+        console.log("fetch new users invoked")
+        console.log("fetchNewUsers:", fetchNewUsers)
 
+        fetchUsers()
+            .then(setFetchNewUsers(false))
+            .catch(err => console.log(err));
+    }, [fetchNewUsers]);
+
+
+    const emotionId = getEmotionInSweFromId(5);
 
     return (
         <div>
-            <CreateUser frequencyDict={frequencyDict} fetchUsers={fetchUsers}/>
+            <div>{emotionId}</div>
+            <CreateUser frequencyDict={frequencyDict} setFetchNewUsers={setFetchNewUsers}/>
             <MyHistogram frequencyDict={frequencyDict}/>
         </div>
     )

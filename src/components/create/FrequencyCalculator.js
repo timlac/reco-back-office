@@ -12,6 +12,9 @@ export function FrequencyCalculator(existingUsers) {
         filenameCounts[filename] = 0;
     }
 
+    console.log("filenameCounts")
+    console.log(filenameCounts)
+
     // Iterate through the jsonData array
     for (const item of existingUsers) {
         // Check if the 'items' property is an array

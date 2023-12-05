@@ -30,7 +30,7 @@ export function repeatedSampling(frequencyDict) {
     //     const videoDataHigherCount = videoData.filter((row) => filenamesWithHigherCount.includes(row.filename));
     // }
 
-    const totalSamplesNeeded = 129; // Adjust this number as needed
+    const totalSamplesNeeded = 132; // Adjust this number as needed
     const allSamples = getUniqueSamples(frequencyDict, totalSamplesNeeded);
 
     return allSamples

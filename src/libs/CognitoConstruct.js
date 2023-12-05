@@ -2,8 +2,8 @@ import {AuthenticationDetails, CognitoUser, CognitoUserPool} from "amazon-cognit
 
 
 const userPool = new CognitoUserPool({
-  UserPoolId: 'eu-west-1_1Fq4BVn1a',
-  ClientId: '6ch34dsufoc3hv2p49tv14151h'
+  UserPoolId: 'eu-west-1_Iug3XSwRq',
+  ClientId: '2rer1p6jedoh35vtghn8s41s5p'
 });
 
 
@@ -26,7 +26,25 @@ export function getCurrentSession() {
 }
 
 
-export function signIn(username, password) {
+export function setNewPassword(newPassword, setNewPasswordRequired) {
+    if (!currentUser) {
+            console.error('Cognito user is not available.');
+            return;
+        }
+        // Assume cognitoUser is in scope, you'd need to make it accessible here.
+        currentUser.completeNewPasswordChallenge(newPassword, {}, {
+            onSuccess: (session) => {
+                console.log('Password updated successfully!', session);
+                setNewPasswordRequired(false);
+            },
+            onFailure: (err) => {
+                console.error('Error updating password:', err);
+            },
+        });
+}
+
+
+export function signIn(username, password, setNewPasswordRequired) {
 
     return new Promise((resolve, reject) => {
         const authenticationDetails = new AuthenticationDetails({
@@ -50,6 +68,8 @@ export function signIn(username, password) {
             },
             newPasswordRequired: (userAttributes, requiredAttributes) => {
                 console.log('New password required');
+                currentUser = cognitoUser;
+                setNewPasswordRequired(true)
                 // Do something
             },
         })

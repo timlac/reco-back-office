@@ -7,7 +7,7 @@ import {filename2MetaData} from "../../services/videoMetaDataHelper";
 // Now I want to make sure that no videos currently in users is sampled.
 
 
-const CreateUser = ( {frequencyDict, fetchUsers} ) => {
+const CreateUser = ( {frequencyDict, setFetchNewUsers} ) => {
 
     const [userName, setUserName] = useState("")
 
@@ -44,11 +44,9 @@ const CreateUser = ( {frequencyDict, fetchUsers} ) => {
         // This does not work properly.
         // Need to make sure fetchUsers is invoked after the post request
         api.post("users", body)
-            .then(
-                fetchUsers()
-                .catch(err => console.log(err)))
+            .then(console.log)
+            .then(setFetchNewUsers(true))
             .catch(error => console.log(error))
-
         setUserName("")
     }
 
