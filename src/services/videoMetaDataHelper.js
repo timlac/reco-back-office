@@ -7,6 +7,8 @@ const fetchVideoData = async () => {
         const response = await videoMetadatApi.get("videos")
         const videoMetaData = await response.data;
 
+        console.log(videoMetaData)
+
         filename2MetaData = videoMetaData.reduce((acc, video) => {
             const {filename, ...otherAttributes} = video;
             acc[filename] = otherAttributes;
@@ -23,6 +25,8 @@ const mapFilenames2MetaData = (filenames) => {
 }
 
 const getEmotionIdFromFilename = (filename) => {
+    console.log("filename", filename)
+
     return filename2MetaData[filename].emotion_id
 }
 

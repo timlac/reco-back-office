@@ -1,15 +1,19 @@
 import React, {useState} from 'react';
 import {emotionCategoriesApi} from "../../services/api";
-import {repeatedSampling} from "./GetSample";
 import {filename2MetaData} from "../../services/videoMetaDataHelper";
 import {Switch} from 'antd';
 import {POSITIVE_VALENCE, NEGATIVE_VALENCE} from "../../config"
+import {filterOnValence} from "./FilterOnValence";
+import {getUserSamples} from "./GetUserSamples";
 
 
 // Now I want to make sure that no videos currently in users is sampled.
 
 
 const CreateUser = ({frequencyDict, setFetchNewUsers}) => {
+
+
+    console.log(frequencyDict)
 
     const [userName, setUserName] = useState("")
 
@@ -21,7 +25,8 @@ const CreateUser = ({frequencyDict, setFetchNewUsers}) => {
 
         console.log("in handle submit")
 
-        const allSamples = repeatedSampling(frequencyDict, valence)
+        frequencyDict = filterOnValence(frequencyDict, valence)
+        const allSamples = getUserSamples(frequencyDict)
 
         const items = []
 
