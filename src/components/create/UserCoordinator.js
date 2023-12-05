@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import api from "../../services/api";
+import {emotionCategoriesApi} from "../../services/api";
 import CreateUser from "./CreateUser";
 import {CreateFrequencyDict, FrequencyCalculator} from "./FrequencyCalculator";
 import MyHistogram from "../visualize/MyHistogram";
@@ -48,12 +48,12 @@ export const UserCoordinator = () => {
 
     const fetchUsers = async () => {
         console.log("invoking fetch users")
-        const response = await api.get("users")
+        const response = await emotionCategoriesApi.get("users")
         console.log(response.data)
 
         setUsers(response.data)
         setDidFetchUsers(true)
-
+        setFetchNewUsers(false)
         console.log(users)
     }
 
@@ -62,7 +62,6 @@ export const UserCoordinator = () => {
         console.log("fetchNewUsers:", fetchNewUsers)
 
         fetchUsers()
-            .then(setFetchNewUsers(false))
             .catch(err => console.log(err));
     }, [fetchNewUsers]);
 

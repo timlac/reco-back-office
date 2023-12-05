@@ -1,10 +1,10 @@
-import api from "./api";
+import {videoMetadatApi} from "./api";
 
 let filename2MetaData = {}; // This will hold your video data once fetched
 
 const fetchVideoData = async () => {
     try {
-        const response = await api.get("video_metadata")
+        const response = await videoMetadatApi.get("videos")
         const videoMetaData = await response.data;
 
         filename2MetaData = videoMetaData.reduce((acc, video) => {
@@ -22,14 +22,14 @@ const mapFilenames2MetaData = (filenames) => {
     return filenames.map(filename => filename2MetaData[filename]);
 }
 
-const getEmotionFromFilename = (filename) => {
+const getEmotionIdFromFilename = (filename) => {
     return filename2MetaData[filename].emotion_id
 }
 
 
-const mapFilenamesToEmotions = (filenames) => {
+const mapFilenamesToEmotionIds = (filenames) => {
     return filenames.map(filename => filename2MetaData[filename].emotion_id);
 }
 
 
-export { fetchVideoData, mapFilenames2MetaData, mapFilenamesToEmotions, filename2MetaData, getEmotionFromFilename };
+export { fetchVideoData, mapFilenames2MetaData, mapFilenamesToEmotionIds, filename2MetaData, getEmotionIdFromFilename };

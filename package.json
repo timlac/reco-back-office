@@ -3,20 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "amazon-cognito-identity-js": "^6.3.7",
+    "antd": "^5.12.1",
     "axios": "^1.6.2",
     "lodash": "^4.17.21",
+    "nexa-js-sentimotion-mapper": "git+ssh://git@github.com/timlac/nexa-js-sentimotion-mapper.git",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router": "^6.19.0",
-    "react-router-dom": "^6.19.0",
+    "react-router": "^6.20.1",
+    "react-router-dom": "^6.20.1",
     "react-scripts": "5.0.1",
-    "recharts": "^2.10.1",
-    "web-vitals": "^2.1.4",
-    "nexa-js-sentimotion-mapper": "git@github.com:timlac/nexa-js-sentimotion-mapper.git"
+    "recharts": "^2.10.3",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

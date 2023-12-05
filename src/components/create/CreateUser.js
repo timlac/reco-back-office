@@ -1,15 +1,19 @@
-import React, {useEffect, useState} from 'react';
-import api from "../../services/api";
+import React, {useState} from 'react';
+import {emotionCategoriesApi} from "../../services/api";
 import {repeatedSampling} from "./GetSample";
 import {filename2MetaData} from "../../services/videoMetaDataHelper";
+import {Switch} from 'antd';
+import {POSITIVE_VALENCE, NEGATIVE_VALENCE} from "../../config"
 
 
 // Now I want to make sure that no videos currently in users is sampled.
 
 
-const CreateUser = ( {frequencyDict, setFetchNewUsers} ) => {
+const CreateUser = ({frequencyDict, setFetchNewUsers}) => {
 
     const [userName, setUserName] = useState("")
+
+    const [valence, setValence] = useState(POSITIVE_VALENCE)
 
 
     const handleSubmit = (e) => {
@@ -17,7 +21,7 @@ const CreateUser = ( {frequencyDict, setFetchNewUsers} ) => {
 
         console.log("in handle submit")
 
-        const allSamples = repeatedSampling(frequencyDict)
+        const allSamples = repeatedSampling(frequencyDict, valence)
 
         const items = []
 
@@ -43,7 +47,7 @@ const CreateUser = ( {frequencyDict, setFetchNewUsers} ) => {
 
         // This does not work properly.
         // Need to make sure fetchUsers is invoked after the post request
-        api.post("users", body)
+        emotionCategoriesApi.post("users", body)
             .then(console.log)
             .then(setFetchNewUsers(true))
             .catch(error => console.log(error))
@@ -52,6 +56,14 @@ const CreateUser = ( {frequencyDict, setFetchNewUsers} ) => {
 
     const handleChange = (e) => {
         setUserName(e.target.value)
+    }
+
+    const handleToggle = (e) => {
+        if (e) {
+            setValence(POSITIVE_VALENCE)
+        } else {
+            setValence(NEGATIVE_VALENCE)
+        }
     }
 
     return <div>
@@ -64,9 +76,9 @@ const CreateUser = ( {frequencyDict, setFetchNewUsers} ) => {
                 onChange={handleChange}
             />
             <button type="submit">Send</button>
+            <Switch checkedChildren={POSITIVE_VALENCE} unCheckedChildren={NEGATIVE_VALENCE} defaultChecked onChange={handleToggle}/>
+            <div>{valence}</div>
         </form>
-
-        <div>Here are some S3 objects</div>
     </div>
 
 }
