@@ -25,11 +25,8 @@ const mapFilenames2MetaData = (filenames) => {
 }
 
 const getEmotionIdFromFilename = (filename) => {
-    console.log("filename", filename)
-
     return filename2MetaData[filename].emotion_id
 }
-
 
 const mapFilenamesToEmotionIds = (filenames) => {
     return filenames.map(filename => filename2MetaData[filename].emotion_id);

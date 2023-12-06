@@ -1,7 +1,7 @@
 import {getEmotionIdFromFilename, mapFilenamesToEmotionIds} from "../../services/videoMetaDataHelper";
 const lodash = require('lodash');
 
-
+// Maybe create a general filename to emotion dict when the app starts up?
 function createFilename2EmotionDict(filenames) {
     // Create dictionary of {emotion: [filenames]}
     const ret = {};
@@ -28,7 +28,9 @@ function createFilename2EmotionDict(filenames) {
 export function getSampleSet(filenames, maxSamples) {
 
     // Get unique uniqueEmotions (emotion_id)
-    const uniqueEmotions = new Set(mapFilenamesToEmotionIds(filenames));
+    const uniqueEmotions = new Set ( mapFilenamesToEmotionIds(filenames) )
+
+    console.log("uniqueEmotions: ", uniqueEmotions)
 
     // Create dictionary of {emotion: [filenames]}
     const emotion2Filenames = createFilename2EmotionDict(filenames)
@@ -53,6 +55,5 @@ export function getSampleSet(filenames, maxSamples) {
             console.log("Something went wrong no videos found for emotion in getSampleSet")
         }
     });
-
     return ret
 }

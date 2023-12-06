@@ -3,38 +3,46 @@ import {emotionCategoriesApi} from "../../services/api";
 import {filename2MetaData} from "../../services/videoMetaDataHelper";
 import {Switch} from 'antd';
 import {POSITIVE_VALENCE, NEGATIVE_VALENCE} from "../../config"
-import {filterOnValence} from "./FilterOnValence";
 import {getUserSamples} from "./GetUserSamples";
 
 
-// Now I want to make sure that no videos currently in users is sampled.
 
 
-const CreateUser = ({frequencyDict, setFetchNewUsers}) => {
-
-
-    console.log(frequencyDict)
+const CreateUser = ( {frequency2FilenameObj, setFetchNewUsers} ) => {
 
     const [userName, setUserName] = useState("")
-
     const [valence, setValence] = useState(POSITIVE_VALENCE)
-
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
         console.log("in handle submit")
 
-        frequencyDict = filterOnValence(frequencyDict, valence)
-        const allSamples = getUserSamples(frequencyDict)
+        let samples = {}
+
+        switch (valence){
+            case POSITIVE_VALENCE:
+                // pass copy to function
+                samples = getUserSamples({ ...frequency2FilenameObj.positiveEmotions })
+                break;
+            case NEGATIVE_VALENCE:
+                // pass copy to function
+                samples = getUserSamples( { ...frequency2FilenameObj.negativeEmotions })
+                break;
+            default:
+                console.log("no valence selected in create user")
+        }
+
+        console.log("samples:")
+        console.log(samples.emotionAlternatives)
+
+        console.log([...samples.emotionAlternatives])
 
         const items = []
 
-        for (let i = 0; i < allSamples.length; i++) {
+        for (const filename of samples.shuffledFilenames) {
 
-            const filename = allSamples[i]
             const metaData = filename2MetaData[filename]
-
 
             const item = {
                 "filename": filename,
@@ -47,10 +55,14 @@ const CreateUser = ({frequencyDict, setFetchNewUsers}) => {
 
         const body = {
             "alias": userName,
-            "items": items
+            "items": items,
+            "emotion_alternatives": [...samples.emotionAlternatives],
+            "valence": valence
         }
 
-        // This does not work properly.
+        console.log("body:")
+        console.log(body)
+
         // Need to make sure fetchUsers is invoked after the post request
         emotionCategoriesApi.post("users", body)
             .then(console.log)

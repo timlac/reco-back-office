@@ -1,11 +1,17 @@
 import React, {useEffect, useState} from "react";
-import {emotionCategoriesApi} from "../../services/api";
+
 import CreateUser from "./CreateUser";
-import {CreateFrequencyDict, FrequencyCalculator} from "./FrequencyCalculator";
 import MyHistogram from "../visualize/MyHistogram";
+
+import {emotionCategoriesApi} from "../../services/api";
+import { createFilename2FrequencyObj } from "../../services/CreateFilename2FrequencyObj";
+import {createFrequency2FilenameObj} from "../../services/createFrequency2FilenameObj";
 import {fetchVideoData} from "../../services/videoMetaDataHelper";
 
 import {getEmotionInSweFromId} from 'nexa-js-sentimotion-mapper';
+
+const lodash = require('lodash');
+
 
 export const UserCoordinator = () => {
 
@@ -15,14 +21,14 @@ export const UserCoordinator = () => {
 
     const [fetchNewUsers, setFetchNewUsers] = useState(false)
 
-    const [frequencyDict, setFrequencyDict] = useState({})
+    const [frequency2FilenameObj, setFrequency2FilenameObj] = useState({})
 
-    const [metaDataIsLoaded, setMetaDataIsLoaded] = useState(false)
+    const [didFetchMetadata, setDidFetchMetadata] = useState(false)
 
     useEffect(() => {
         console.log("fetching video data")
         fetchVideoData()
-            .then(() => setMetaDataIsLoaded(true))
+            .then(() => setDidFetchMetadata(true))
             .catch(error => {
                 console.error('Error fetching video data:', error);
             });
@@ -30,27 +36,27 @@ export const UserCoordinator = () => {
 
     useEffect(() => {
         // Check if both videoData and users are loaded
-        if (metaDataIsLoaded && didFetchUsers) {
-            const filenameCounts = FrequencyCalculator(users);
-            console.log("filenameCounts")
-            console.log(filenameCounts)
+        if (didFetchMetadata && didFetchUsers) {
 
-            const frequencyDict = CreateFrequencyDict(filenameCounts)
+            console.log("calculating frequencies")
 
-            setFrequencyDict(frequencyDict)
+            const filename2FrequencyObj = createFilename2FrequencyObj(users)
+            console.log("filename2FrequencyObj")
+            console.log(Object.keys(filename2FrequencyObj.allEmotions).length)
 
-            console.log("frequencydict")
-            console.log(frequencyDict)
+            const frequency2FilenameObj = createFrequency2FilenameObj(filename2FrequencyObj)
+            setFrequency2FilenameObj( frequency2FilenameObj )
+
+            console.log("frequency2FilenameObj")
+            console.log(frequency2FilenameObj)
 
         }
-    }, [metaDataIsLoaded, users, didFetchUsers])
-
+    }, [didFetchMetadata, users, didFetchUsers])
 
     const fetchUsers = async () => {
         console.log("invoking fetch users")
         const response = await emotionCategoriesApi.get("users")
         console.log(response.data)
-
         setUsers(response.data)
         setDidFetchUsers(true)
         setFetchNewUsers(false)
@@ -60,19 +66,21 @@ export const UserCoordinator = () => {
     useEffect(() => {
         console.log("fetch new users invoked")
         console.log("fetchNewUsers:", fetchNewUsers)
-
         fetchUsers()
             .catch(err => console.log(err));
     }, [fetchNewUsers]);
 
-
-    const emotionId = getEmotionInSweFromId(5);
+    const emotion = getEmotionInSweFromId(5);
 
     return (
         <div>
-            <div>{emotionId}</div>
-            <CreateUser frequencyDict={frequencyDict} setFetchNewUsers={setFetchNewUsers}/>
-            <MyHistogram frequencyDict={frequencyDict}/>
+            <div>{emotion}</div>
+            <CreateUser frequency2FilenameObj={frequency2FilenameObj} setFetchNewUsers={setFetchNewUsers}/>
+
+            {lodash.isEmpty(frequency2FilenameObj) ?
+            "Loading...":
+            <MyHistogram frequency2FilenameObj={frequency2FilenameObj} />
+                }
         </div>
     )
 }
