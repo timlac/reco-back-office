@@ -38,7 +38,7 @@ const CreateUser = ( {frequency2FilenameObj, setFetchNewUsers} ) => {
 
         console.log([...samples.emotionAlternatives])
 
-        const items = []
+        const user_items = []
 
         for (const filename of samples.shuffledFilenames) {
 
@@ -48,14 +48,13 @@ const CreateUser = ( {frequency2FilenameObj, setFetchNewUsers} ) => {
                 "filename": filename,
                 "video_id": metaData["video_id"],
                 "emotion_id": metaData["emotion_id"],
-                "reply": "",
             }
-            items.push(item)
+            user_items.push(item)
         }
 
         const body = {
-            "alias": userName,
-            "items": items,
+            "user_id": userName,
+            "user_items": user_items,
             "emotion_alternatives": [...samples.emotionAlternatives],
             "valence": valence
         }

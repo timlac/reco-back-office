@@ -11,9 +11,9 @@ export function createFilename2FrequencyObj(users) {
     // Iterate through the users array
     for (const user of users) {
         // Check if the 'items' property is an array
-        if (Array.isArray(user.items)) {
+        if (Array.isArray(user.user_items)) {
             // Iterate through the 'items' array
-            for (const itemData of user.items) {
+            for (const itemData of user.user_items) {
                 // Extract the 'filename' property from each itemData
                 const filename = itemData.filename;
                 try {
