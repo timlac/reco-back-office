@@ -4,23 +4,20 @@ import {filename2MetaData} from "../../services/videoMetaDataHelper";
 import {Switch} from 'antd';
 import {POSITIVE_VALENCE, NEGATIVE_VALENCE} from "../../config"
 import {getUserSamples} from "./GetUserSamples";
+import BasicForm from "./BasicForm";
 
 
 
 
 const CreateUser = ( {frequency2FilenameObj, setFetchNewUsers} ) => {
 
-    const [userName, setUserName] = useState("")
-    const [valence, setValence] = useState(POSITIVE_VALENCE)
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const createUser = (values) => {
 
         console.log("in handle submit")
 
         let samples = {}
 
-        switch (valence){
+        switch (values.valence){
             case POSITIVE_VALENCE:
                 // pass copy to function
                 samples = getUserSamples({ ...frequency2FilenameObj.positiveEmotions })
@@ -53,10 +50,12 @@ const CreateUser = ( {frequency2FilenameObj, setFetchNewUsers} ) => {
         }
 
         const body = {
-            "user_id": userName,
+            "user_id": values.email,
             "user_items": user_items,
             "emotion_alternatives": [...samples.emotionAlternatives],
-            "valence": valence
+            "valence": values.valence,
+            "sex": values.sex,
+            "date_of_birth": values.dateString
         }
 
         console.log("body:")
@@ -67,34 +66,10 @@ const CreateUser = ( {frequency2FilenameObj, setFetchNewUsers} ) => {
             .then(console.log)
             .then(setFetchNewUsers(true))
             .catch(error => console.log(error))
-        setUserName("")
-    }
-
-    const handleChange = (e) => {
-        setUserName(e.target.value)
-    }
-
-    const handleToggle = (e) => {
-        if (e) {
-            setValence(POSITIVE_VALENCE)
-        } else {
-            setValence(NEGATIVE_VALENCE)
-        }
     }
 
     return <div>
-        <div>Create a new user:</div>
-        <form onSubmit={handleSubmit}>
-            <input
-                name="alias"
-                type="text"
-                value={userName}
-                onChange={handleChange}
-            />
-            <button type="submit">Send</button>
-            <Switch checkedChildren={POSITIVE_VALENCE} unCheckedChildren={NEGATIVE_VALENCE} defaultChecked onChange={handleToggle}/>
-            <div>{valence}</div>
-        </form>
+        <BasicForm createUser={createUser} />
     </div>
 
 }

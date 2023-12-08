@@ -28,6 +28,8 @@ function createFilename2EmotionDict(filenames) {
 export function getSampleSet(filenames, maxSamples) {
 
     // Get unique uniqueEmotions (emotion_id)
+    // Potentially this need to be turned into a list that is then shuffled to ensure uniform distribution
+    // TODO: Investigate the order of emotions in uniqueEmotions, what order does Set() natively create
     const uniqueEmotions = new Set ( mapFilenamesToEmotionIds(filenames) )
 
     console.log("uniqueEmotions: ", uniqueEmotions)
@@ -52,7 +54,7 @@ export function getSampleSet(filenames, maxSamples) {
             const selectedVideo = lodash.sample(videos);
             ret.push(selectedVideo);
         } else {
-            console.log("Something went wrong no videos found for emotion in getSampleSet")
+            console.log("Something went wrong, no videos found for emotion in getSampleSet")
         }
     });
     return ret

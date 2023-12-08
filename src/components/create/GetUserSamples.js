@@ -16,14 +16,6 @@ function getUniqueEmotionIds(frequency2Filename) {
     return uniqueEmotionIds
 }
 
-// set numberOfUniqueEmotionIds manually
-// create a frozen set of the first set of unique emotions sampled
-// filter out all filenames that doesn't correspond to these emotions
-// proceed sampling.
-// Since I'm working with a smaller dataset we might run out of samples...
-// set the totalSamplesNeeded to some smaller number for the time being.
-
-
 function filterFrequency2Filename(frequency2Filename, emotionIdsToFilterBy) {
     console.log("emotionIdsToFilterBy type: ", emotionIdsToFilterBy)
 

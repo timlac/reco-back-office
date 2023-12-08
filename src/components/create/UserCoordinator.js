@@ -9,6 +9,8 @@ import {createFrequency2FilenameObj} from "../../services/createFrequency2Filena
 import {fetchVideoData} from "../../services/videoMetaDataHelper";
 
 import {getEmotionInSweFromId} from 'nexa-js-sentimotion-mapper';
+import BasicForm from "./BasicForm";
+import {UserTable} from "./UserTable";
 
 const lodash = require('lodash');
 
@@ -70,12 +72,13 @@ export const UserCoordinator = () => {
             .catch(err => console.log(err));
     }, [fetchNewUsers]);
 
-    const emotion = getEmotionInSweFromId(5);
 
     return (
         <div>
-            <div>{emotion}</div>
             <CreateUser frequency2FilenameObj={frequency2FilenameObj} setFetchNewUsers={setFetchNewUsers}/>
+
+
+            <UserTable users={users}/>
 
             {lodash.isEmpty(frequency2FilenameObj) ?
             "Loading...":
