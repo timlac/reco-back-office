@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Form, Input, Button, Radio, DatePicker} from 'antd';
 import {NEGATIVE_VALENCE, POSITIVE_VALENCE} from "../../config";
+import {generateHash} from "../../services/generateHash";
 
 const BasicForm = ({createUser}) => {
+
+    const [surveyId, setSurveyId] = useState('');
+
+
     const onFinish = (values) => {
+
+        values.surveyId = surveyId
+
         console.log('Form Values:', values);
         console.log(values["dob"])
 
@@ -14,11 +22,23 @@ const BasicForm = ({createUser}) => {
 
         console.log(values)
 
-        createUser(values)
+        // createUser(values)
     };
+
+    const generateSurveyId = async () => {
+
+        const hash = await generateHash()
+
+        if (hash) {
+            setSurveyId(hash)
+        }
+    }
+
 
     return (
         <Form
+            initialValues={{ surveyId: surveyId }} // Set the initial value for the surveyId field
+
             size={"small"}
             labelCol={{
                 span: 5,
@@ -35,9 +55,19 @@ const BasicForm = ({createUser}) => {
             onFinish={onFinish}
         >
             <Form.Item
-                label="Email Address"
+                label="Survey Id"
+            >
+                <Input name="surveyId" value={surveyId} readOnly></Input>
+
+                <Button type={"default"} onClick={generateSurveyId}>
+                    Generate Unique Survey Id
+                </Button>
+            </Form.Item>
+
+            <Form.Item
+                label="User Id"
                 name="email"
-                rules={[{required: true, message: 'Please input your email address!'}]}
+                rules={[{required: true, message: 'Please input user id'}]}
             >
                 <Input/>
             </Form.Item>
@@ -59,7 +89,7 @@ const BasicForm = ({createUser}) => {
                 name="dob"
                 rules={[{required: true, message: 'Please select date of birth!'}]}
             >
-                <DatePicker />
+                <DatePicker/>
             </Form.Item>
 
             <Form.Item

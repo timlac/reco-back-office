@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {emotionCategoriesApi} from "../../services/api";
 import {filename2MetaData} from "../../services/videoMetaDataHelper";
-import {Switch} from 'antd';
 import {POSITIVE_VALENCE, NEGATIVE_VALENCE} from "../../config"
 import {getUserSamples} from "./GetUserSamples";
 import BasicForm from "./BasicForm";
@@ -9,9 +8,9 @@ import BasicForm from "./BasicForm";
 
 
 
-const CreateUser = ( {frequency2FilenameObj, setFetchNewUsers} ) => {
+const CreateSurvey = ({frequency2FilenameObj, setFetchNewUsers} ) => {
 
-    const createUser = (values) => {
+    const createSurvey = (values) => {
 
         console.log("in handle submit")
 
@@ -35,7 +34,7 @@ const CreateUser = ( {frequency2FilenameObj, setFetchNewUsers} ) => {
 
         console.log([...samples.emotionAlternatives])
 
-        const user_items = []
+        const survey_items = []
 
         for (const filename of samples.shuffledFilenames) {
 
@@ -46,12 +45,15 @@ const CreateUser = ( {frequency2FilenameObj, setFetchNewUsers} ) => {
                 "video_id": metaData["video_id"],
                 "emotion_id": metaData["emotion_id"],
             }
-            user_items.push(item)
+            survey_items.push(item)
         }
 
         const body = {
+            // TODO: user_id should rather be survey_id or something.
+            // user should not be unique since we can have the same user for multiple surveys.
             "user_id": values.email,
-            "user_items": user_items,
+            "survey_id": values.surveyId,
+            "survey_items": survey_items,
             "emotion_alternatives": [...samples.emotionAlternatives],
             "valence": values.valence,
             "sex": values.sex,
@@ -69,9 +71,9 @@ const CreateUser = ( {frequency2FilenameObj, setFetchNewUsers} ) => {
     }
 
     return <div>
-        <BasicForm createUser={createUser} />
+        <BasicForm createUser={createSurvey} />
     </div>
 
 }
 
-export default CreateUser
+export default CreateSurvey

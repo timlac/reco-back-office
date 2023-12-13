@@ -1,12 +1,17 @@
 import {Table} from "antd";
 
-export const UserTable = ({users}) => {
+export const SurveyTable = ({users}) => {
 
     const columns = [
         {
-            title: 'User Id',
+            title: 'Survey Id',
             dataIndex: 'id',
             key: 'id',
+        },
+        {
+            title: 'User Id',
+            dataIndex: 'user_id',
+            key: 'user_id',
         },
         {
             title: 'Valence',

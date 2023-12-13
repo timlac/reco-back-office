@@ -1,16 +1,14 @@
 import React, {useEffect, useState} from "react";
 
-import CreateUser from "./CreateUser";
+import CreateSurvey from "./CreateSurvey";
 import MyHistogram from "../visualize/MyHistogram";
 
 import {emotionCategoriesApi} from "../../services/api";
-import { createFilename2FrequencyObj } from "../../services/CreateFilename2FrequencyObj";
+import { createFilename2FrequencyObj } from "../../services/createFilename2FrequencyObj";
 import {createFrequency2FilenameObj} from "../../services/createFrequency2FilenameObj";
 import {fetchVideoData} from "../../services/videoMetaDataHelper";
 
-import {getEmotionInSweFromId} from 'nexa-js-sentimotion-mapper';
-import BasicForm from "./BasicForm";
-import {UserTable} from "./UserTable";
+import {SurveyTable} from "./SurveyTable";
 
 const lodash = require('lodash');
 
@@ -75,10 +73,10 @@ export const UserCoordinator = () => {
 
     return (
         <div>
-            <CreateUser frequency2FilenameObj={frequency2FilenameObj} setFetchNewUsers={setFetchNewUsers}/>
+            <CreateSurvey frequency2FilenameObj={frequency2FilenameObj} setFetchNewUsers={setFetchNewUsers}/>
 
 
-            <UserTable users={users}/>
+            <SurveyTable users={users}/>
 
             {lodash.isEmpty(frequency2FilenameObj) ?
             "Loading...":

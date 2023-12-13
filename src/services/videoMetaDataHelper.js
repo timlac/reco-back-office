@@ -25,8 +25,13 @@ const mapFilenames2MetaData = (filenames) => {
 }
 
 const getEmotionIdFromFilename = (filename) => {
-    return filename2MetaData[filename].emotion_id
-}
+    try {
+        return filename2MetaData[filename].emotion_id;
+    } catch (error) {
+        // Handle the case when the filename doesn't exist in filename2MetaData
+        console.error(`Error retrieving emotion_id for filename "${filename}":`, error);
+    }
+};
 
 const mapFilenamesToEmotionIds = (filenames) => {
     return filenames.map(filename => filename2MetaData[filename].emotion_id);

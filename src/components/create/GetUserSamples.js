@@ -49,7 +49,7 @@ class Samples {
 }
 
 
-export function getUserSamples(frequency2Filename, numberOfEmotionAlternatives=11, totalSamplesNeeded=33) {
+export function getUserSamples(frequency2Filename, numberOfEmotionAlternatives=11, totalSamplesNeeded=132) {
 
     console.log("numberOfEmotionAlternatives", numberOfEmotionAlternatives)
 

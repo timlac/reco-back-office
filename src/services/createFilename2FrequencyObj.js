@@ -11,9 +11,9 @@ export function createFilename2FrequencyObj(users) {
     // Iterate through the users array
     for (const user of users) {
         // Check if the 'items' property is an array
-        if (Array.isArray(user.user_items)) {
+        if (Array.isArray(user.survey_items)) {
             // Iterate through the 'items' array
-            for (const itemData of user.user_items) {
+            for (const itemData of user.survey_items) {
                 // Extract the 'filename' property from each itemData
                 const filename = itemData.filename;
                 try {
@@ -50,6 +50,7 @@ function updateFilename2Frequencies(filename, filename2FrequencyObjects) {
 }
 
 function getValence(filename) {
+
     const emotionId = getEmotionIdFromFilename(filename);
     return getValenceFromEmotionId(emotionId);
 }

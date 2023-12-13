@@ -1,4 +1,5 @@
-/* FormStyles.css */
-.email-input {
-    width: 300px; /* Adjust the width as needed */
+.input-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
