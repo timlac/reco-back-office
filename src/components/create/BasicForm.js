@@ -22,7 +22,7 @@ const BasicForm = ({createUser}) => {
 
         console.log(values)
 
-        // createUser(values)
+        createUser(values)
     };
 
     const generateSurveyId = async () => {

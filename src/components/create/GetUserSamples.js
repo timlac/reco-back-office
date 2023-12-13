@@ -6,16 +6,6 @@ import {getSampleSet} from "./GetSampleSet";
 
 const lodash = require('lodash');
 
-
-function getUniqueEmotionIds(frequency2Filename) {
-    let uniqueEmotionIds = new Set()
-    for (const filenames of Object.values(frequency2Filename)) {
-        console.log(mapFilenamesToEmotionIds(filenames))
-        uniqueEmotionIds = new Set([...uniqueEmotionIds, ...mapFilenamesToEmotionIds(filenames)])
-    }
-    return uniqueEmotionIds
-}
-
 function filterFrequency2Filename(frequency2Filename, emotionIdsToFilterBy) {
     console.log("emotionIdsToFilterBy type: ", emotionIdsToFilterBy)
 
@@ -48,16 +38,17 @@ class Samples {
     }
 }
 
-
+// TODO: See If I can remove filenames continuously instead of filtering again and and again
+// TODO: This might also prevent bugs since the frequency2Filename will be more updated
+// otherwise we might try to sample from min count when all in min count are duplicates...
 export function getUserSamples(frequency2Filename, numberOfEmotionAlternatives=11, totalSamplesNeeded=132) {
 
     console.log("numberOfEmotionAlternatives", numberOfEmotionAlternatives)
 
     const samples = new Samples()
 
-    let numberOfUniqueEmotionIds = getUniqueEmotionIds(frequency2Filename).size
-    if (numberOfEmotionAlternatives > numberOfUniqueEmotionIds) {
-        console.log("something went wrong, there are not that many unique emotion among the filenames")
+    if (numberOfEmotionAlternatives > 44) {
+        console.log("something went wrong, there are not that many unique emotions")
         // throw an error here, maybe raise it somewhere?
     }
 
@@ -72,7 +63,7 @@ export function getUserSamples(frequency2Filename, numberOfEmotionAlternatives=1
 
 
         let sampledEmotionIds = new Set();
-        while (newSamples <= numberOfEmotionAlternatives){
+        while (newSamples.length < numberOfEmotionAlternatives){
             minCount += 1
             // A list of all emotions in newSamples
             sampledEmotionIds = new Set([...sampledEmotionIds, ...mapFilenamesToEmotionIds(newSamples)])
@@ -83,7 +74,9 @@ export function getUserSamples(frequency2Filename, numberOfEmotionAlternatives=1
                 (
                     frequency2Filename[minCount],
                     samples.filenames,
-                    sampledEmotionIds)
+                    sampledEmotionIds
+                ),
+                numberOfEmotionAlternatives - sampledEmotionIds.size
                 );
 
             console.log("filler samples", fillerSamples)

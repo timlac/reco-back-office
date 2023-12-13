@@ -49,6 +49,8 @@ export const UserCoordinator = () => {
 
             console.log("frequency2FilenameObj")
             console.log(frequency2FilenameObj)
+            console.log(frequency2FilenameObj.positiveEmotions)
+            console.log(typeof frequency2FilenameObj.positiveEmotions)
 
         }
     }, [didFetchMetadata, users, didFetchUsers])

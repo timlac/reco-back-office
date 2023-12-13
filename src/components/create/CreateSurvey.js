@@ -18,7 +18,7 @@ const CreateSurvey = ({frequency2FilenameObj, setFetchNewUsers} ) => {
 
         switch (values.valence){
             case POSITIVE_VALENCE:
-                // pass copy to function
+                // {...} is to pass COPY to function
                 samples = getUserSamples({ ...frequency2FilenameObj.positiveEmotions })
                 break;
             case NEGATIVE_VALENCE:
