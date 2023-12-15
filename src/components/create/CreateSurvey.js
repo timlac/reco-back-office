@@ -2,8 +2,8 @@ import React from 'react';
 import {emotionCategoriesApi} from "../../services/api";
 import {filename2MetaData} from "../../services/videoMetaDataHelper";
 import {POSITIVE_VALENCE, NEGATIVE_VALENCE} from "../../config"
-import {getUserSamples} from "./GetUserSamples";
 import BasicForm from "./BasicForm";
+import {generateSamples} from "../../services/sampling/generateSamples";
 
 
 
@@ -19,11 +19,11 @@ const CreateSurvey = ({frequency2FilenameObj, setFetchNewUsers} ) => {
         switch (values.valence){
             case POSITIVE_VALENCE:
                 // {...} is to pass COPY to function
-                samples = getUserSamples({ ...frequency2FilenameObj.positiveEmotions })
+                samples = generateSamples({ ...frequency2FilenameObj.positiveEmotions })
                 break;
             case NEGATIVE_VALENCE:
                 // pass copy to function
-                samples = getUserSamples( { ...frequency2FilenameObj.negativeEmotions })
+                samples = generateSamples( { ...frequency2FilenameObj.negativeEmotions })
                 break;
             default:
                 console.log("no valence selected in create user")
@@ -49,8 +49,6 @@ const CreateSurvey = ({frequency2FilenameObj, setFetchNewUsers} ) => {
         }
 
         const body = {
-            // TODO: user_id should rather be survey_id or something.
-            // user should not be unique since we can have the same user for multiple surveys.
             "user_id": values.email,
             "survey_id": values.surveyId,
             "survey_items": survey_items,
