@@ -1,6 +1,6 @@
 import {videoMetadatApi} from "./api";
 
-let filename2MetaData = {}; // This will hold your video data once fetched
+let filename2MetaData = {}; // This will hold video data once fetched
 
 const fetchVideoData = async () => {
     try {
