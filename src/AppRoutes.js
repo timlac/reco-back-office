@@ -2,10 +2,13 @@ import {Route, Routes, Navigate} from 'react-router-dom';
 import useAuth from './contexts/AuthContext';
 import LoginForm from './components/login/LoginForm';
 
-import {UserCoordinator} from "./components/create/UserCoordinator";
 import SurveyDetails from "./components/survey/SurveyDetails";
 import {AppLayout} from "./components/layout/AppLayout";
 import {UserDataProvider} from "./contexts/UserDataProvider";
+import CreateSurvey from "./components/create/CreateSurvey";
+import {SurveyTable} from "./components/create/SurveyTable";
+import ItemHistogram from "./components/visualize/ItemHistogram";
+import React from "react";
 
 
 const AppRoutes = () => {
@@ -25,26 +28,7 @@ const AppRoutes = () => {
 const ProtectedRoutes = () => {
     return (
         <UserDataProvider>
-            <Routes>
-                <Route
-                    path="/"
-                    element={
-                        <div>
-                            <AppLayout/>
-                        </div>
-                    }
-                />
-                {/* Protected Survey Route */}
-                <Route
-                    path="/survey/:surveyId"
-                    element={
-                        <div>
-                            <SurveyDetails/>
-                        </div>
-                    }
-                />
-                {/* ... other protected routes ... */}
-            </Routes>
+            <AppLayout/>
         </UserDataProvider>
     );
 };

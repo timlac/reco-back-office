@@ -9,6 +9,8 @@ const ItemHistogram = () => {
 
     const { frequency2FilenameObj, isLoading } = useUserData()
 
+    console.log(frequency2FilenameObj)
+
     const [value, setValue] = useState("all");
     const [chartData, setChartData] = useState({})
 
@@ -20,13 +22,13 @@ const ItemHistogram = () => {
     useEffect(() => {
         switch (value){
             case "all":
-                setChartData( getChartData(frequency2FilenameObj.allEmotions) )
+                setChartData( getChartData(frequency2FilenameObj?.allEmotions || {}) )
                 break;
             case POSITIVE_VALENCE:
-                setChartData( getChartData(frequency2FilenameObj.positiveEmotions) )
+                setChartData( getChartData(frequency2FilenameObj?.positiveEmotions  || {}) )
                 break;
             case NEGATIVE_VALENCE:
-                setChartData(  getChartData(frequency2FilenameObj.negativeEmotions) )
+                setChartData(  getChartData(frequency2FilenameObj?.negativeEmotions  || {}) )
                 break;
             default:
                 console.log("no data selected")

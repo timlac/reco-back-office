@@ -6,6 +6,9 @@ export const SurveyTable = () => {
 
     const { userData } = useUserData()
 
+    console.log("in survey table")
+    console.log(userData)
+
     const columns = [
         {
             title: 'Survey Id',

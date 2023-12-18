@@ -10,7 +10,7 @@ const UserDataContext = createContext(null);
 export const useUserData = () => useContext(UserDataContext);
 
 export const UserDataProvider = ({children}) => {
-    const [surveys, setSurveys] = useState([]);
+    const [userData, setUserData] = useState([]);
     const [frequency2FilenameObj, setFrequency2FilenameObj] = useState({});
     const [isLoading, setIsLoading] = useState(true);
 
@@ -27,11 +27,13 @@ export const UserDataProvider = ({children}) => {
     const fetchUsers = async () => {
         try {
             const response = await emotionCategoriesApi.get("users");
+            console.log(response)
+
             const surveyData = response.data.map(user => ({
                 ...user,
                 created_at: new Date(user.created_at),
             }));
-            setSurveys(surveyData);
+            setUserData(surveyData);
 
             const filename2FrequencyObj = createFilename2FrequencyObj(surveyData);
             const newFrequency2FilenameObj = createFrequency2FilenameObj(filename2FrequencyObj);
@@ -43,7 +45,7 @@ export const UserDataProvider = ({children}) => {
     };
 
     return (
-        <UserDataContext.Provider value={{frequency2FilenameObj, surveys, isLoading, fetchUsers}}>
+        <UserDataContext.Provider value={{frequency2FilenameObj, userData, isLoading, fetchUsers}}>
             {children}
         </UserDataContext.Provider>
     );
