@@ -1,4 +1,5 @@
 import {Table} from "antd";
+import {Link} from "react-router-dom";
 
 export const SurveyTable = ({users}) => {
 
@@ -7,6 +8,7 @@ export const SurveyTable = ({users}) => {
             title: 'Survey Id',
             dataIndex: 'id',
             key: 'id',
+            render: (text) => <Link to={`/protected/survey/${text}`}>{text}</Link>
         },
         {
             title: 'User Id',
@@ -32,6 +34,12 @@ export const SurveyTable = ({users}) => {
             title: 'Created At',
             dataIndex: 'created_at',
             key: 'created_at',
+            render: (date) => {
+                return date.toLocaleString()
+            },
+            sorter: (a, b) => {
+                return a.created_at - b.created_at
+            }
         },
     ];
     return (

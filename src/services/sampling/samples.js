@@ -1,5 +1,5 @@
 import {shuffle} from "lodash";
-import {mapFilenamesToEmotionIds} from "../videoMetaDataHelper";
+import {getEmotionIdFromFilename, mapFilenamesToEmotionIds} from "../videoMetaDataHelper";
 
 export class Samples {
 
@@ -23,5 +23,14 @@ export class Samples {
 
         console.log("set emotion alternatives to: ", this.emotionAlternatives)
 
+    }
+
+    assertFilenamesHaveValidEmotionIds() {
+        for (const filename of this.filenames) {
+            const emotionId = getEmotionIdFromFilename(filename);
+            if (!this.emotionAlternatives.has(emotionId)) {
+                throw new Error(`Invalid emotionId for filename "${filename}"`);
+            }
+        }
     }
 }

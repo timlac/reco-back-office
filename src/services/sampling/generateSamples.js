@@ -1,5 +1,29 @@
 import {Samples} from "./samples";
 import {FrequencySampler} from "./frequencySampler";
+import {mapFilenamesToEmotionIds} from "../videoMetaDataHelper";
+
+// Function to assert the length of sampleBatch
+function assertSampleBatchLength(sampleBatch, expectedLength) {
+    if (sampleBatch.length !== expectedLength) {
+        throw new Error(`Sample batch length should be ${expectedLength}, but it is ${sampleBatch.length}.`);
+    }
+}
+
+// Function to assert that filenames in sampleBatch are unique
+function assertUniqueFilenames(sampleBatch) {
+    const filenameSet = new Set(sampleBatch);
+    if (filenameSet.size !== sampleBatch.length) {
+        throw new Error("Filenames in sampleBatch are not unique.");
+    }
+}
+
+// Function to assert that emotionIds in sampleBatch are unique
+function assertUniqueEmotionIds(sampleBatch) {
+    const emotionIdSet = new Set(mapFilenamesToEmotionIds(sampleBatch));
+    if (emotionIdSet.size !== sampleBatch.length) {
+        throw new Error("EmotionIds in sampleBatch are not unique.");
+    }
+}
 
 export function generateSamples(frequency2Filename,
                                 numberOfEmotionAlternatives = 11,
@@ -15,6 +39,10 @@ export function generateSamples(frequency2Filename,
     while (samples.filenames.size < totalSamplesNeeded) {
         const sampleBatch = sampler.getSampleBatch(numberOfEmotionAlternatives)
 
+        assertSampleBatchLength(sampleBatch, numberOfEmotionAlternatives)
+        assertUniqueFilenames(sampleBatch)
+        assertUniqueEmotionIds(sampleBatch)
+
         console.log("sampleBatch: ", sampleBatch)
         console.log("sampleBatch length: ", sampleBatch.length)
 
@@ -27,6 +55,11 @@ export function generateSamples(frequency2Filename,
 
         samples.addSamples(sampleBatch)
     }
+
+    if (samples.filenames.size !== totalSamplesNeeded){
+        throw new Error(`Total samples should be ${totalSamplesNeeded} but it is ${samples.filenames.size}`)
+    }
+    samples.assertFilenamesHaveValidEmotionIds()
 
     return samples;
 }

@@ -27,6 +27,8 @@ const BasicForm = ({createUser}) => {
 
     const generateSurveyId = async () => {
 
+        setSurveyId("")
+
         const hash = await generateHash()
 
         if (hash) {

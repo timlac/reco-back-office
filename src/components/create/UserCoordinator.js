@@ -14,6 +14,7 @@ const lodash = require('lodash');
 
 
 export const UserCoordinator = () => {
+    // TODO: This rerenders waaaaay to often. Make it only it new data when users are actually created...
 
     const [users, setUsers] = useState([])
 
@@ -59,7 +60,15 @@ export const UserCoordinator = () => {
         console.log("invoking fetch users")
         const response = await emotionCategoriesApi.get("users")
         console.log(response.data)
-        setUsers(response.data)
+
+        const userData = response.data.map(user => ({
+            ...user,
+            created_at: new Date(user.created_at), // Convert the createdAt date
+        }));
+
+        console.log("userData: ", userData)
+
+        setUsers(userData)
         setDidFetchUsers(true)
         setFetchNewUsers(false)
         console.log(users)

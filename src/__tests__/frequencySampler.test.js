@@ -7,7 +7,7 @@ describe('FrequencySampler', () => {
                 // Mock data
             };
             const sampler = new FrequencySampler(frequency2Filename);
-            const numberOfEmotionAlternatives = 5; // Example number
+            const numberOfEmotionAlternatives = 11; // Example number
             const sampleBatch = sampler.getSampleBatch(numberOfEmotionAlternatives);
 
             expect(sampleBatch.length).toBe(numberOfEmotionAlternatives);
