@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, {createContext, useContext, useState, useEffect} from 'react';
 import {fetchVideoData} from "../services/videoMetaDataHelper";
 import {emotionCategoriesApi} from "../services/api";
 import {createFilename2FrequencyObj} from "../services/createFilename2FrequencyObj";
@@ -9,7 +9,7 @@ const UserDataContext = createContext(null);
 
 export const useUserData = () => useContext(UserDataContext);
 
-export const UserDataProvider = ({ children }) => {
+export const UserDataProvider = ({children}) => {
     const [surveys, setSurveys] = useState([]);
     const [frequency2FilenameObj, setFrequency2FilenameObj] = useState({});
     const [isLoading, setIsLoading] = useState(true);
@@ -43,7 +43,7 @@ export const UserDataProvider = ({ children }) => {
     };
 
     return (
-        <UserDataContext.Provider value={{ frequency2FilenameObj, surveys, isLoading, setSurveys }}>
+        <UserDataContext.Provider value={{frequency2FilenameObj, surveys, isLoading, fetchUsers}}>
             {children}
         </UserDataContext.Provider>
     );

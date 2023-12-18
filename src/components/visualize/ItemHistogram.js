@@ -2,10 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
 import {Radio, Space} from "antd";
 import {NEGATIVE_VALENCE, POSITIVE_VALENCE} from "../../config";
+import {useUserData} from "../../contexts/UserDataProvider";
 
 
-const MyHistogram = ({frequency2FilenameObj}) => {
+const ItemHistogram = () => {
 
+    const { frequency2FilenameObj, isLoading } = useUserData()
 
     const [value, setValue] = useState("all");
     const [chartData, setChartData] = useState({})
@@ -43,26 +45,33 @@ const MyHistogram = ({frequency2FilenameObj}) => {
 
     return (
         <div>
-            <Radio.Group onChange={onChange} value={value}>
-                <Space direction="vertical">
-                    <Radio value={"all"}>All</Radio>
-                    <Radio value={POSITIVE_VALENCE}>{POSITIVE_VALENCE}</Radio>
-                    <Radio value={NEGATIVE_VALENCE}>{NEGATIVE_VALENCE}</Radio>
-                </Space>
-            </Radio.Group>
+        {isLoading ?
+                <div>Loading...</div>
+                :
+
+                <div>
+                    <Radio.Group onChange={onChange} value={value}>
+                        <Space direction="vertical">
+                            <Radio value={"all"}>All</Radio>
+                            <Radio value={POSITIVE_VALENCE}>{POSITIVE_VALENCE}</Radio>
+                            <Radio value={NEGATIVE_VALENCE}>{NEGATIVE_VALENCE}</Radio>
+                        </Space>
+                    </Radio.Group>
 
 
-            <BarChart width={800} height={400} data={chartData}>
-                <CartesianGrid strokeDasharray="3 3"/>
-                <XAxis dataKey="numOccurrences"
-                       label={{value: 'Number of Occurrences', position: 'insideBottomRight', dy: 10}}/>
-                <YAxis label={{value: 'Count of Filenames', angle: -90, position: 'insideLeft'}}/>
-                <Tooltip/>
-                {/*<Legend/>*/}
-                <Bar dataKey="count" fill="#8884d8"/>
-            </BarChart>
+                    <BarChart width={800} height={400} data={chartData}>
+                        <CartesianGrid strokeDasharray="3 3"/>
+                        <XAxis dataKey="numOccurrences"
+                               label={{value: 'Number of Occurrences', position: 'insideBottomRight', dy: 10}}/>
+                        <YAxis label={{value: 'Count of Filenames', angle: -90, position: 'insideLeft'}}/>
+                        <Tooltip/>
+                        {/*<Legend/>*/}
+                        <Bar dataKey="count" fill="#8884d8"/>
+                    </BarChart>
+                </div>
+        }
         </div>
     );
 };
 
-export default MyHistogram;
+export default ItemHistogram;

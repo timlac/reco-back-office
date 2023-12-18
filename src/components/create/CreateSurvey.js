@@ -4,11 +4,12 @@ import {filename2MetaData} from "../../services/videoMetaDataHelper";
 import {POSITIVE_VALENCE, NEGATIVE_VALENCE} from "../../config"
 import BasicForm from "./BasicForm";
 import {generateSamples} from "../../services/sampling/generateSamples";
+import {useUserData} from "../../contexts/UserDataProvider";
 
 
+const CreateSurvey = () => {
 
-
-const CreateSurvey = ({frequency2FilenameObj, setFetchNewUsers} ) => {
+    const { fetchUsers, frequency2FilenameObj } = useUserData()
 
     const createSurvey = (values) => {
 
@@ -64,7 +65,7 @@ const CreateSurvey = ({frequency2FilenameObj, setFetchNewUsers} ) => {
         // Need to make sure fetchUsers is invoked after the post request
         emotionCategoriesApi.post("users", body)
             .then(console.log)
-            .then(setFetchNewUsers(true))
+            .then(fetchUsers)
             .catch(error => console.log(error))
     }
 

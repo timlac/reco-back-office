@@ -1,7 +1,10 @@
 import {Table} from "antd";
 import {Link} from "react-router-dom";
+import {useUserData} from "../../contexts/UserDataProvider";
 
-export const SurveyTable = ({users}) => {
+export const SurveyTable = () => {
+
+    const { userData } = useUserData()
 
     const columns = [
         {
@@ -43,6 +46,6 @@ export const SurveyTable = ({users}) => {
         },
     ];
     return (
-        <Table dataSource={users} rowKey="id" columns={columns}/>
+        <Table dataSource={userData} rowKey="id" columns={columns}/>
     )
 }

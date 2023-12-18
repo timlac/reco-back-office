@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import CreateSurvey from "./CreateSurvey";
-import MyHistogram from "../visualize/MyHistogram";
+import ItemHistogram from "../visualize/ItemHistogram";
 
 import {emotionCategoriesApi} from "../../services/api";
 import { createFilename2FrequencyObj } from "../../services/createFilename2FrequencyObj";
@@ -91,7 +91,7 @@ export const UserCoordinator = () => {
 
             {lodash.isEmpty(frequency2FilenameObj) ?
             "Loading...":
-            <MyHistogram frequency2FilenameObj={frequency2FilenameObj} />
+            <ItemHistogram frequency2FilenameObj={frequency2FilenameObj} />
                 }
         </div>
     )
