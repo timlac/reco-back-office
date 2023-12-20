@@ -1,13 +1,13 @@
 import {Table} from "antd";
 import {Link} from "react-router-dom";
-import {useUserData} from "../../contexts/UserDataProvider";
+import {useSurveyData} from "../../contexts/SurveyDataProvider";
 
 export const SurveyTable = () => {
 
-    const { userData } = useUserData()
+    const { surveyData } = useSurveyData()
 
     console.log("in survey table")
-    console.log(userData)
+    console.log(surveyData)
 
     const columns = [
         {
@@ -49,6 +49,6 @@ export const SurveyTable = () => {
         },
     ];
     return (
-        <Table dataSource={userData} rowKey="id" columns={columns}/>
+        <Table dataSource={surveyData} rowKey="id" columns={columns}/>
     )
 }

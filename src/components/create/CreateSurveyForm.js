@@ -3,7 +3,7 @@ import {Form, Input, Button, Radio, DatePicker} from 'antd';
 import {NEGATIVE_VALENCE, POSITIVE_VALENCE} from "../../config";
 import {generateHash} from "../../services/generateHash";
 
-const BasicForm = ({createUser}) => {
+const CreateSurveyForm = ({createSurvey}) => {
 
     const [surveyId, setSurveyId] = useState('');
 
@@ -12,17 +12,10 @@ const BasicForm = ({createUser}) => {
 
         values.surveyId = surveyId
 
-        console.log('Form Values:', values);
-        console.log(values["dob"])
-
         const dateString = values["dob"] ? values["dob"].format('YYYY-MM-DD') : null;
-        console.log('Date of Birth:', dateString);
-
         values["dateString"] = dateString
 
-        console.log(values)
-
-        createUser(values)
+        createSurvey(values)
     };
 
     const generateSurveyId = async () => {
@@ -119,4 +112,4 @@ const BasicForm = ({createUser}) => {
     );
 };
 
-export default BasicForm;
+export default CreateSurveyForm;

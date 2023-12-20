@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
 import {Radio, Space} from "antd";
 import {NEGATIVE_VALENCE, POSITIVE_VALENCE} from "../../config";
-import {useUserData} from "../../contexts/UserDataProvider";
+import {useSurveyData} from "../../contexts/SurveyDataProvider";
 
 
 const ItemHistogram = () => {
 
-    const { frequency2FilenameObj, isLoading } = useUserData()
+    const { frequency2FilenameObj, isLoading } = useSurveyData()
 
     console.log(frequency2FilenameObj)
 

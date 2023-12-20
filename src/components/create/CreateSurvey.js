@@ -2,14 +2,14 @@ import React from 'react';
 import {emotionCategoriesApi} from "../../services/api";
 import {filename2MetaData} from "../../services/videoMetaDataHelper";
 import {POSITIVE_VALENCE, NEGATIVE_VALENCE} from "../../config"
-import BasicForm from "./BasicForm";
+import CreateSurveyForm from "./CreateSurveyForm";
 import {generateSamples} from "../../services/sampling/generateSamples";
-import {useUserData} from "../../contexts/UserDataProvider";
+import {useSurveyData} from "../../contexts/SurveyDataProvider";
 
 
 const CreateSurvey = () => {
 
-    const { fetchUsers, frequency2FilenameObj } = useUserData()
+    const { fetchSurveys, frequency2FilenameObj } = useSurveyData()
 
     const createSurvey = (values) => {
 
@@ -63,14 +63,14 @@ const CreateSurvey = () => {
         console.log(body)
 
         // Need to make sure fetchUsers is invoked after the post request
-        emotionCategoriesApi.post("users", body)
+        emotionCategoriesApi.post("surveys", body)
             .then(console.log)
-            .then(fetchUsers)
+            .then(fetchSurveys)
             .catch(error => console.log(error))
     }
 
     return <div>
-        <BasicForm createUser={createSurvey} />
+        <CreateSurveyForm createSurvey={createSurvey} />
     </div>
 
 }

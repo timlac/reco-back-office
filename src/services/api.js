@@ -15,7 +15,11 @@ async function apiAuthInterceptor (config){
 
 // Create an Axios instance
 const emotionCategoriesApi = axios.create({
-    baseURL: 'https://xxpy3ht9ke.execute-api.eu-west-1.amazonaws.com/prod/'
+    baseURL: 'https://wzaajjpfih.execute-api.eu-west-1.amazonaws.com/prod'
+});
+
+const emotionScalesApi = axios.create({
+    baseURL: 'https://7625nbpg3m.execute-api.eu-west-1.amazonaws.com/prod/'
 });
 
 const videoMetadatApi = axios.create({
@@ -23,7 +27,8 @@ const videoMetadatApi = axios.create({
 })
 
 emotionCategoriesApi.interceptors.request.use(apiAuthInterceptor)
+emotionScalesApi.interceptors.request.use(apiAuthInterceptor)
 videoMetadatApi.interceptors.request.use(apiAuthInterceptor)
 
 
-export {emotionCategoriesApi, videoMetadatApi}
+export {emotionCategoriesApi, emotionScalesApi, videoMetadatApi}

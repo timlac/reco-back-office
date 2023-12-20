@@ -4,37 +4,77 @@ import {
 
 } from '@ant-design/icons';
 import {Layout, Menu, theme} from 'antd';
-import {Link, Outlet, Route, Routes} from "react-router-dom";
+import {Link, Route, Routes} from "react-router-dom";
 import CreateSurvey from "../create/CreateSurvey";
 import {SurveyTable} from "../create/SurveyTable";
 import SurveyDetails from "../survey/SurveyDetails";
 import ItemHistogram from "../visualize/ItemHistogram";
+import {useSurveyData} from "../../contexts/SurveyDataProvider";
 
 const {Header, Content, Footer, Sider} = Layout;
 
-function getItem(label, key, icon, children, path) {
+
+const createMenuItem = (title, key, path, apiType) => getItem(title, key, null, null, path, apiType);
+
+const createSubMenu = (title, key, icon, items) => getItem(title, key, icon, items);
+
+// Menu items for 'Categories'
+const categoriesItems = [
+    createMenuItem('Create', '1', '/protected/create', 'categories'),
+    createMenuItem('Survey Overview', '2', '/protected/overview', 'categories'),
+    createMenuItem('Items', '3', 'Items', 'categories'),
+];
+
+// Menu items for 'Scales'
+const scalesItems = [
+    createMenuItem('Create', '4', '/protected/create', 'scales'),
+    createMenuItem('Survey Overview', '5', '/protected/overview', 'scales'),
+    createMenuItem('Items', '6', 'Items', 'scales'),
+];
+
+// Final menu structure
+const items = [
+    createSubMenu('Categories', 'sub1', <CopyOutlined />, categoriesItems),
+    createSubMenu('Scales', 'sub2', <DragOutlined />, scalesItems),
+];
+
+
+
+function getItem(label, key, icon, children, path, apiType) {
     return {
         key,
         icon,
         children,
-        label: path ? <Link to={path}>{label}</Link> : label,
+        label: path ? <Link to={path}
+            onClick={() => handleMenuClick(apiType)}
+
+        >{label}</Link> : label,
     };
 }
 
 const items = [
     getItem('Categories', 'sub1', <CopyOutlined/>, [
-        getItem('Create', '1', null, null, "/protected/create"),
-        getItem('Survey Overview', '2', null, null, "/protected/overview"),
-        getItem('Items', '3', null, null, "items"),
+        getItem('Create', '1', null, null, "/protected/create", 'categories'),
+        getItem('Survey Overview', '2', null, null, "/protected/overview", 'categories'),
+        getItem('Items', '3', null, null, "Items", 'categories'),
     ]),
     getItem('Scales', 'sub2', <DragOutlined/>, [
-        getItem('Create', '4'),
-        getItem('Survey Overview', '5'),
-        getItem("Other", '6')
+        getItem('Create', '4', null, null, "/protected/create", "scales"),
+        getItem('Survey Overview', '5', null, null, "/protected/overview", "scales"),
+        getItem("Items", '6', null, null, "Items", "scales")
     ]),
 ];
 export const AppLayout = () => {
     const [collapsed, setCollapsed] = useState(false);
+    const { switchApiKeyword } = useSurveyData();
+
+    // Function to handle API switch based on menu item
+    const handleMenuClick = (apiType) => {
+        if (apiType) {
+            switchApiKeyword(apiType);
+        }
+    };
+
     const {
         token: {colorBgContainer},
     } = theme.useToken();
@@ -51,17 +91,13 @@ export const AppLayout = () => {
                       mode="inline"
                       items={items}
                 >
-                    <Menu.Item key="Test">
-                        <Link to={"/protected/create"}>Test</Link>
-
-                    </Menu.Item>
                 </Menu>
             </Sider>
             <Layout>
                 <Header style={{padding: 0, background: colorBgContainer,}}
                 />
                 <Content style={{margin: '0 16px',}}>
-                                                    <Routes>
+                    <Routes>
                         <Route path="/" element={<SurveyTable/>}/>
                         <Route path="/survey/:surveyId" element={<SurveyDetails/>}/>
                         <Route path="/create" element={<CreateSurvey/>}/>
