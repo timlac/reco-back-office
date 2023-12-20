@@ -14,66 +14,49 @@ import {useSurveyData} from "../../contexts/SurveyDataProvider";
 const {Header, Content, Footer, Sider} = Layout;
 
 
-const createMenuItem = (title, key, path, apiType) => getItem(title, key, null, null, path, apiType);
-
-const createSubMenu = (title, key, icon, items) => getItem(title, key, icon, items);
-
-// Menu items for 'Categories'
-const categoriesItems = [
-    createMenuItem('Create', '1', '/protected/create', 'categories'),
-    createMenuItem('Survey Overview', '2', '/protected/overview', 'categories'),
-    createMenuItem('Items', '3', 'Items', 'categories'),
-];
-
-// Menu items for 'Scales'
-const scalesItems = [
-    createMenuItem('Create', '4', '/protected/create', 'scales'),
-    createMenuItem('Survey Overview', '5', '/protected/overview', 'scales'),
-    createMenuItem('Items', '6', 'Items', 'scales'),
-];
-
-// Final menu structure
-const items = [
-    createSubMenu('Categories', 'sub1', <CopyOutlined />, categoriesItems),
-    createSubMenu('Scales', 'sub2', <DragOutlined />, scalesItems),
-];
-
-
-
-function getItem(label, key, icon, children, path, apiType) {
-    return {
-        key,
-        icon,
-        children,
-        label: path ? <Link to={path}
-            onClick={() => handleMenuClick(apiType)}
-
-        >{label}</Link> : label,
-    };
-}
-
-const items = [
-    getItem('Categories', 'sub1', <CopyOutlined/>, [
-        getItem('Create', '1', null, null, "/protected/create", 'categories'),
-        getItem('Survey Overview', '2', null, null, "/protected/overview", 'categories'),
-        getItem('Items', '3', null, null, "Items", 'categories'),
-    ]),
-    getItem('Scales', 'sub2', <DragOutlined/>, [
-        getItem('Create', '4', null, null, "/protected/create", "scales"),
-        getItem('Survey Overview', '5', null, null, "/protected/overview", "scales"),
-        getItem("Items", '6', null, null, "Items", "scales")
-    ]),
-];
 export const AppLayout = () => {
     const [collapsed, setCollapsed] = useState(false);
-    const { switchApiKeyword } = useSurveyData();
+    const {switchApiType} = useSurveyData();
 
     // Function to handle API switch based on menu item
-    const handleMenuClick = (apiType) => {
+    const handleSwitchApi = (apiType) => {
         if (apiType) {
-            switchApiKeyword(apiType);
+            switchApiType(apiType);
         }
     };
+
+    function getItem(label, key, icon, children, path, apiType) {
+        return {
+            key,
+            icon,
+            children,
+            label: path ? <Link to={path}
+                                onClick={() => handleSwitchApi(apiType)}
+
+            >{label}</Link> : label,
+        };
+    }
+
+    const createMenuItem = (title, key, path, apiType) =>
+        getItem(title, key, null, null, path, apiType);
+
+    const createMenuItems = (apiType) => [
+        createMenuItem('Create', `${apiType}-create`, '/protected/create', apiType),
+        createMenuItem('Survey Overview', `${apiType}-overview`, '/protected/overview', apiType),
+        createMenuItem('Items', `${apiType}-items`, 'Items', apiType),
+    ];
+
+    const createSubMenu = (title, key, icon, items) => getItem(title, key, icon, items);
+
+// Now generate menu items for each category using the function
+    const categoriesItems = createMenuItems('categories');
+    const scalesItems = createMenuItems('scales');
+
+// Final menu structure
+    const items = [
+        createSubMenu('Categories', 'sub1', <CopyOutlined/>, categoriesItems),
+        createSubMenu('Scales', 'sub2', <DragOutlined/>, scalesItems),
+    ];
 
     const {
         token: {colorBgContainer},

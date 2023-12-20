@@ -49,6 +49,9 @@ export const SurveyDataProvider = ({children}) => {
 
     const switchApiType = (newType) => {
         if (apiType !== newType) {
+            setSurveyData([])
+            setFrequency2FilenameObj({})
+            setIsLoading(true)
             setApiType(newType);
         }
     };

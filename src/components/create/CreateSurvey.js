@@ -26,8 +26,11 @@ const CreateSurvey = () => {
                 // pass copy to function
                 samples = generateSamples( { ...frequency2FilenameObj.negativeEmotions })
                 break;
+            case "all":
+                samples = generateSamples({ ...frequency2FilenameObj.allEmotions })
+                break;
             default:
-                console.log("no valence selected in create user")
+                console.log("no valid option for valence selected in create user")
         }
 
         console.log("samples:")

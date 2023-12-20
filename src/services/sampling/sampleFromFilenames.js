@@ -30,6 +30,8 @@ export function sampleFromFilenames(filenames, maxSamples, excludeEmotions = new
     // Get unique uniqueEmotions (emotion_id)
     // Potentially this need to be turned into a list that is then shuffled to ensure uniform distribution
     // TODO: Investigate the order of emotions in uniqueEmotions, what order does Set() natively create
+
+    // Maybe just make a list out of it, and shuffle
     let uniqueEmotions = new Set ( mapFilenamesToEmotionIds(filenames) )
 
     if (excludeEmotions.size > 0) {
@@ -43,6 +45,8 @@ export function sampleFromFilenames(filenames, maxSamples, excludeEmotions = new
 
     // Initialize an empty array to store the final set of videos
     const ret = [];
+
+    uniqueEmotions = lodash.shuffle([...uniqueEmotions])
 
     // sample one video per emotion
     uniqueEmotions.forEach((emotion) => {
