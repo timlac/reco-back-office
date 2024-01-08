@@ -27,6 +27,7 @@ export const SurveyDataProvider = ({children}) => {
 
     const fetchSurveys = async () => {
         try {
+            setIsLoading(true)
             const api = apiMap[apiType]
 
             const response = await api.get("surveys");
@@ -64,7 +65,10 @@ export const SurveyDataProvider = ({children}) => {
     }, [apiType]);
 
     return (
-        <SurveyDataContext.Provider value={{frequency2FilenameObj, surveyData, isLoading, fetchSurveys, switchApiType}}>
+        <SurveyDataContext.Provider value={{frequency2FilenameObj,
+            surveyData,
+            isLoading, fetchSurveys, switchApiType, apiType}}>
+
             {children}
         </SurveyDataContext.Provider>
     );

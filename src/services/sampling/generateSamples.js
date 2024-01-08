@@ -2,6 +2,10 @@ import {Samples} from "./samples";
 import {FrequencySampler} from "./frequencySampler";
 import {mapFilenamesToEmotionIds} from "../videoMetaDataHelper";
 
+
+// TODO: Maybe the neutral emotions should be divided 50/50 from the beginning to avoid neutral emotions crowding the lowest freq
+
+
 // Function to assert the length of sampleBatch
 function assertSampleBatchLength(sampleBatch, expectedLength) {
     if (sampleBatch.length !== expectedLength) {

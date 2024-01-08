@@ -38,7 +38,7 @@ export function sampleFromFilenames(filenames, maxSamples, excludeEmotions = new
         uniqueEmotions = new Set([...uniqueEmotions].filter(emotionId => !excludeEmotions.has(emotionId)))
     }
 
-    console.log("uniqueEmotions: ", uniqueEmotions)
+    // console.log("uniqueEmotions: ", uniqueEmotions)
 
     // Create dictionary of {emotion: [filenames]}
     const emotion2Filenames = createFilename2EmotionDict(filenames)

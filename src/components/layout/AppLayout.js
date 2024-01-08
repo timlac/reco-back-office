@@ -8,8 +8,8 @@ import {Link, Route, Routes} from "react-router-dom";
 import CreateSurvey from "../create/CreateSurvey";
 import {SurveyTable} from "../create/SurveyTable";
 import SurveyDetails from "../survey/SurveyDetails";
-import ItemHistogram from "../visualize/ItemHistogram";
 import {useSurveyData} from "../../contexts/SurveyDataProvider";
+import {Visualizations} from "../visualize/Visualizations";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -85,7 +85,7 @@ export const AppLayout = () => {
                         <Route path="/survey/:surveyId" element={<SurveyDetails/>}/>
                         <Route path="/create" element={<CreateSurvey/>}/>
                         <Route path="/overview" element={<SurveyTable/>}/>
-                        <Route path="/items" element={<ItemHistogram/>}/>
+                        <Route path="/items" element={<Visualizations/>}/>
                     </Routes>
 
                 </Content>

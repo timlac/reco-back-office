@@ -2,17 +2,28 @@ import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {Progress} from "antd";
 import {useSurveyData} from "../../contexts/SurveyDataProvider";
+import EmotionHistogram from "../visualize/EmotionHistogram";
+import {getFilenames} from "../../services/utils";
 
+
+
+function getNumberOfReplies(surveyItems){
+    return surveyItems.filter(obj => obj.has_reply === '1').length
+}
 
 function getProgress(surveyItems) {
-    const numberOfReplies = surveyItems.filter(obj => obj.has_reply === '1').length
-    return numberOfReplies / surveyItems.length;
+    return getNumberOfReplies(surveyItems) / surveyItems.length;
 }
 
 function getAccuracy(surveyItems) {
     const numberOfCorrect = surveyItems.filter(obj => obj.emotion_id === obj.reply).length
+    const numberOfReplies = getNumberOfReplies(surveyItems)
 
-    return numberOfCorrect / surveyItems.length;
+    if (numberOfReplies > 0) {
+        return numberOfCorrect / getNumberOfReplies(surveyItems)
+    } else {
+        return 0
+    }
 }
 
 function getSurvey(surveyData, surveyId){
@@ -62,20 +73,24 @@ const SurveyDetails = () => {
 
     return (
         <div>
+            <p>Survey ID: {surveyId}</p>
+            {/* Display other survey details here */}
 
+            <p>URL: </p>
             {loading ?
                 <p>Loading...</p>
                 :
                 <div>
                     <p>Progress:</p>
-                    <Progress type="circle" percent={getProgress(data.survey_items) * 100}/>
+                    <Progress type="circle" percent={(getProgress(data.survey_items) * 100).toFixed(1)}/>
 
                     <p>Accuracy:</p>
-                    <Progress type="circle" percent={getAccuracy(data.survey_items).toFixed(3) * 100}/>
+                    <Progress type="circle" percent={(getAccuracy(data.survey_items) * 100).toFixed(1)}/>
+
+                    <EmotionHistogram filenames={getFilenames(data.survey_items)}/>
+
                 </div>
             }
-            <p>Survey ID: {surveyId}</p>
-            {/* Display other survey details here */}
         </div>
     );
 };

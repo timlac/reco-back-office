@@ -8,6 +8,7 @@ export class FrequencySampler {
 
     getSampleBatch(numberOfEmotionAlternatives) {
         let minCount = this.getMinCount()
+        console.log("min count: ", minCount)
 
         let sampleBatch = sampleFromFilenames(
             this.frequency2Filename[minCount],
@@ -25,6 +26,9 @@ export class FrequencySampler {
     }
 
     getFillerSamples(minCount, sampleBatch, numberOfEmotionAlternatives) {
+        console.log("min count in filler ", minCount)
+
+
         const sampledEmotionIds = new Set([...mapFilenamesToEmotionIds(sampleBatch)]);
 
         const maxNumberOfSamples = numberOfEmotionAlternatives - sampledEmotionIds.size

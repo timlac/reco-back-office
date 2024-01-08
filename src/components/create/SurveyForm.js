@@ -1,16 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Form, Input, Button, Radio, DatePicker} from 'antd';
 import {NEGATIVE_VALENCE, POSITIVE_VALENCE} from "../../config";
-import {generateHash} from "../../services/generateHash";
+import moment from "moment";
 
-const CreateSurveyForm = ({createSurvey}) => {
-
-    const [surveyId, setSurveyId] = useState('');
-
+const SurveyForm = ({createSurvey, isLoading}) => {
+    const initialDateOfBirth = moment().subtract(25, 'years');
 
     const onFinish = (values) => {
-
-        values.surveyId = surveyId
 
         const dateString = values["dob"] ? values["dob"].format('YYYY-MM-DD') : null;
         values["dateString"] = dateString
@@ -18,22 +14,14 @@ const CreateSurveyForm = ({createSurvey}) => {
         createSurvey(values)
     };
 
-    const generateSurveyId = async () => {
-
-        setSurveyId("")
-
-        const hash = await generateHash()
-
-        if (hash) {
-            setSurveyId(hash)
-        }
-    }
-
 
     return (
         <Form
-            initialValues={{ surveyId: surveyId }} // Set the initial value for the surveyId field
-
+            initialValues={{
+                email: 'default', // Set default value for "User Id"
+                sex: 'male',                 // Set default value for "Sex"
+                dob: initialDateOfBirth,                   // Set default value for "Date of Birth"
+            }}
             size={"small"}
             labelCol={{
                 span: 5,
@@ -49,16 +37,6 @@ const CreateSurveyForm = ({createSurvey}) => {
             name="basicForm"
             onFinish={onFinish}
         >
-            <Form.Item
-                label="Survey Id"
-            >
-                <Input name="surveyId" value={surveyId} readOnly></Input>
-
-                <Button type={"default"} onClick={generateSurveyId}>
-                    Generate Unique Survey Id
-                </Button>
-            </Form.Item>
-
             <Form.Item
                 label="User Id"
                 name="email"
@@ -104,7 +82,7 @@ const CreateSurveyForm = ({createSurvey}) => {
                     offset: 5, // This offset should match labelCol span
                     span: 14,
                 }}>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" disabled={isLoading}>
                     Submit
                 </Button>
             </Form.Item>
@@ -112,4 +90,4 @@ const CreateSurveyForm = ({createSurvey}) => {
     );
 };
 
-export default CreateSurveyForm;
+export default SurveyForm;
