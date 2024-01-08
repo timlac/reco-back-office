@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useState, useEffect} from 'react';
 import {fetchVideoData} from "../services/videoMetaDataHelper";
-import {emotionCategoriesApi, emotionScalesApi} from "../services/api";
+import {responseApi} from "../services/api";
 import {createFilename2FrequencyObj} from "../services/createFilename2FrequencyObj";
 import {createFrequency2FilenameObj} from "../services/createFrequency2FilenameObj";
 
@@ -9,28 +9,23 @@ const SurveyDataContext = createContext(null);
 
 export const useSurveyData = () => useContext(SurveyDataContext);
 
-
-// API Map
-const apiMap = {
-    categories: emotionCategoriesApi,
-    scales: emotionScalesApi,
-    // Add more mappings here
-};
+// const surveyTypes = new Set(
+//     ["categories",
+//         "scales"]
+// );
 
 
 export const SurveyDataProvider = ({children}) => {
     const [surveyData, setSurveyData] = useState([]);
     const [frequency2FilenameObj, setFrequency2FilenameObj] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-    const [apiType, setApiType] = useState('categories'); // New state for API type
+    const [surveyType, setSurveyType] = useState('categories'); // New state for API type
 
 
     const fetchSurveys = async () => {
         try {
             setIsLoading(true)
-            const api = apiMap[apiType]
-
-            const response = await api.get("surveys");
+            const response = await responseApi.get(surveyType + "/surveys");
             console.log(response)
 
             const surveyData = response.data.map(user => ({
@@ -48,12 +43,12 @@ export const SurveyDataProvider = ({children}) => {
         }
     };
 
-    const switchApiType = (newType) => {
-        if (apiType !== newType) {
+    const switchSurveyType = (newType) => {
+        if (surveyType !== newType) {
             setSurveyData([])
             setFrequency2FilenameObj({})
             setIsLoading(true)
-            setApiType(newType);
+            setSurveyType(newType);
         }
     };
 
@@ -62,12 +57,20 @@ export const SurveyDataProvider = ({children}) => {
         fetchVideoData()
             .then(fetchSurveys)
             .catch(error => console.error('Error fetching video data:', error));
-    }, [apiType]);
+    }, [surveyType]);
 
     return (
-        <SurveyDataContext.Provider value={{frequency2FilenameObj,
-            surveyData,
-            isLoading, fetchSurveys, switchApiType, apiType}}>
+        <SurveyDataContext.Provider
+            value={
+                {
+                    frequency2FilenameObj,
+                    surveyData,
+                    isLoading,
+                    fetchSurveys,
+                    switchSurveyType,
+                    surveyType
+                }
+            }>
 
             {children}
         </SurveyDataContext.Provider>

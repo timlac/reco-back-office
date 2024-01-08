@@ -16,34 +16,34 @@ const {Header, Content, Footer, Sider} = Layout;
 
 export const AppLayout = () => {
     const [collapsed, setCollapsed] = useState(false);
-    const {switchApiType} = useSurveyData();
+    const {switchSurveyType} = useSurveyData();
 
     // Function to handle API switch based on menu item
-    const handleSwitchApi = (apiType) => {
-        if (apiType) {
-            switchApiType(apiType);
+    const handleSwitchType = (surveyType) => {
+        if (surveyType) {
+            switchSurveyType(surveyType);
         }
     };
 
-    function getItem(label, key, icon, children, path, apiType) {
+    function getItem(label, key, icon, children, path, surveyType) {
         return {
             key,
             icon,
             children,
             label: path ? <Link to={path}
-                                onClick={() => handleSwitchApi(apiType)}
+                                onClick={() => handleSwitchType(surveyType)}
 
             >{label}</Link> : label,
         };
     }
 
-    const createMenuItem = (title, key, path, apiType) =>
-        getItem(title, key, null, null, path, apiType);
+    const createMenuItem = (title, key, path, surveyType) =>
+        getItem(title, key, null, null, path, surveyType);
 
-    const createMenuItems = (apiType) => [
-        createMenuItem('Create', `${apiType}-create`, '/protected/create', apiType),
-        createMenuItem('Survey Overview', `${apiType}-overview`, '/protected/overview', apiType),
-        createMenuItem('Items', `${apiType}-items`, 'Items', apiType),
+    const createMenuItems = (surveyType) => [
+        createMenuItem('Create', `${surveyType}-create`, '/protected/create', surveyType),
+        createMenuItem('Survey Overview', `${surveyType}-overview`, '/protected/overview', surveyType),
+        createMenuItem('Items', `${surveyType}-items`, 'Items', surveyType),
     ];
 
     const createSubMenu = (title, key, icon, items) => getItem(title, key, icon, items);

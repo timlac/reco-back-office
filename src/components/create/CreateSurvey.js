@@ -4,14 +4,14 @@ import {POSITIVE_VALENCE, NEGATIVE_VALENCE} from "../../config"
 import SurveyForm from "./SurveyForm";
 import {generateSamples} from "../../services/sampling/generateSamples";
 import {useSurveyData} from "../../contexts/SurveyDataProvider";
-import useApi from "../../hooks/useApi";
 import {getEmotionInSweFromId} from "nexa-js-sentimotion-mapper";
+import {responseApi} from "../../services/api";
 
 
 const CreateSurvey = () => {
 
-    const {fetchSurveys, frequency2FilenameObj, apiType, isLoading} = useSurveyData()
-    const api = useApi();
+    const {fetchSurveys, frequency2FilenameObj, surveyType, isLoading} = useSurveyData()
+    const api = responseApi
 
     const [survey, setSurvey] = useState(null)
 
@@ -69,7 +69,7 @@ const CreateSurvey = () => {
         console.log(body)
 
         // Need to make sure fetchUsers is invoked after the post request
-        api.post("surveys", body)
+        api.post(surveyType + "/surveys", body)
             .then(response => {
                 console.log("returned data: ", response)
                 setSurvey(response.data)
@@ -86,7 +86,7 @@ const CreateSurvey = () => {
                     <div>
                         <p>Survey Successfully Created</p>
                         <p>Survey Id: {survey.id}</p>
-                        <p>Survey Type: {apiType}</p>
+                        <p>Survey Type: {surveyType}</p>
 
                         <div>
                             <h1>Emotion Alternatives</h1>
