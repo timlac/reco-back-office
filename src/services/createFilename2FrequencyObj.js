@@ -1,19 +1,20 @@
-import {filename2MetaData, getEmotionIdFromFilename} from "./videoMetaDataHelper";
+import {getEmotionIdFromFilename} from "./videoMetaDataHelper";
+import filename2MetaData from "../../data/filename2Metadata.json";
 import {getValenceFromEmotionId} from "nexa-js-sentimotion-mapper";
 import {NEGATIVE_VALENCE, NEUTRAL_VALENCE, POSITIVE_VALENCE} from "../config";
 
 
-export function createFilename2FrequencyObj(users) {
+export function createFilename2FrequencyObj(surveys) {
 
     // Initialize an object to store the filename dictionaries
     const ret = initializeFilename2FrequencyObj()
 
-    // Iterate through the users array
-    for (const user of users) {
+    // Iterate through the surveys array
+    for (const survey of surveys) {
         // Check if the 'items' property is an array
-        if (Array.isArray(user.survey_items)) {
+        if (Array.isArray(survey.survey_items)) {
             // Iterate through the 'items' array
-            for (const itemData of user.survey_items) {
+            for (const itemData of survey.survey_items) {
                 // Extract the 'filename' property from each itemData
                 const filename = itemData.filename;
                 try {

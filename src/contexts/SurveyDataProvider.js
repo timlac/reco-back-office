@@ -1,5 +1,4 @@
 import React, {createContext, useContext, useState, useEffect} from 'react';
-import {fetchVideoData} from "../services/videoMetaDataHelper";
 import {responseApi} from "../services/api";
 import {createFilename2FrequencyObj} from "../services/createFilename2FrequencyObj";
 import {createFrequency2FilenameObj} from "../services/createFrequency2FilenameObj";
@@ -28,9 +27,9 @@ export const SurveyDataProvider = ({children}) => {
             const response = await responseApi.get(surveyType + "/surveys");
             console.log(response)
 
-            const surveyData = response.data.map(user => ({
-                ...user,
-                created_at: new Date(user.created_at),
+            const surveyData = response.data.map(survey => ({
+                ...survey,
+                created_at: new Date(survey.created_at),
             }));
             setSurveyData(surveyData);
 
@@ -54,9 +53,7 @@ export const SurveyDataProvider = ({children}) => {
 
     // Fetch video data
     useEffect(() => {
-        fetchVideoData()
-            .then(fetchSurveys)
-            .catch(error => console.error('Error fetching video data:', error));
+        fetchSurveys()
     }, [surveyType]);
 
     return (

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {filename2MetaData} from "../../services/videoMetaDataHelper";
+import filename2MetaData from "../../../data/filename2Metadata.json";
 import {POSITIVE_VALENCE, NEGATIVE_VALENCE} from "../../config"
 import SurveyForm from "./SurveyForm";
 import {generateSamples} from "../../services/sampling/generateSamples";

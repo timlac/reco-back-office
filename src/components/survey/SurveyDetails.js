@@ -27,7 +27,7 @@ function getAccuracy(surveyItems) {
 }
 
 function getSurvey(surveyData, surveyId){
-    const ret = surveyData.filter( obj => obj.id === surveyId )
+    const ret = surveyData.filter( obj => obj.survey_id === surveyId )
 
     if (ret.length !== 1)
         throw new Error(`something went wrong, more than one survey matches survey id: ${surveyId}`)

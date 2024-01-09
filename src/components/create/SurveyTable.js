@@ -12,8 +12,8 @@ export const SurveyTable = () => {
     const columns = [
         {
             title: 'Survey Id',
-            dataIndex: 'id',
-            key: 'id',
+            dataIndex: 'survey_id',
+            key: 'survey_id',
             render: (text) => <Link to={`/protected/survey/${text}`}>{text}</Link>
         },
         {
@@ -49,6 +49,6 @@ export const SurveyTable = () => {
         },
     ];
     return (
-        <Table dataSource={surveyData} rowKey="id" columns={columns}/>
+        <Table dataSource={surveyData} rowKey="survey_id" columns={columns}/>
     )
 }
