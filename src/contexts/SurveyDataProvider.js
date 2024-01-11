@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useState, useEffect} from 'react';
-import {responseApi} from "../services/api";
+import {api} from "../services/api";
 import {createFilename2FrequencyObj} from "../services/createFilename2FrequencyObj";
 import {createFrequency2FilenameObj} from "../services/createFrequency2FilenameObj";
 
@@ -24,7 +24,7 @@ export const SurveyDataProvider = ({children}) => {
     const fetchSurveys = async () => {
         try {
             setIsLoading(true)
-            const response = await responseApi.get(surveyType + "/surveys");
+            const response = await api.get(surveyType + "/surveys");
             console.log(response)
 
             const surveyData = response.data.map(survey => ({

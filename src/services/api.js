@@ -14,16 +14,11 @@ async function apiAuthInterceptor (config){
 
 
 // Create an Axios instance
-const responseApi = axios.create({
-    baseURL: 'https://zm9qh359vf.execute-api.eu-west-1.amazonaws.com/prod/'
+const api = axios.create({
+    baseURL: process.env.REACT_APP_API_URL
 });
 
-const videoMetadatApi = axios.create({
-    baseURL: 'https://n6phu93lo7.execute-api.eu-west-1.amazonaws.com/prod'
-})
-
-responseApi.interceptors.request.use(apiAuthInterceptor)
-videoMetadatApi.interceptors.request.use(apiAuthInterceptor)
+api.interceptors.request.use(apiAuthInterceptor)
 
 
-export {responseApi, videoMetadatApi}
+export {api}

@@ -27,7 +27,13 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy:stage": "npm run build:stage && npm run s3-deploy:stage",
+    "deploy:prod": "npm run build:prod && npm run s3-deploy:prod",
+    "build:stage": "env-cmd -f .env.stage react-scripts build",
+    "build:prod": "env-cmd -f .env.prod react-scripts build",
+    "s3-deploy:stage": "aws s3 sync build/ s3://reco-backoffice-stage --delete",
+    "s3-deploy:prod": "aws s3 sync build/ s3://reco-backoffice-prod --delete"
   },
   "eslintConfig": {
     "extends": [
@@ -46,5 +52,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0"
   }
 }

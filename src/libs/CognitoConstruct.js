@@ -2,8 +2,8 @@ import {AuthenticationDetails, CognitoUser, CognitoUserPool} from "amazon-cognit
 
 
 const userPool = new CognitoUserPool({
-  UserPoolId: 'eu-west-1_Iug3XSwRq',
-  ClientId: '2rer1p6jedoh35vtghn8s41s5p'
+  UserPoolId: process.env.REACT_APP_COGNITO_USER_POOL_ID,
+  ClientId: process.env.REACT_APP_COGNITO_CLIENT_ID
 });
 
 

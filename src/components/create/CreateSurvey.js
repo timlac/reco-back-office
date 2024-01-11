@@ -1,18 +1,31 @@
 import React, {useState} from 'react';
-import filename2MetaData from "../../../data/filename2Metadata.json";
+import filename2MetaData from "../../data/filename2Metadata.json";
 import {POSITIVE_VALENCE, NEGATIVE_VALENCE} from "../../config"
 import SurveyForm from "./SurveyForm";
 import {generateSamples} from "../../services/sampling/generateSamples";
 import {useSurveyData} from "../../contexts/SurveyDataProvider";
 import {getEmotionInSweFromId} from "nexa-js-sentimotion-mapper";
-import {responseApi} from "../../services/api";
+import {api} from "../../services/api";
+import SurveySummary from "../survey/SurveySummary";
+import ItemDisplay from "../survey/ItemDisplay";
+import EmotionAlternativesDisplay from "../survey/EmotionAlternativesDisplay";
+import {Header} from "antd/es/layout/layout";
+import {message} from "antd";
 
 
 const CreateSurvey = () => {
 
-    const {fetchSurveys, frequency2FilenameObj, surveyType, isLoading} = useSurveyData()
-    const api = responseApi
+    const [messageApi, contextHolder] = message.useMessage();
+    const success = () => {
 
+        console.log("successmessage")
+        messageApi.open({
+            type: 'success',
+            content: 'Survey Successfully created',
+        });
+    };
+
+    const {fetchSurveys, frequency2FilenameObj, surveyType, isLoading} = useSurveyData()
     const [survey, setSurvey] = useState(null)
 
     const createSurvey = (values) => {
@@ -75,29 +88,25 @@ const CreateSurvey = () => {
                 setSurvey(response.data)
             })
             .then(fetchSurveys)
+            .then(success)
             .catch(error => console.log(error))
     }
+
 
     return (
         <div>
             <SurveyForm createSurvey={createSurvey} isLoading={isLoading}/>
             <div>
                 {survey && (
+
+
                     <div>
-                        <p>Survey Successfully Created</p>
-                        <p>Survey Id: {survey.id}</p>
-                        <p>Survey Type: {surveyType}</p>
-
-                        <div>
-                            <h1>Emotion Alternatives</h1>
-                            <ul>
-                                {survey.emotion_alternatives.map((item, index) => (
-                                    <li key={index}>{item}: {getEmotionInSweFromId(item)}</li>
-                                ))}
-                            </ul>
-                        </div>
-
+                        <SurveySummary data={survey}></SurveySummary>
+                        <ItemDisplay surveyItems={survey.survey_items}></ItemDisplay>
+                        <EmotionAlternativesDisplay
+                            emotionAlternatives={survey.emotion_alternatives}></EmotionAlternativesDisplay>
                     </div>
+
                 )}
             </div>
         </div>

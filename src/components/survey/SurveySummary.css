@@ -1,0 +1,12 @@
+.custom-descriptions {
+  display: flex;
+  flex-direction: column;
+}
+
+.first-row-item {
+  margin-bottom: 4px; /* Reduce the space below the first item */
+}
+
+.ant-descriptions-item {
+  margin-bottom: 4px; /* Reduce the space between items */
+}

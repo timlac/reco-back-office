@@ -1,4 +1,4 @@
-import filename2MetaData from "../../data/filename2Metadata.json";
+import filename2MetaData from "../data/filename2Metadata.json";
 
 const mapFilenames2MetaData = (filenames) => {
     return filenames.map(filename => filename2MetaData[filename]);
