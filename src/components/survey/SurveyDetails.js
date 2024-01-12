@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {Card, Progress, Space} from "antd";
 import {useSurveyData} from "../../contexts/SurveyDataProvider";
-import EmotionHistogram from "../visualize/EmotionHistogram";
-import {getFilenames} from "../../services/utils";
 import SurveySummary from "./SurveySummary";
 import EmotionAlternativesDisplay from "./EmotionAlternativesDisplay";
 import ItemDisplay from "./ItemDisplay";
@@ -29,7 +27,12 @@ function getAccuracy(surveyItems) {
 }
 
 function getSurvey(surveyData, surveyId) {
+
+    console.log("survey data in getSurvey: ", surveyData)
+
     const ret = surveyData.filter(obj => obj.survey_id === surveyId)
+
+    console.log(ret)
 
     if (ret.length !== 1)
         throw new Error(`something went wrong, more than one survey matches survey id: ${surveyId}`)
@@ -41,16 +44,9 @@ function getSurvey(surveyData, surveyId) {
 
 const SurveyDetails = () => {
 
-    console.log("in survey details")
-
     const {surveyData, isLoading} = useSurveyData()
-
-    console.log("surveyData: ", surveyData)
-
     const {surveyId} = useParams();
-
     const [data, setData] = useState(null);
-
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -61,10 +57,10 @@ const SurveyDetails = () => {
             return;
         }
         try {
-
             console.log("getting survey data")
             setLoading(true);
             setData(getSurvey(surveyData, surveyId)) // Fetching survey data
+            console.log("survey data: ", data)
         } catch (error) {
             console.error('Error:', error);
             // Handle the error as needed

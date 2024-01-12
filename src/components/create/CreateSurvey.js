@@ -4,31 +4,25 @@ import {POSITIVE_VALENCE, NEGATIVE_VALENCE} from "../../config"
 import SurveyForm from "./SurveyForm";
 import {generateSamples} from "../../services/sampling/generateSamples";
 import {useSurveyData} from "../../contexts/SurveyDataProvider";
-import {getEmotionInSweFromId} from "nexa-js-sentimotion-mapper";
 import {api} from "../../services/api";
 import SurveySummary from "../survey/SurveySummary";
 import ItemDisplay from "../survey/ItemDisplay";
 import EmotionAlternativesDisplay from "../survey/EmotionAlternativesDisplay";
-import {Header} from "antd/es/layout/layout";
 import {message} from "antd";
 
 
 const CreateSurvey = () => {
 
-    const [messageApi, contextHolder] = message.useMessage();
-    const success = () => {
-
-        console.log("successmessage")
-        messageApi.open({
-            type: 'success',
-            content: 'Survey Successfully created',
-        });
-    };
-
-    const {fetchSurveys, frequency2FilenameObj, surveyType, isLoading} = useSurveyData()
+    const {fetchSurveys, frequency2FilenameObj, surveyType} = useSurveyData()
     const [survey, setSurvey] = useState(null)
 
+    const [isLoading, setIsLoading] = useState(false)
+
     const createSurvey = (values) => {
+
+        setIsLoading(true)
+
+        console.log("isLoading in begin: " + isLoading)
 
         console.log("in handle submit")
 
@@ -86,10 +80,14 @@ const CreateSurvey = () => {
             .then(response => {
                 console.log("returned data: ", response)
                 setSurvey(response.data)
+                message.success("Survey successfully created!")
             })
             .then(fetchSurveys)
-            .then(success)
-            .catch(error => console.log(error))
+            .then(() => setIsLoading(false))
+            .catch(error => {
+                console.log(error)
+                message.error(`Error creating the survey: ${error.message}`);
+            })
     }
 
 
