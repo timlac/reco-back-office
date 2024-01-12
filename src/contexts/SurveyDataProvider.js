@@ -14,12 +14,10 @@ export const useSurveyData = () => useContext(SurveyDataContext);
 // );
 
 
-export const SurveyDataProvider = ({children}) => {
+export const SurveyDataProvider = ({children, surveyType}) => {
     const [surveyData, setSurveyData] = useState([]);
     const [frequency2FilenameObj, setFrequency2FilenameObj] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-    const [surveyType, setSurveyType] = useState('categories'); // New state for API type
-
 
     const fetchSurveys = async () => {
         try {
@@ -42,17 +40,17 @@ export const SurveyDataProvider = ({children}) => {
         }
     };
 
-    const switchSurveyType = (newType) => {
-        if (surveyType !== newType) {
-            setSurveyData([])
-            setFrequency2FilenameObj({})
-            setIsLoading(true)
-            setSurveyType(newType);
-        }
-    };
+    // const switchSurveyType = (newType) => {
+    //     if (surveyType !== newType) {
+    //
+    //     }
+    // };
 
     // Fetch video data
     useEffect(() => {
+        setSurveyData([])
+        setFrequency2FilenameObj({})
+        setIsLoading(true)
         fetchSurveys()
     }, [surveyType]);
 
@@ -64,7 +62,6 @@ export const SurveyDataProvider = ({children}) => {
                     surveyData,
                     isLoading,
                     fetchSurveys,
-                    switchSurveyType,
                     surveyType
                 }
             }>

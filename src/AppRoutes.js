@@ -3,7 +3,6 @@ import useAuth from './contexts/AuthContext';
 import LoginForm from './components/login/LoginForm';
 
 import {AppLayout} from "./components/layout/AppLayout";
-import {SurveyDataProvider} from "./contexts/SurveyDataProvider";
 import React from "react";
 
 
@@ -23,9 +22,7 @@ const AppRoutes = () => {
 // Create a nested route structure for the protected routes
 const ProtectedRoutes = () => {
     return (
-        <SurveyDataProvider>
-            <AppLayout/>
-        </SurveyDataProvider>
+        <AppLayout/>
     );
 };
 

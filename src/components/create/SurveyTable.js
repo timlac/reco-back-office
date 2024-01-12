@@ -1,12 +1,16 @@
 import {Table} from "antd";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useSurveyData} from "../../contexts/SurveyDataProvider";
 
 export const SurveyTable = () => {
 
     const { surveyData } = useSurveyData()
 
+    const {surveyType} = useParams()
+
     console.log("in survey table")
+    console.log("survey type ", surveyType)
+
     console.log(surveyData)
 
     const columns = [
