@@ -1,29 +1,28 @@
-import React, {createContext, useContext, useState, useEffect} from 'react';
+import React, {createContext, useContext, useState, useEffect, useCallback} from 'react';
 import {api} from "../services/api";
 import {createFilename2FrequencyObj} from "../services/createFilename2FrequencyObj";
 import {createFrequency2FilenameObj} from "../services/createFrequency2FilenameObj";
+import {useParams} from "react-router-dom";
 
 
 const SurveyDataContext = createContext(null);
 
 export const useSurveyData = () => useContext(SurveyDataContext);
 
-// const surveyTypes = new Set(
-//     ["categories",
-//         "scales"]
-// );
 
-
-export const SurveyDataProvider = ({children, surveyType}) => {
+export const SurveyDataProvider = ({children}) => {
     const [surveyData, setSurveyData] = useState([]);
     const [frequency2FilenameObj, setFrequency2FilenameObj] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const {surveyType} = useParams();
 
-    const fetchSurveys = async () => {
+    const fetchSurveys = useCallback(async () => {
         try {
             setIsLoading(true)
+            setSurveyData([])
+            setFrequency2FilenameObj({})
             const response = await api.get(surveyType + "/surveys");
-            console.log(response)
+            console.log("Logging response in fetchSurveys: ", response)
 
             const surveyData = response.data.map(survey => ({
                 ...survey,
@@ -38,21 +37,12 @@ export const SurveyDataProvider = ({children, surveyType}) => {
         } catch (error) {
             console.error('Error fetching surveys:', error);
         }
-    };
-
-    // const switchSurveyType = (newType) => {
-    //     if (surveyType !== newType) {
-    //
-    //     }
-    // };
+    }, [surveyType]);
 
     // Fetch video data
     useEffect(() => {
-        setSurveyData([])
-        setFrequency2FilenameObj({})
-        setIsLoading(true)
         fetchSurveys()
-    }, [surveyType]);
+    }, [fetchSurveys]);
 
     return (
         <SurveyDataContext.Provider
@@ -65,7 +55,6 @@ export const SurveyDataProvider = ({children, surveyType}) => {
                     surveyType
                 }
             }>
-
             {children}
         </SurveyDataContext.Provider>
     );

@@ -23,7 +23,7 @@ const LoginForm = () => {
         try {
             await signIn(username, password, setNewPasswordRequired)
             auth.login(username); // Update the login context state
-            navigate('/protected'); // Navigate to the protected route
+            navigate('/protected/categories'); // Navigate to the protected route
         } catch (err) {
             setError(err.message)
         }

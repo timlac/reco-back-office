@@ -4,13 +4,11 @@ import {
 
 } from '@ant-design/icons';
 import {Layout, Menu, theme} from 'antd';
-import {Link, Route, Routes, useParams} from "react-router-dom";
+import {Link, Route, Routes} from "react-router-dom";
 import CreateSurvey from "../create/CreateSurvey";
 import {SurveyTable} from "../create/SurveyTable";
 import SurveyDetails from "../survey/SurveyDetails";
 import {Visualizations} from "../visualize/Visualizations";
-import {SurveyDataProvider} from "../../contexts/SurveyDataProvider";
-import withSurveyData from "../hoc/withSurveyData";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -37,7 +35,7 @@ export const AppLayout = () => {
     const createMenuItems = (surveyType) => [
         createMenuItem('Create', `${surveyType}-create`, `/protected/${surveyType}/create`),
         createMenuItem('Survey Overview', `${surveyType}-overview`, `/protected/${surveyType}/overview`),
-        createMenuItem('Items', `${surveyType}-items`, `${surveyType}/items`),
+        createMenuItem('Items', `${surveyType}-items`, `items`),
     ];
 
     const createSubMenu = (title, key, icon, items) => getItem(title, key, icon, items);
@@ -75,11 +73,11 @@ export const AppLayout = () => {
                     />
                     <Content style={{margin: '0 16px',}}>
                         <Routes>
-                            <Route path="/:surveyType" element={withSurveyData(SurveyTable)()}/>
-                            <Route path="/:surveyType/survey/:surveyId" element={withSurveyData(SurveyDetails)()}/>
-                            <Route path="/:surveyType/create" element={withSurveyData(CreateSurvey)()}/>
-                            <Route path="/:surveyType/overview" element={withSurveyData(SurveyTable)()}/>
-                            <Route path="/:surveyType/items" element={withSurveyData(Visualizations)()}/>
+                            <Route path="/" element={<SurveyTable/>}/>
+                            <Route path="/survey/:surveyId" element={<SurveyDetails/>}/>
+                            <Route path="/create" element={<CreateSurvey/>}/>
+                            <Route path="/overview" element={<SurveyTable/>}/>
+                            <Route path="/items" element={<Visualizations/>}/>
                         </Routes>
 
                     </Content>

@@ -1,24 +1,17 @@
 import {Table} from "antd";
-import {Link, useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useSurveyData} from "../../contexts/SurveyDataProvider";
 
 export const SurveyTable = () => {
 
-    const { surveyData } = useSurveyData()
-
-    const {surveyType} = useParams()
-
-    console.log("in survey table")
-    console.log("survey type ", surveyType)
-
-    console.log(surveyData)
+    const { surveyData, surveyType } = useSurveyData()
 
     const columns = [
         {
             title: 'Survey Id',
             dataIndex: 'survey_id',
             key: 'survey_id',
-            render: (text) => <Link to={`/protected/survey/${text}`}>{text}</Link>
+            render: (text) => <Link to={`/protected/${surveyType}/survey/${text}`}>{text}</Link>
         },
         {
             title: 'User Id',

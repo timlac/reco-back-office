@@ -4,6 +4,7 @@ import LoginForm from './components/login/LoginForm';
 
 import {AppLayout} from "./components/layout/AppLayout";
 import React from "react";
+import {SurveyDataProvider} from "./contexts/SurveyDataProvider";
 
 
 const AppRoutes = () => {
@@ -12,7 +13,7 @@ const AppRoutes = () => {
     return (
         <Routes>
             <Route path="/" element={<LoginForm/>}/>
-            <Route path="/protected/*" element={isAuthenticated ? <ProtectedRoutes/> : <Navigate to="/"/>}/>
+            <Route path="/protected/:surveyType/*" element={isAuthenticated ? <ProtectedRoutes/> : <Navigate to="/"/>}/>
             {/* ... other routes ... */}
         </Routes>
     );
@@ -22,7 +23,9 @@ const AppRoutes = () => {
 // Create a nested route structure for the protected routes
 const ProtectedRoutes = () => {
     return (
-        <AppLayout/>
+        <SurveyDataProvider>
+            <AppLayout/>
+        </SurveyDataProvider>
     );
 };
 

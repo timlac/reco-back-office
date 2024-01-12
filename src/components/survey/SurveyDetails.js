@@ -51,16 +51,12 @@ const SurveyDetails = () => {
 
     useEffect(() => {
         if (isLoading) {
-            console.log("isLoading... returning")
-
             // If userData is not yet loaded, don't do anything
             return;
         }
         try {
-            console.log("getting survey data")
             setLoading(true);
             setData(getSurvey(surveyData, surveyId)) // Fetching survey data
-            console.log("survey data: ", data)
         } catch (error) {
             console.error('Error:', error);
             // Handle the error as needed

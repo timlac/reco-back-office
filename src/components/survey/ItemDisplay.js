@@ -1,7 +1,17 @@
-import {Collapse, Table} from 'antd';
+import {Button, Collapse, Popover, Table} from 'antd';
 import {getEmotionFromId} from "nexa-js-sentimotion-mapper";
 
 const ItemDisplay = ({surveyItems}) => {
+
+    const scalesDisplay = (reply) => (
+        <div>
+            {Object.keys(reply).map((attributeName, index) => (
+                <li key={index}>
+                    {attributeName}: {reply[attributeName]}
+                </li>
+            ))}
+        </div>
+    );
 
     const uniqueEmotionIds = new Set(surveyItems.map(item => item.emotion_id));
 
@@ -20,8 +30,6 @@ const ItemDisplay = ({surveyItems}) => {
             value: emotionId,
         }));
     };
-
-
 
     const columns = [
         {
@@ -53,6 +61,18 @@ const ItemDisplay = ({surveyItems}) => {
             title: 'Reply',
             dataIndex: 'reply',
             key: 'reply',
+            render: (reply, record) => {
+                if (reply && Object.keys(reply).length > 1) {
+                    return (
+                        <Popover content={scalesDisplay(reply)} title="Scales" trigger="hover">
+                            <Button>Replies</Button>
+                        </Popover>
+                    )
+                }
+                else {
+                    return reply
+                }
+            }
         }
 
     ]

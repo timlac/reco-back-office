@@ -2,6 +2,13 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# TODO
+
+## Pilot Testing 
+
+Need to limit the number of items we sample from in the pilot study in order to be able to measure reliability on items. 
+Maybe use the same items for everyone... 
+
 ## Available Scripts
 
 In the project directory, you can run:
