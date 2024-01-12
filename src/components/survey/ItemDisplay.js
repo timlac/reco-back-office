@@ -62,7 +62,7 @@ const ItemDisplay = ({surveyItems}) => {
             dataIndex: 'reply',
             key: 'reply',
             render: (reply, record) => {
-                if (reply && Object.keys(reply).length > 1) {
+                if (reply && typeof reply === "object" && Object.keys(reply).length > 1) {
                     return (
                         <Popover content={scalesDisplay(reply)} title="Scales" trigger="hover">
                             <Button>Replies</Button>

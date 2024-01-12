@@ -23,9 +23,9 @@ const AppRoutes = () => {
 // Create a nested route structure for the protected routes
 const ProtectedRoutes = () => {
     return (
-        <SurveyDataProvider>
-            <AppLayout/>
-        </SurveyDataProvider>
+            <SurveyDataProvider>
+                <AppLayout/>
+            </SurveyDataProvider>
     );
 };
 

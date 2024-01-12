@@ -35,7 +35,7 @@ export const AppLayout = () => {
     const createMenuItems = (surveyType) => [
         createMenuItem('Create', `${surveyType}-create`, `/protected/${surveyType}/create`),
         createMenuItem('Survey Overview', `${surveyType}-overview`, `/protected/${surveyType}/overview`),
-        createMenuItem('Items', `${surveyType}-items`, `items`),
+        createMenuItem('Items', `${surveyType}-items`, `/protected/${surveyType}/items`),
     ];
 
     const createSubMenu = (title, key, icon, items) => getItem(title, key, icon, items);
