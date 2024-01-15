@@ -1,19 +1,21 @@
 import {Button, Collapse, Popover, Table} from 'antd';
 import {getEmotionFromId} from "nexa-js-sentimotion-mapper";
 
-const ItemDisplay = ({surveyItems}) => {
+const ItemDisplay = ({survey}) => {
 
     const scalesDisplay = (reply) => (
         <div>
-            {Object.keys(reply).map((attributeName, index) => (
-                <li key={index}>
-                    {attributeName}: {reply[attributeName]}
-                </li>
-            ))}
+            <ul>
+                {survey.reply_format.map((element, index) => (
+                    <li key={index}>
+                        {element.label}:  {reply[index] || null}</li>
+                ))}
+            </ul>
         </div>
     );
 
-    const uniqueEmotionIds = new Set(surveyItems.map(item => item.emotion_id));
+
+    const uniqueEmotionIds = new Set(survey?.survey_items.map(item => item.emotion_id));
 
     // Function to generate unique filter options for emotion_id
     const generateEmotionIdFilters = () => {
@@ -62,14 +64,13 @@ const ItemDisplay = ({surveyItems}) => {
             dataIndex: 'reply',
             key: 'reply',
             render: (reply, record) => {
-                if (reply && typeof reply === "object" && Object.keys(reply).length > 1) {
+                if (reply && typeof Array.isArray(reply)) {
                     return (
                         <Popover content={scalesDisplay(reply)} title="Scales" trigger="hover">
                             <Button>Replies</Button>
                         </Popover>
                     )
-                }
-                else {
+                } else {
                     return reply
                 }
             }
@@ -78,7 +79,7 @@ const ItemDisplay = ({surveyItems}) => {
     ]
     return <Collapse>
         <Collapse.Panel key={1} header={"Survey Items"}>
-            <Table dataSource={surveyItems} rowKey="filename" columns={columns} size="small"/>
+            <Table dataSource={survey?.survey_items} rowKey="filename" columns={columns} size="small"/>
         </Collapse.Panel>
     </Collapse>;
 };

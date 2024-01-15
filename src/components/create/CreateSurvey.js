@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import filename2MetaData from "../../data/filename2Metadata.json";
-import {POSITIVE_VALENCE, NEGATIVE_VALENCE} from "../../config"
+import {POSITIVE_VALENCE, NEGATIVE_VALENCE, SCALES, emotionScales} from "../../config"
 import SurveyForm from "./SurveyForm";
 import {generateSamples} from "../../services/sampling/generateSamples";
 import {useSurveyData} from "../../contexts/SurveyDataProvider";
@@ -22,23 +22,25 @@ const CreateSurvey = () => {
 
         setIsLoading(true)
 
-        console.log("isLoading in begin: " + isLoading)
-
-        console.log("in handle submit")
+        console.log("logging values")
+        console.log(values)
 
         let samples = {}
 
         switch (values.valence) {
             case POSITIVE_VALENCE:
                 // {...} is to pass COPY to function
-                samples = generateSamples({...frequency2FilenameObj.positiveEmotions})
+                samples = generateSamples({...frequency2FilenameObj.positiveEmotions},
+                    values.numOfEmotionAlternatives)
                 break;
             case NEGATIVE_VALENCE:
                 // pass copy to function
-                samples = generateSamples({...frequency2FilenameObj.negativeEmotions})
+                samples = generateSamples({...frequency2FilenameObj.negativeEmotions},
+                    values.numOfEmotionAlternatives)
                 break;
             case "all":
-                samples = generateSamples({...frequency2FilenameObj.allEmotions})
+                samples = generateSamples({...frequency2FilenameObj.allEmotions},
+                    values.numOfEmotionAlternatives)
                 break;
             default:
                 console.log("no valid option for valence selected in create user")
@@ -49,7 +51,7 @@ const CreateSurvey = () => {
 
         console.log([...samples.emotionAlternatives])
 
-        const survey_items = []
+        const surveyItems = []
 
         for (const filename of samples.shuffledFilenames) {
 
@@ -60,16 +62,22 @@ const CreateSurvey = () => {
                 "video_id": metaData["video_id"],
                 "emotion_id": metaData["emotion_id"],
             }
-            survey_items.push(item)
+            surveyItems.push(item)
         }
 
-        const body = {
-            "user_id": values.email,
-            "survey_items": survey_items,
+        let body = {
+            "user_id": values.user_id,
+            "survey_items": surveyItems,
             "emotion_alternatives": [...samples.emotionAlternatives],
             "valence": values.valence,
             "sex": values.sex,
             "date_of_birth": values.dateString
+        }
+
+        if (surveyType === SCALES) {
+            body = {...body, "reply_format": emotionScales}
+        } else {
+            body = {...body, "reply_format": []}
         }
 
         console.log("body:")
@@ -100,7 +108,7 @@ const CreateSurvey = () => {
 
                     <div>
                         <SurveySummary data={survey}></SurveySummary>
-                        <ItemDisplay surveyItems={survey.survey_items}></ItemDisplay>
+                        <ItemDisplay survey={survey}></ItemDisplay>
                         <EmotionAlternativesDisplay
                             emotionAlternatives={survey.emotion_alternatives}></EmotionAlternativesDisplay>
                     </div>

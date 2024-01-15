@@ -33,8 +33,7 @@ const EmotionAlternativesDisplay = ({emotionAlternatives}) => {
 
     return <Collapse>
         <Collapse.Panel key={2} header={"Emotion Options"}>
-            <Table dataSource={emotionData} rowKey="survey_id" columns={columns} size="small"/>
-
+            <Table dataSource={emotionData} rowKey="emotion_id" columns={columns} size="small"/>
         </Collapse.Panel>
     </Collapse>;
 };

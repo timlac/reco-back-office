@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Input, Button, Radio, DatePicker} from 'antd';
+import {Form, Input, Button, Radio, DatePicker, Slider} from 'antd';
 import {NEGATIVE_VALENCE, POSITIVE_VALENCE} from "../../config";
 import moment from "moment";
 
@@ -18,7 +18,7 @@ const SurveyForm = ({createSurvey, isLoading}) => {
     return (
         <Form
             initialValues={{
-                email: 'default', // Set default value for "User Id"
+                user_id: 'default', // Set default value for "User Id"
                 sex: 'male',                 // Set default value for "Sex"
                 dob: initialDateOfBirth,                   // Set default value for "Date of Birth"
             }}
@@ -31,7 +31,7 @@ const SurveyForm = ({createSurvey, isLoading}) => {
             }}
             layout="horizontal"
             style={{
-                maxWidth: 600,
+                maxWidth: 800,
             }}
 
             name="basicForm"
@@ -39,7 +39,7 @@ const SurveyForm = ({createSurvey, isLoading}) => {
         >
             <Form.Item
                 label="User Id"
-                name="email"
+                name="user_id"
                 rules={[{required: true, message: 'Please input user id'}]}
             >
                 <Input/>
@@ -71,10 +71,25 @@ const SurveyForm = ({createSurvey, isLoading}) => {
                 rules={[{required: true, message: 'Please select a valence!'}]}
             >
                 <Radio.Group>
-                    <Radio value="All">All</Radio>
+                    <Radio value="all">All</Radio>
                     <Radio value={POSITIVE_VALENCE}>Pos</Radio>
                     <Radio value={NEGATIVE_VALENCE}>Neg</Radio>
                 </Radio.Group>
+            </Form.Item>
+
+            <Form.Item
+                label="No. Emotion Alternatives"
+                name="numOfEmotionAlternatives"
+            >
+                <Slider defaultValue={11}
+                        min={1}
+                        max={44}
+                        disabled={true}
+                        marks={{
+                            1: 1,
+                            44: 44
+                        }}
+                />
             </Form.Item>
 
             <Form.Item

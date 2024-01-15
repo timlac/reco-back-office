@@ -6,9 +6,10 @@ import {
 import {Layout, Menu, theme} from 'antd';
 import {Link, Route, Routes} from "react-router-dom";
 import CreateSurvey from "../create/CreateSurvey";
-import {SurveyTable} from "../create/SurveyTable";
+import {SurveyTable} from "../survey/SurveyTable";
 import SurveyDetails from "../survey/SurveyDetails";
 import {Visualizations} from "../visualize/Visualizations";
+import {CATEGORIES, SCALES} from "../../config";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -41,13 +42,13 @@ export const AppLayout = () => {
     const createSubMenu = (title, key, icon, items) => getItem(title, key, icon, items);
 
 // Now generate menu items for each category using the function
-    const categoriesItems = createMenuItems('categories');
-    const scalesItems = createMenuItems('scales');
+    const categoriesItems = createMenuItems(CATEGORIES);
+    const scalesItems = createMenuItems(SCALES);
 
 // Final menu structure
     const items = [
-        createSubMenu('Categories', 'sub1', <CopyOutlined/>, categoriesItems),
-        createSubMenu('Scales', 'sub2', <DragOutlined/>, scalesItems),
+        createSubMenu(CATEGORIES, 'sub1', <CopyOutlined/>, categoriesItems),
+        createSubMenu(SCALES, 'sub2', <DragOutlined/>, scalesItems),
     ];
 
     const {

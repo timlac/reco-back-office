@@ -85,7 +85,7 @@ const SurveyDetails = () => {
                             <Progress type="circle" percent={(getAccuracy(data.survey_items) * 100).toFixed(1)}/>
                         </Card>
                     </Space>
-                    <ItemDisplay surveyItems={data.survey_items}></ItemDisplay>
+                    <ItemDisplay survey={data}></ItemDisplay>
 
                     <EmotionAlternativesDisplay emotionAlternatives={data.emotion_alternatives}/>
                 </div>
