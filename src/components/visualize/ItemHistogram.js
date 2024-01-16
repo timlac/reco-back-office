@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
 import {Radio, Space} from "antd";
-import {NEGATIVE_VALENCE, POSITIVE_VALENCE} from "../../config";
+import {ALL, NEGATIVE_VALENCE, POSITIVE_VALENCE} from "../../config";
 import {useSurveyData} from "../../contexts/SurveyDataProvider";
+import {filterFrequency2Filename} from "../../services/filterFilenames";
 
 
 const ItemHistogram = () => {
 
-    const { frequency2FilenameObj, isLoading } = useSurveyData()
+    const { frequency2Filename, isLoading } = useSurveyData()
 
-    console.log(frequency2FilenameObj)
-
-    const [value, setValue] = useState("all");
+    const [value, setValue] = useState(ALL);
     const [chartData, setChartData] = useState({})
 
     const onChange = (e) => {
@@ -20,21 +19,9 @@ const ItemHistogram = () => {
     };
 
     useEffect(() => {
-        switch (value){
-            case "all":
-                setChartData( getChartData(frequency2FilenameObj?.allEmotions || {}) )
-                break;
-            case POSITIVE_VALENCE:
-                setChartData( getChartData(frequency2FilenameObj?.positiveEmotions  || {}) )
-                break;
-            case NEGATIVE_VALENCE:
-                setChartData(  getChartData(frequency2FilenameObj?.negativeEmotions  || {}) )
-                break;
-            default:
-                console.log("no data selected")
-        }
-
-    }, [value, frequency2FilenameObj]);
+        const filteredFrequency2Filename = filterFrequency2Filename(frequency2Filename, value)
+        setChartData( getChartData(filteredFrequency2Filename) )
+    }, [value, frequency2Filename]);
 
     // Convert frequencyDistribution to array format for recharts
     function getChartData (frequency2Filename)
@@ -54,7 +41,7 @@ const ItemHistogram = () => {
                 <div>
                     <Radio.Group onChange={onChange} value={value}>
                         <Space direction="vertical">
-                            <Radio value={"all"}>All</Radio>
+                            <Radio value={ALL}>All</Radio>
                             <Radio value={POSITIVE_VALENCE}>{POSITIVE_VALENCE}</Radio>
                             <Radio value={NEGATIVE_VALENCE}>{NEGATIVE_VALENCE}</Radio>
                         </Space>

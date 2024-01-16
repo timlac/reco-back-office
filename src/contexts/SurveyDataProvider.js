@@ -1,7 +1,6 @@
 import React, {createContext, useContext, useState, useEffect, useCallback} from 'react';
 import {api} from "../services/api";
-import {createFilename2FrequencyObj} from "../services/createFilename2FrequencyObj";
-import {createFrequency2FilenameObj} from "../services/createFrequency2FilenameObj";
+import {createFilename2Frequency, invertFilename2Frequency} from "../services/createFilename2Frequency";
 import {useParams} from "react-router-dom";
 
 
@@ -12,7 +11,7 @@ export const useSurveyData = () => useContext(SurveyDataContext);
 
 export const SurveyDataProvider = ({children}) => {
     const [surveyData, setSurveyData] = useState([]);
-    const [frequency2FilenameObj, setFrequency2FilenameObj] = useState({});
+    const [frequency2Filename, setFrequency2Filename] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const {surveyType} = useParams();
 
@@ -20,7 +19,7 @@ export const SurveyDataProvider = ({children}) => {
         try {
             setIsLoading(true)
             setSurveyData([])
-            setFrequency2FilenameObj({})
+            setFrequency2Filename({})
             const response = await api.get(surveyType + "/surveys");
             console.log("Logging response in fetchSurveys: ", response)
 
@@ -30,10 +29,11 @@ export const SurveyDataProvider = ({children}) => {
             }));
             setSurveyData(surveyData);
 
-            const filename2FrequencyObj = createFilename2FrequencyObj(surveyData);
-            const newFrequency2FilenameObj = createFrequency2FilenameObj(filename2FrequencyObj);
-            setFrequency2FilenameObj(newFrequency2FilenameObj);
+            const filename2Frequency = createFilename2Frequency(surveyData);
+
+            setFrequency2Filename(invertFilename2Frequency(filename2Frequency));
             setIsLoading(false);
+
         } catch (error) {
             console.error('Error fetching surveys:', error);
         }
@@ -48,7 +48,7 @@ export const SurveyDataProvider = ({children}) => {
         <SurveyDataContext.Provider
             value={
                 {
-                    frequency2FilenameObj,
+                    frequency2Filename,
                     surveyData,
                     isLoading,
                     fetchSurveys,

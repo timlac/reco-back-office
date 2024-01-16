@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import filename2MetaData from "../../data/filename2Metadata.json";
-import {POSITIVE_VALENCE, NEGATIVE_VALENCE, SCALES, emotionScales} from "../../config"
+import {SCALES, emotionScales} from "../../config"
 import SurveyForm from "./SurveyForm";
 import {generateSamples} from "../../services/sampling/generateSamples";
 import {useSurveyData} from "../../contexts/SurveyDataProvider";
@@ -9,11 +9,12 @@ import SurveySummary from "../survey/SurveySummary";
 import ItemDisplay from "../survey/ItemDisplay";
 import EmotionAlternativesDisplay from "../survey/EmotionAlternativesDisplay";
 import {message} from "antd";
+import {filterFrequency2Filename} from "../../services/filterFilenames";
 
 
 const CreateSurvey = () => {
 
-    const {fetchSurveys, frequency2FilenameObj, surveyType} = useSurveyData()
+    const {fetchSurveys, frequency2Filename, surveyType} = useSurveyData()
     const [survey, setSurvey] = useState(null)
 
     const [isLoading, setIsLoading] = useState(false)
@@ -27,24 +28,8 @@ const CreateSurvey = () => {
 
         let samples = {}
 
-        switch (values.valence) {
-            case POSITIVE_VALENCE:
-                // {...} is to pass COPY to function
-                samples = generateSamples({...frequency2FilenameObj.positiveEmotions},
-                    values.numOfEmotionAlternatives)
-                break;
-            case NEGATIVE_VALENCE:
-                // pass copy to function
-                samples = generateSamples({...frequency2FilenameObj.negativeEmotions},
-                    values.numOfEmotionAlternatives)
-                break;
-            case "all":
-                samples = generateSamples({...frequency2FilenameObj.allEmotions},
-                    values.numOfEmotionAlternatives)
-                break;
-            default:
-                console.log("no valid option for valence selected in create user")
-        }
+        const filteredFrequency2Filename = filterFrequency2Filename(frequency2Filename, values.valence)
+        samples = generateSamples(filteredFrequency2Filename, values.numOfEmotionAlternatives)
 
         console.log("samples:")
         console.log(samples.emotionAlternatives)
