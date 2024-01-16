@@ -64,13 +64,20 @@ const ItemDisplay = ({survey}) => {
             dataIndex: 'reply',
             key: 'reply',
             render: (reply, record) => {
-                if (reply && typeof Array.isArray(reply)) {
+
+                console.log(reply)
+                console.log(Array.isArray(reply))
+                console.log(reply.length > 1)
+
+                if (reply && Array.isArray(reply) && reply.length > 1) {
+                    console.log("in if")
                     return (
                         <Popover content={scalesDisplay(reply)} title="Scales" trigger="hover">
                             <Button>Replies</Button>
                         </Popover>
                     )
                 } else {
+                    console.log("in else")
                     return reply
                 }
             }
