@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import filename2MetaData from "../../data/filename2Metadata.json";
+import filename2MetaData from "../../data/filename2metadata.json";
 import {SCALES, emotionScales} from "../../config"
 import SurveyForm from "./SurveyForm";
 import {generateSamples} from "../../services/sampling/generateSamples";
@@ -28,7 +28,7 @@ const CreateSurvey = () => {
 
         let samples = {}
 
-        const filteredFrequency2Filename = filterFrequency2Filename(frequency2Filename, values.valence)
+        const filteredFrequency2Filename = filterFrequency2Filename(frequency2Filename, values.subset)
         samples = generateSamples(filteredFrequency2Filename, values.numOfEmotionAlternatives)
 
         console.log("samples:")

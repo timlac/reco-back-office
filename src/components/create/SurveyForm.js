@@ -1,6 +1,6 @@
 import React from 'react';
-import {Form, Input, Button, Radio, DatePicker, Slider} from 'antd';
-import {NEGATIVE_VALENCE, POSITIVE_VALENCE} from "../../config";
+import {Form, Input, Button, Radio, DatePicker, Slider, Tooltip} from 'antd';
+import {ALL, NEGATIVE_VALENCE, PILOT, POSITIVE_VALENCE} from "../../config";
 import moment from "moment";
 
 const SurveyForm = ({createSurvey, isLoading}) => {
@@ -66,14 +66,24 @@ const SurveyForm = ({createSurvey, isLoading}) => {
             </Form.Item>
 
             <Form.Item
-                label="Valence"
-                name="valence"
-                rules={[{required: true, message: 'Please select a valence!'}]}
+                label="Subset"
+                name="subset"
+                rules={[{required: true, message: 'Please select subset!'}]}
             >
                 <Radio.Group>
-                    <Radio value="all">All</Radio>
-                    <Radio value={POSITIVE_VALENCE}>Pos</Radio>
-                    <Radio value={NEGATIVE_VALENCE}>Neg</Radio>
+                    <Tooltip></Tooltip>
+                    <Tooltip key={ALL} title={"All Emotions"}>
+                        <Radio value={ALL}>All</Radio>
+                    </Tooltip>
+                    <Tooltip key={POSITIVE_VALENCE} title={"Positive Emotions"}>
+                        <Radio value={POSITIVE_VALENCE}>Positive</Radio>
+                    </Tooltip>
+                    <Tooltip key={NEGATIVE_VALENCE} title={"Negative Emotions"}>
+                        <Radio value={NEGATIVE_VALENCE}>Negative</Radio>
+                    </Tooltip>
+                    <Tooltip key={PILOT} title={"Specific items for Pilot Study"}>
+                        <Radio value={PILOT}>Pilot Study</Radio>
+                    </Tooltip>
                 </Radio.Group>
             </Form.Item>
 

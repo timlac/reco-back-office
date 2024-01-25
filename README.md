@@ -9,6 +9,24 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Need to limit the number of items we sample from in the pilot study in order to be able to measure reliability on items. 
 Maybe use the same items for everyone... 
 
+## Survey settings
+
+Settings like n.o. emotion alternatives, subset of items, should be set upon **survey type** creation, not **survey** creation.
+
+Possibly I need somewhere to store the survey types. Perhaps another table. 
+
+Each survey type should be linked to 
+- a folder in the S3 bucket. 
+I could potentially create an api endpoint later on to add files to a bucket.
+  - The easiest setup would be to load all the filenames in the S3 bucket and sample from these. 
+  Metadata could then be added in the GET request in lambda. 
+- some information about the response format, e.g. the scales or the emotion alternatives. 
+
+
+### Hardcoded solution
+
+
+
 ## Available Scripts
 
 In the project directory, you can run:

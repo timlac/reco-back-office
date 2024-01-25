@@ -4,6 +4,7 @@ export const NEUTRAL_VALENCE = "neu"
 
 export const ALL = "all"
 
+export const PILOT = "pilot"
 
 export const SCALES = "scales"
 export const CATEGORIES = "categories"
