@@ -5,6 +5,7 @@ import LoginForm from './components/login/LoginForm';
 import {AppLayout} from "./components/layout/AppLayout";
 import React from "react";
 import {SurveyDataProvider} from "./contexts/SurveyDataProvider";
+import CreateNewSurveyComponent from "./components/create/CreateNewSurveyComponent";
 
 
 const AppRoutes = () => {
@@ -14,18 +15,23 @@ const AppRoutes = () => {
         <Routes>
             <Route path="/" element={<LoginForm/>}/>
             <Route path="/protected/:surveyType/*" element={isAuthenticated ? <ProtectedRoutes/> : <Navigate to="/"/>}/>
-            {/* ... other routes ... */}
+            <Route path="/protected/create_new_survey" element={isAuthenticated ? <ProtectedRoutesNoProvider/> : <Navigate to="/"/>}/>
         </Routes>
     );
 };
 
 
+const ProtectedRoutesNoProvider = () => {
+    // Need some kind of higher AppLayout component here
+    return <CreateNewSurveyComponent/>
+}
+
 // Create a nested route structure for the protected routes
 const ProtectedRoutes = () => {
     return (
-            <SurveyDataProvider>
-                <AppLayout/>
-            </SurveyDataProvider>
+        <SurveyDataProvider>
+            <AppLayout/>
+        </SurveyDataProvider>
     );
 };
 
