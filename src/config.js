@@ -9,6 +9,8 @@ export const PILOT = "pilot"
 export const SCALES = "scales"
 export const CATEGORIES = "categories"
 
+export const surveyTypes = ["categories", "scales", "fmri"]
+
 export const emotionScales = [
         {
             label: "Novelty",
