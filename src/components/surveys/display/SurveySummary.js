@@ -1,6 +1,6 @@
 import React from 'react';
 import {Descriptions} from 'antd';
-import {useSurveyData} from "../../contexts/SurveyDataProvider";
+import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 
 const App = ({data}) => {
     const {surveyType} = useSurveyData()

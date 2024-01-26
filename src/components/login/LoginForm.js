@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import useAuth from "../../contexts/AuthContext";
-import {setNewPassword, signIn} from "../../libs/CognitoConstruct";
+import {setNewPassword, signIn} from "../../services/CognitoConstruct";
 import {Button, Form, Input} from "antd";
 
 import backgroundImage from '../../images/Timovia2.png';
@@ -33,7 +33,7 @@ const LoginForm = () => {
         try {
             await signIn(username, password, setNewPasswordRequired)
             auth.login(username); // Update the login context state
-            navigate('/protected/categories'); // Navigate to the protected route
+            navigate('/protected/projects'); // Navigate to the protected route
         } catch (err) {
             setError(err.message)
         }

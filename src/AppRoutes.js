@@ -1,37 +1,21 @@
-import {Route, Routes, Navigate} from 'react-router-dom';
-import useAuth from './contexts/AuthContext';
+import {Route, Routes} from 'react-router-dom';
 import LoginForm from './components/login/LoginForm';
 
-import {AppLayout} from "./components/layout/AppLayout";
 import React from "react";
-import {SurveyDataProvider} from "./contexts/SurveyDataProvider";
-import CreateNewSurveyComponent from "./components/create/CreateNewSurveyComponent";
+import ProjectLayout from "./components/layout/ProjectLayout";
+import ProtectedRoute from "./components/login/ProtectedRoute";
 
 
 const AppRoutes = () => {
-    const {isAuthenticated} = useAuth();
-
     return (
         <Routes>
             <Route path="/" element={<LoginForm/>}/>
-            <Route path="/protected/:surveyType/*" element={isAuthenticated ? <ProtectedRoutes/> : <Navigate to="/"/>}/>
-            <Route path="/protected/create_new_survey" element={isAuthenticated ? <ProtectedRoutesNoProvider/> : <Navigate to="/"/>}/>
+            <Route path="/protected/projects/*" element={
+                <ProtectedRoute>
+                    <ProjectLayout/>
+                </ProtectedRoute>
+            }/>
         </Routes>
-    );
-};
-
-
-const ProtectedRoutesNoProvider = () => {
-    // Need some kind of higher AppLayout component here
-    return <CreateNewSurveyComponent/>
-}
-
-// Create a nested route structure for the protected routes
-const ProtectedRoutes = () => {
-    return (
-        <SurveyDataProvider>
-            <AppLayout/>
-        </SurveyDataProvider>
     );
 };
 

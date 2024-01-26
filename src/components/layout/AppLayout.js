@@ -5,12 +5,12 @@ import {
 } from '@ant-design/icons';
 import {Layout, Menu, theme} from 'antd';
 import {Link, Route, Routes} from "react-router-dom";
-import CreateSurvey from "../create/CreateSurvey";
-import {SurveyTable} from "../survey/SurveyTable";
-import SurveyDetails from "../survey/SurveyDetails";
-import {Visualizations} from "../visualize/Visualizations";
+import CreateSurvey from "../surveys/create/CreateSurvey";
+import {SurveyTable} from "../surveys/display/SurveyTable";
+import SurveyDetails from "../surveys/display/SurveyDetails";
+import {Visualizations} from "../surveys/visualize/Visualizations";
 import {CATEGORIES, SCALES} from "../../config";
-import CreateNewSurveyComponent from "../create/CreateNewSurveyComponent";
+import CreateProject from "../projects/CreateProject";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -99,7 +99,7 @@ export const AppLayout = () => {
                         <Route path="/create" element={<CreateSurvey/>}/>
                         <Route path="/overview" element={<SurveyTable/>}/>
                         <Route path="/items" element={<Visualizations/>}/>
-                        <Route path="/protected/create_new_survey" element={<CreateNewSurveyComponent/>}/>
+                        <Route path="/protected/create_new_survey" element={<CreateProject/>}/>
 
                     </Routes>
 

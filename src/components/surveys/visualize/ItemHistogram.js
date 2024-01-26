@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
 import {Radio, Space} from "antd";
-import {ALL, NEGATIVE_VALENCE, PILOT, POSITIVE_VALENCE} from "../../config";
-import {useSurveyData} from "../../contexts/SurveyDataProvider";
-import {filterFrequency2Filename} from "../../services/filterFilenames";
+import {ALL, NEGATIVE_VALENCE, PILOT, POSITIVE_VALENCE} from "../../../config";
+import {useSurveyData} from "../../../contexts/SurveyDataProvider";
+import {filterFrequency2Filename} from "../../../services/filenameHandling/filterFilenames";
 
 
 const ItemHistogram = () => {

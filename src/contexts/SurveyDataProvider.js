@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useState, useEffect, useCallback} from 'react';
 import {api} from "../services/api";
-import {createFilename2Frequency, invertFilename2Frequency} from "../services/createFilename2Frequency";
+import {createFilename2Frequency, invertFilename2Frequency} from "../services/filenameHandling/createFilename2Frequency";
 import {useParams} from "react-router-dom";
 
 

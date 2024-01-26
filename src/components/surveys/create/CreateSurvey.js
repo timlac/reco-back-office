@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
-import filename2MetaData from "../../data/filename2metadata.json";
-import {SCALES, emotionScales} from "../../config"
+import filename2MetaData from "../../../data/filename2metadata.json";
+import {SCALES, emotionScales} from "../../../config"
 import SurveyForm from "./SurveyForm";
-import {generateSamples} from "../../services/sampling/generateSamples";
-import {useSurveyData} from "../../contexts/SurveyDataProvider";
-import {api} from "../../services/api";
-import SurveySummary from "../survey/SurveySummary";
-import ItemDisplay from "../survey/ItemDisplay";
-import EmotionAlternativesDisplay from "../survey/EmotionAlternativesDisplay";
+import {generateSamples} from "../../../services/sampling/generateSamples";
+import {useSurveyData} from "../../../contexts/SurveyDataProvider";
+import {api} from "../../../services/api";
+import SurveySummary from "../display/SurveySummary";
+import ItemDisplay from "../display/ItemDisplay";
+import EmotionAlternativesDisplay from "../display/EmotionAlternativesDisplay";
 import {message} from "antd";
-import {filterFrequency2Filename} from "../../services/filterFilenames";
+import {filterFrequency2Filename} from "../../../services/filenameHandling/filterFilenames";
 
 
 const CreateSurvey = () => {

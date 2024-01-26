@@ -1,7 +1,7 @@
-import {ALL, NEGATIVE_VALENCE, NEUTRAL_VALENCE, PILOT, POSITIVE_VALENCE} from "../config";
-import {getEmotionIdFromFilename} from "./videoMetaDataHelper";
+import {ALL, NEGATIVE_VALENCE, NEUTRAL_VALENCE, PILOT, POSITIVE_VALENCE} from "../../config";
+import {getEmotionIdFromFilename} from "../videoMetaDataHelper";
 import {getValenceFromEmotionId} from "nexa-js-sentimotion-mapper";
-import pilotFilenames from "../data/pilot_filenames.json";
+import pilotFilenames from "../../data/pilot_filenames.json";
 
 
 function getValence(filename) {

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {Card, Progress, Space} from "antd";
-import {useSurveyData} from "../../contexts/SurveyDataProvider";
+import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 import SurveySummary from "./SurveySummary";
 import EmotionAlternativesDisplay from "./EmotionAlternativesDisplay";
 import ItemDisplay from "./ItemDisplay";

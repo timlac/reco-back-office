@@ -1,4 +1,4 @@
-import filename2MetaData from "../data/filename2metadata.json";
+import filename2MetaData from "../../data/filename2metadata.json";
 
 export function createFilename2Frequency(surveys) {
 

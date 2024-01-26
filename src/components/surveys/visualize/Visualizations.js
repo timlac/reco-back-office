@@ -1,8 +1,8 @@
 import ItemHistogram from "./ItemHistogram";
 import EmotionHistogram from "./EmotionHistogram";
-import {useSurveyData} from "../../contexts/SurveyDataProvider";
+import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 import React from "react";
-import {getAllFilenames} from "../../services/utils";
+import {getAllFilenames} from "../../../services/utils";
 
 export const Visualizations = () => {
 

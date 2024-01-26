@@ -1,6 +1,6 @@
 import React from 'react';
 import {Form, Input, Button, Radio, DatePicker, Slider, Tooltip} from 'antd';
-import {ALL, NEGATIVE_VALENCE, PILOT, POSITIVE_VALENCE} from "../../config";
+import {ALL, NEGATIVE_VALENCE, PILOT, POSITIVE_VALENCE} from "../../../config";
 import moment from "moment";
 
 const SurveyForm = ({createSurvey, isLoading}) => {

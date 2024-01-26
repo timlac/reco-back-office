@@ -1,6 +1,6 @@
 import {Table} from "antd";
 import {Link} from "react-router-dom";
-import {useSurveyData} from "../../contexts/SurveyDataProvider";
+import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 
 export const SurveyTable = () => {
 

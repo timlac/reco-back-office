@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
-import {mapFilenamesToEmotionIds} from "../../services/videoMetaDataHelper";
+import {mapFilenamesToEmotionIds} from "../../../services/videoMetaDataHelper";
 import {getEmotionFromId} from "nexa-js-sentimotion-mapper";
 
 const EmotionHistogram = ({filenames}) => {

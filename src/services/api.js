@@ -1,4 +1,4 @@
-import {getCurrentSession} from "../libs/CognitoConstruct";
+import {getCurrentSession} from "./CognitoConstruct";
 import axios from 'axios';
 
 async function apiAuthInterceptor (config){
