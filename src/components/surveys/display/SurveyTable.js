@@ -4,14 +4,14 @@ import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 
 export const SurveyTable = () => {
 
-    const { surveyData, surveyType } = useSurveyData()
+    const { surveyData } = useSurveyData()
 
     const columns = [
         {
             title: 'Survey Id',
             dataIndex: 'survey_id',
             key: 'survey_id',
-            render: (text) => <Link to={`/protected/${surveyType}/survey/${text}`}>{text}</Link>
+            render: (text) => <Link to={`${text}`}>{text}</Link>
         },
         {
             title: 'User Id',

@@ -1,6 +1,6 @@
 import React from 'react';
-import {Form, Input, Button, Radio, DatePicker, Slider, Tooltip} from 'antd';
-import {ALL, NEGATIVE_VALENCE, PILOT, POSITIVE_VALENCE} from "../../../config";
+import {Form, Input, Button, Radio, DatePicker, Tooltip} from 'antd';
+import {ALL, NEGATIVE_VALENCE, POSITIVE_VALENCE} from "../../../config";
 import moment from "moment";
 
 const SurveyForm = ({createSurvey, isLoading}) => {
@@ -81,27 +81,8 @@ const SurveyForm = ({createSurvey, isLoading}) => {
                     <Tooltip key={NEGATIVE_VALENCE} title={"Negative Emotions"}>
                         <Radio value={NEGATIVE_VALENCE}>Negative</Radio>
                     </Tooltip>
-                    <Tooltip key={PILOT} title={"Specific items for Pilot Study"}>
-                        <Radio value={PILOT}>Pilot Study</Radio>
-                    </Tooltip>
                 </Radio.Group>
             </Form.Item>
-
-            <Form.Item
-                label="No. Emotion Alternatives"
-                name="numOfEmotionAlternatives"
-            >
-                <Slider defaultValue={11}
-                        min={1}
-                        max={44}
-                        disabled={true}
-                        marks={{
-                            1: 1,
-                            44: 44
-                        }}
-                />
-            </Form.Item>
-
             <Form.Item
                 wrapperCol={{
                     offset: 5, // This offset should match labelCol span

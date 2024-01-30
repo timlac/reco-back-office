@@ -29,27 +29,32 @@ function assertUniqueEmotionIds(sampleBatch) {
     }
 }
 
+
 export function generateSamples(frequency2Filename,
-                                numberOfEmotionAlternatives = 11,
-                                totalSamplesNeeded = 132) {
+                                batchSize,
+                                total) {
 
     const samples = new Samples()
     const sampler = new FrequencySampler(frequency2Filename);
 
-    if (numberOfEmotionAlternatives > sampler.getUniqueEmotionIds().size) {
+    if (batchSize > sampler.getUniqueEmotionIds().size) {
         throw new Error("Invalid number of unique emotions");
     }
 
-    while (samples.filenames.size < totalSamplesNeeded) {
-        const sampleBatch = sampler.getSampleBatch(numberOfEmotionAlternatives)
+    while (samples.filenames.size < total) {
+        // Calculate how many more samples are needed to reach the total
+        const remaining = total - samples.filenames.size;
 
-        assertSampleBatchLength(sampleBatch, numberOfEmotionAlternatives)
+        // Determine the size of the next sample batch, ensuring it doesn't exceed the remaining needed
+        const nextBatchSize = Math.min(batchSize, remaining);
+
+        console.log("nextBatchSize ", nextBatchSize)
+
+        const sampleBatch = sampler.getSampleBatch(nextBatchSize);
+
+        assertSampleBatchLength(sampleBatch, batchSize)
         assertUniqueFilenames(sampleBatch)
         assertUniqueEmotionIds(sampleBatch)
-
-        console.log("sampleBatch: ", sampleBatch)
-        console.log("sampleBatch length: ", sampleBatch.length)
-
 
         if (samples.filenames.size === 0) {
             console.log("freezing emotion alternatives")
@@ -60,8 +65,8 @@ export function generateSamples(frequency2Filename,
         samples.addSamples(sampleBatch)
     }
 
-    if (samples.filenames.size !== totalSamplesNeeded){
-        throw new Error(`Total samples should be ${totalSamplesNeeded} but it is ${samples.filenames.size}`)
+    if (samples.filenames.size !== total){
+        throw new Error(`Total samples should be ${total} but it is ${samples.filenames.size}`)
     }
     samples.assertFilenamesHaveValidEmotionIds()
 

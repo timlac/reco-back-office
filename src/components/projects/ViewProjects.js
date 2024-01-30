@@ -26,11 +26,13 @@ const ViewProjects = () => {
                 dataSource={projects}
                 renderItem={project => (
                     <List.Item>
-                        <Link to={`${project.project_name}`}> {/* Dynamic link based on project name */}
+                        <Link to={`${project.project_name}`} state={{ project }}> {/* Dynamic link based on project name */}
                             <Card title={project.project_name}> {/* Use project.name or any relevant property */}
                                 {/* Display more project details here */}
                                 <p>Survey Type: {project.survey_type}</p>
                                 <p>Emotions per survey: {project.emotions_per_survey}</p>
+                                <p>Samples per survey: {project.samples_per_survey}</p>
+
                                 {/* Add more project information as needed */}
                             </Card>
                         </Link>

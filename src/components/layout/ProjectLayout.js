@@ -11,7 +11,8 @@ const {Header, Content} = Layout;
 const ProjectLayout = () => {
     return (
         <Layout className="projectLayout">
-            <Header>
+            <Header
+            >
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
                     <Menu.Item key="1">
                         <Link to="">My Projects</Link>
@@ -21,7 +22,7 @@ const ProjectLayout = () => {
                     </Menu.Item>
                 </Menu>
             </Header>
-            <Content style={{padding: '0 50px'}}>
+            <Content>
                 <div className="site-layout-content">
                     <Routes>
                         <Route exact path="" element={<ViewProjects/>}/>

@@ -12,9 +12,12 @@ import {message} from "antd";
 import {filterFrequency2Filename} from "../../../services/filenameHandling/filterFilenames";
 
 
-const CreateSurvey = () => {
+const CreateSurvey = ( {project} ) => {
 
-    const {fetchSurveys, frequency2Filename, surveyType} = useSurveyData()
+    console.log(project)
+    // console.log(project)
+
+    const {fetchSurveys, frequency2Filename, projectName} = useSurveyData()
     const [survey, setSurvey] = useState(null)
 
     const [isLoading, setIsLoading] = useState(false)
@@ -29,7 +32,9 @@ const CreateSurvey = () => {
         let samples = {}
 
         const filteredFrequency2Filename = filterFrequency2Filename(frequency2Filename, values.subset)
-        samples = generateSamples(filteredFrequency2Filename, values.numOfEmotionAlternatives)
+        samples = generateSamples(filteredFrequency2Filename,
+            Number(project.emotions_per_survey),
+            Number(project.samples_per_survey))
 
         console.log("samples:")
         console.log(samples.emotionAlternatives)
@@ -59,7 +64,7 @@ const CreateSurvey = () => {
             "date_of_birth": values.dateString
         }
 
-        if (surveyType === SCALES) {
+        if (project.survey_type === SCALES) {
             body = {...body, "reply_format": emotionScales}
         } else {
             body = {...body, "reply_format": []}
@@ -69,7 +74,7 @@ const CreateSurvey = () => {
         console.log(body)
 
         // Need to make sure fetchUsers is invoked after the post request
-        api.post(surveyType + "/surveys", body)
+        api.post(`projects/${projectName}/surveys/` , body)
             .then(response => {
                 console.log("returned data: ", response)
                 setSurvey(response.data)
@@ -86,6 +91,8 @@ const CreateSurvey = () => {
 
     return (
         <div>
+            <h1>Create New Survey</h1>
+
             <SurveyForm createSurvey={createSurvey} isLoading={isLoading}/>
             <div>
                 {survey && (

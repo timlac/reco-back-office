@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
 import {Radio, Space} from "antd";
-import {ALL, NEGATIVE_VALENCE, PILOT, POSITIVE_VALENCE} from "../../../config";
+import {ALL, NEGATIVE_VALENCE, POSITIVE_VALENCE} from "../../../config";
 import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 import {filterFrequency2Filename} from "../../../services/filenameHandling/filterFilenames";
 
@@ -44,8 +44,6 @@ const ItemHistogram = () => {
                             <Radio value={ALL}>All</Radio>
                             <Radio value={POSITIVE_VALENCE}>Negative</Radio>
                             <Radio value={NEGATIVE_VALENCE}>Positive</Radio>
-                            <Radio value={PILOT}>Pilot</Radio>
-
                         </Space>
                     </Radio.Group>
 

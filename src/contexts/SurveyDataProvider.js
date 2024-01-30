@@ -9,7 +9,7 @@ const SurveyDataContext = createContext(null);
 export const useSurveyData = () => useContext(SurveyDataContext);
 
 
-export const SurveyDataProvider = ({children}) => {
+export const SurveyDataProvider = ({children }) => {
     const [surveyData, setSurveyData] = useState([]);
     const [frequency2Filename, setFrequency2Filename] = useState({});
     const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +20,7 @@ export const SurveyDataProvider = ({children}) => {
             setIsLoading(true)
             setSurveyData([])
             setFrequency2Filename({})
-            const response = await api.get(projectName + "/surveys");
+            const response = await api.get(`projects/${projectName}/surveys`);
             console.log("Logging response in fetchSurveys: ", response)
 
             const surveyData = response.data.map(survey => ({
