@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { List, Card } from 'antd';
-import {api} from "../../services/api"; // Assuming you're using axios for API calls
+import React, {useEffect, useState} from 'react';
+import {List, Card} from 'antd';
+import {api} from "../../services/api";
+import {Link} from "react-router-dom"; // Assuming you're using axios for API calls
 
 const ViewProjects = () => {
     const [projects, setProjects] = useState([]);
@@ -21,16 +22,19 @@ const ViewProjects = () => {
         <div>
             <h1>My Projects</h1>
             <List
-                grid={{ gutter: 16, column: 4 }}
+                grid={{gutter: 16, column: 4}}
                 dataSource={projects}
                 renderItem={project => (
                     <List.Item>
-                        <Card title={project.project_name}> {/* Use project.name or any relevant property */}
-                            {/* Display more project details here */}
-                            <p>Survey Type: {project.survey_type}</p>
-                            <p>Emotions per survey: {project.emotions_per_survey}</p>
-                            {/* Add more project information as needed */}
-                        </Card>
+                        <Link to={`${project.project_name}`}> {/* Dynamic link based on project name */}
+                            <Card title={project.project_name}> {/* Use project.name or any relevant property */}
+                                {/* Display more project details here */}
+                                <p>Survey Type: {project.survey_type}</p>
+                                <p>Emotions per survey: {project.emotions_per_survey}</p>
+                                {/* Add more project information as needed */}
+                            </Card>
+                        </Link>
+
                     </List.Item>
                 )}
             />

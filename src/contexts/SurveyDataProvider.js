@@ -13,14 +13,14 @@ export const SurveyDataProvider = ({children}) => {
     const [surveyData, setSurveyData] = useState([]);
     const [frequency2Filename, setFrequency2Filename] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-    const {surveyType} = useParams();
+    const {projectName} = useParams();
 
     const fetchSurveys = useCallback(async () => {
         try {
             setIsLoading(true)
             setSurveyData([])
             setFrequency2Filename({})
-            const response = await api.get(surveyType + "/surveys");
+            const response = await api.get(projectName + "/surveys");
             console.log("Logging response in fetchSurveys: ", response)
 
             const surveyData = response.data.map(survey => ({
@@ -37,7 +37,7 @@ export const SurveyDataProvider = ({children}) => {
         } catch (error) {
             console.error('Error fetching surveys:', error);
         }
-    }, [surveyType]);
+    }, [projectName]);
 
     // Fetch video data
     useEffect(() => {
@@ -52,7 +52,7 @@ export const SurveyDataProvider = ({children}) => {
                     surveyData,
                     isLoading,
                     fetchSurveys,
-                    surveyType
+                    projectName
                 }
             }>
             {children}
