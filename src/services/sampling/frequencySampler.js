@@ -1,5 +1,5 @@
 import {sampleFromFilenames} from "./sampleFromFilenames";
-import {getEmotionIdFromFilename, mapFilenamesToEmotionIds} from "../videoMetaDataHelper";
+import {getEmotionIdFromFilename, mapFilenamesToEmotionIds} from "../metadataManager";
 
 export class FrequencySampler {
     constructor(frequency2Filename) {

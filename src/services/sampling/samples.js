@@ -1,5 +1,5 @@
 import {shuffle} from "lodash";
-import {getEmotionIdFromFilename, mapFilenamesToEmotionIds} from "../videoMetaDataHelper";
+import {getEmotionIdFromFilename, mapFilenamesToEmotionIds} from "../metadataManager";
 
 export class Samples {
 

@@ -1,6 +1,6 @@
 import {Samples} from "./samples";
 import {FrequencySampler} from "./frequencySampler";
-import {mapFilenamesToEmotionIds} from "../videoMetaDataHelper";
+import {mapFilenamesToEmotionIds} from "../metadataManager";
 
 
 // TODO: Maybe the neutral emotions should be divided 50/50 from the beginning to avoid neutral emotions crowding the lowest freq
@@ -52,7 +52,7 @@ export function generateSamples(frequency2Filename,
 
         const sampleBatch = sampler.getSampleBatch(nextBatchSize);
 
-        assertSampleBatchLength(sampleBatch, batchSize)
+        assertSampleBatchLength(sampleBatch, nextBatchSize)
         assertUniqueFilenames(sampleBatch)
         assertUniqueEmotionIds(sampleBatch)
 

@@ -1,4 +1,4 @@
-import {getEmotionIdFromFilename, mapFilenamesToEmotionIds} from "../videoMetaDataHelper";
+import {getEmotionIdFromFilename, mapFilenamesToEmotionIds} from "../metadataManager";
 const lodash = require('lodash');
 
 // Maybe create a general filename to emotion dict when the app starts up?

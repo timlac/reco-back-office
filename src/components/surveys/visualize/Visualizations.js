@@ -8,6 +8,7 @@ export const Visualizations = () => {
 
     const {surveyData, isLoading} = useSurveyData()
 
+    console.log("surveydata in vsialuzation", surveyData)
 
     return (
         <div>

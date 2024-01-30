@@ -1,5 +1,5 @@
 import {ALL, NEGATIVE_VALENCE, NEUTRAL_VALENCE, POSITIVE_VALENCE} from "../../config";
-import {getEmotionIdFromFilename} from "../videoMetaDataHelper";
+import {getEmotionIdFromFilename} from "../metadataManager";
 import {getValenceFromEmotionId} from "nexa-js-sentimotion-mapper";
 
 

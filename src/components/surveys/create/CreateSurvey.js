@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import filename2MetaData from "../../../data/filename2metadata.json";
 import {SCALES, emotionScales} from "../../../config"
 import SurveyForm from "./SurveyForm";
 import {generateSamples} from "../../../services/sampling/generateSamples";
@@ -10,14 +9,12 @@ import ItemDisplay from "../display/ItemDisplay";
 import EmotionAlternativesDisplay from "../display/EmotionAlternativesDisplay";
 import {message} from "antd";
 import {filterFrequency2Filename} from "../../../services/filenameHandling/filterFilenames";
+import {getFilenameMetadata} from "../../../services/metadataManager";
 
 
-const CreateSurvey = ( {project} ) => {
+const CreateSurvey = () => {
 
-    console.log(project)
-    // console.log(project)
-
-    const {fetchSurveys, frequency2Filename, projectName} = useSurveyData()
+    const {fetchSurveys, frequency2Filename, projectName, projectData} = useSurveyData()
     const [survey, setSurvey] = useState(null)
 
     const [isLoading, setIsLoading] = useState(false)
@@ -33,8 +30,8 @@ const CreateSurvey = ( {project} ) => {
 
         const filteredFrequency2Filename = filterFrequency2Filename(frequency2Filename, values.subset)
         samples = generateSamples(filteredFrequency2Filename,
-            Number(project.emotions_per_survey),
-            Number(project.samples_per_survey))
+            Number(projectData.emotions_per_survey),
+            Number(projectData.samples_per_survey))
 
         console.log("samples:")
         console.log(samples.emotionAlternatives)
@@ -45,17 +42,18 @@ const CreateSurvey = ( {project} ) => {
 
         for (const filename of samples.shuffledFilenames) {
 
-            const metaData = filename2MetaData[filename]
+            const metaData = getFilenameMetadata(filename)
 
             const item = {
                 "filename": filename,
                 "video_id": metaData["video_id"],
-                "emotion_id": metaData["emotion_id"],
+                "emotion_id": metaData["emotion_1_id"],
             }
             surveyItems.push(item)
         }
 
         let body = {
+            "survey_type": projectData.survey_type,
             "user_id": values.user_id,
             "survey_items": surveyItems,
             "emotion_alternatives": [...samples.emotionAlternatives],
@@ -64,7 +62,7 @@ const CreateSurvey = ( {project} ) => {
             "date_of_birth": values.dateString
         }
 
-        if (project.survey_type === SCALES) {
+        if (projectData.survey_type === SCALES) {
             body = {...body, "reply_format": emotionScales}
         } else {
             body = {...body, "reply_format": []}

@@ -1,10 +1,7 @@
-import filename2MetaData from "../../data/filename2metadata.json";
-
-export function createFilename2Frequency(surveys) {
-
+export function createFilename2Frequency(surveys, allFilenames) {
     // Initialize an object to store the filename dictionaries
     const filename2Frequency = {}
-    for (const filename of Object.keys(filename2MetaData)) {
+    for (const filename of allFilenames) {
         filename2Frequency[filename] = 0;
     }
 
