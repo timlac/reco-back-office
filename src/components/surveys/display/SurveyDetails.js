@@ -30,16 +30,17 @@ function getSurvey(surveyData, surveyId) {
 
     console.log("survey data in getSurvey: ", surveyData)
 
-    const ret = surveyData.filter(obj => obj.survey_id === surveyId)
+    const ret = surveyData.filter(obj => obj?.survey_id === surveyId)
 
     console.log(ret)
 
-    if (ret.length !== 1)
-        throw new Error(`something went wrong, more than one survey matches survey id: ${surveyId}`)
-    else {
+    if (ret.length > 1)
+        throw new Error(`Something went wrong, more than one survey matches survey id: ${surveyId}`)
+    else if (ret.length === 0) {
+        throw new Error(`Something went wrong, no survey found for: ${surveyId}`)
+    } else {
         return ret[0]
     }
-
 }
 
 const SurveyDetails = () => {
@@ -79,10 +80,10 @@ const SurveyDetails = () => {
                 <div>
                     <Space direction="horizontal" size={16}>
                         <Card size="small" title="Progress">
-                            <Progress type="circle" percent={(getProgress(data.survey_items) * 100).toFixed(1)}/>
+                            <Progress type="circle" percent={(getProgress(data?.survey_items) * 100).toFixed(1)}/>
                         </Card>
                         <Card size="small" title="Accuracy">
-                            <Progress type="circle" percent={(getAccuracy(data.survey_items) * 100).toFixed(1)}/>
+                            <Progress type="circle" percent={(getAccuracy(data?.survey_items) * 100).toFixed(1)}/>
                         </Card>
                     </Space>
                     <ItemDisplay survey={data}></ItemDisplay>

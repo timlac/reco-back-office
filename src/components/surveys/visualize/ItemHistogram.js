@@ -10,6 +10,8 @@ const ItemHistogram = () => {
 
     const { frequency2Filename, isLoading } = useSurveyData()
 
+    console.log(frequency2Filename)
+
     const [value, setValue] = useState(ALL);
     const [chartData, setChartData] = useState({})
 

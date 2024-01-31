@@ -14,6 +14,8 @@ export const useSurveyData = () => useContext(SurveyDataContext);
 export const SurveyDataProvider = ({children }) => {
 
     const [frequency2Filename, setFrequency2Filename] = useState({});
+    const [isFrequencyLoading, setIsFrequencyLoading] = useState(true);
+
     const {projectName} = useParams();
 
     const { surveyData, isLoading: surveysIsLoading, fetchSurveys } = useFetchSurveys(projectName);
@@ -22,23 +24,12 @@ export const SurveyDataProvider = ({children }) => {
 
     useEffect(() => {
 
-        console.log("in useEffect")
-        console.log("surveysIsLoading", surveysIsLoading)
-        console.log("projectsIsLoading", projectsIsLoading)
-        console.log("surveyData.length", surveyData.length)
-        console.log("projectData", projectData)
-
-
         // Ensure both surveyData and projectData are loaded and not loading
         if (!surveysIsLoading && !projectsIsLoading && projectData) {
-            console.log("projectData.s3_objects ", projectData.s3_objects)
-
             const filename2Freq = createFilename2Frequency(surveyData, projectData.s3_objects);
-
-            console.log("filename2Freq in SurveyDataProvider")
-            console.log(filename2Freq)
-
             setFrequency2Filename(invertFilename2Frequency(filename2Freq));
+            setIsFrequencyLoading(false); // Indicate that frequency calculation is done
+
         }
     }, [surveyData, projectData, surveysIsLoading, projectsIsLoading]);
 
@@ -51,11 +42,10 @@ export const SurveyDataProvider = ({children }) => {
     }, [fetchProject]);
 
     useEffect(() => {
-        console.log("logging in project data hook", projectData)
         updateProjectMetadata(projectData?.s3_objects_with_meta);
     }, [projectData]);
 
-    const isLoading = surveysIsLoading || projectsIsLoading;
+    const isLoading = surveysIsLoading || projectsIsLoading || isFrequencyLoading;
 
     return (
         <SurveyDataContext.Provider

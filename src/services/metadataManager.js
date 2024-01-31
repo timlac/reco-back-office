@@ -2,8 +2,6 @@ let projectMetadata = {};
 
 export const updateProjectMetadata = (newMetadata) => {
     projectMetadata = newMetadata;
-    console.log("newMetadata: ", newMetadata)
-
 };
 
 export const getFilenameMetadata = (filename) =>  {

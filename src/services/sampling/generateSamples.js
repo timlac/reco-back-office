@@ -5,6 +5,11 @@ import {mapFilenamesToEmotionIds} from "../metadataManager";
 
 // TODO: Maybe the neutral emotions should be divided 50/50 from the beginning to avoid neutral emotions crowding the lowest freq
 
+// TODO: Need to be able to adjust the desired distribution of emotions for inbalanced datasets, e.g. where neutral emotion occurs more frequently....
+
+// In the FMRI dataset we typically have 2 neutral emotions for every other emotion
+
+// Maybe the balance of emotions in each batch should reflect that of the entire dataset...?
 
 // Function to assert the length of sampleBatch
 function assertSampleBatchLength(sampleBatch, expectedLength) {

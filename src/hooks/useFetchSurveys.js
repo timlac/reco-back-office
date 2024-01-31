@@ -3,7 +3,7 @@ import { api } from "../services/api";
 
 export const useFetchSurveys = (projectName) => {
     const [surveyData, setSurveyData] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
     const fetchSurveys = useCallback(async () => {

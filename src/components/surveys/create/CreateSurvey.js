@@ -54,6 +54,7 @@ const CreateSurvey = () => {
 
         let body = {
             "survey_type": projectData.survey_type,
+            "s3_folder": projectData.s3_folder,
             "user_id": values.user_id,
             "survey_items": surveyItems,
             "emotion_alternatives": [...samples.emotionAlternatives],

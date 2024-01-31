@@ -4,6 +4,7 @@ import {SurveyTable} from "../surveys/display/SurveyTable";
 import CreateSurvey from "../surveys/create/CreateSurvey";
 import {Visualizations} from "../surveys/visualize/Visualizations";
 import React from "react";
+import SurveyDetails from "../surveys/display/SurveyDetails";
 
 const {
     Header,
@@ -28,6 +29,7 @@ const SurveyLayout = () => {
                 <div className="site-layout-content">
                     <Routes>
                         <Route exact path="" element={<SurveyTable/>}/>
+                        <Route path=":surveyId" element={<SurveyDetails/>}/>
                         <Route path="create-survey" element={<CreateSurvey/>}/>
                         <Route path="statistics" element={<Visualizations/>}/>
                     </Routes>
