@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Col, InputNumber, Row, Slider} from 'antd';
 
-const NumberOfSamplesSlider = ({numberOfSamples, onValueChange}) => {
+const NumberOfSamplesSlider = ({numberOfSamples, onValueChange, emotionSamplingEnabled}) => {
     const [inputValue, setInputValue] = useState(1);
     const onChange = (newValue) => {
         setInputValue(newValue);
@@ -10,10 +10,13 @@ const NumberOfSamplesSlider = ({numberOfSamples, onValueChange}) => {
         }
     };
 
+    // Would be good to find a way to set slider and input number to max value by default...
+
     return (
         <Row>
             <Col span={18}>
                 <Slider
+                    disabled={!emotionSamplingEnabled}
                     min={1}
                     max={numberOfSamples}
                     marks={{
@@ -26,6 +29,7 @@ const NumberOfSamplesSlider = ({numberOfSamples, onValueChange}) => {
             </Col>
             <Col span={4}>
                 <InputNumber
+                    disabled={!emotionSamplingEnabled}
                     min={1}
                     max={numberOfSamples}
                     style={{

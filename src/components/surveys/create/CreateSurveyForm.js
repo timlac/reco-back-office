@@ -3,7 +3,7 @@ import {Form, Input, Button, Radio, DatePicker, Tooltip} from 'antd';
 import {ALL, NEGATIVE_VALENCE, POSITIVE_VALENCE} from "../../../config";
 import moment from "moment";
 
-const SurveyForm = ({createSurvey, isLoading}) => {
+const CreateSurveyForm = ({createSurvey, isLoading}) => {
     const initialDateOfBirth = moment().subtract(25, 'years');
 
     const onFinish = (values) => {
@@ -96,4 +96,4 @@ const SurveyForm = ({createSurvey, isLoading}) => {
     );
 };
 
-export default SurveyForm;
+export default CreateSurveyForm;

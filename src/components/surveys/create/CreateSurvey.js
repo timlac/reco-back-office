@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {SCALES, emotionScales} from "../../../config"
-import SurveyForm from "./SurveyForm";
+import CreateSurveyForm from "./CreateSurveyForm";
 import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 import {api} from "../../../services/api";
 import SurveySummary from "../display/SurveySummary";
@@ -66,7 +66,7 @@ const CreateSurvey = () => {
         <div>
             <h1>Create New Survey</h1>
 
-            <SurveyForm createSurvey={createSurvey} isLoading={isLoading}/>
+            <CreateSurveyForm createSurvey={createSurvey} isLoading={isLoading}/>
             <div>
                 {survey && (
 
