@@ -1,19 +1,9 @@
+import _ from 'lodash';
 import {getFilesForEmotionId} from "./getFilesForEmotionId";
-import {getAllEmotionIds, sampleEmotionIds} from "./sampleEmotionIds";
 
 
 
-export function getEqualDistributionSamples(frequency2Filename, totalSamples, numberOfEmotions) {
-
-    const allEmotionIds = getAllEmotionIds(frequency2Filename)
-    let emotionIds = null
-
-    if (numberOfEmotions < allEmotionIds) {
-        emotionIds = sampleEmotionIds(allEmotionIds)
-    } else {
-        emotionIds = allEmotionIds
-    }
-
+export function getEqualDistributionSamples(frequency2Filename, emotionIds, totalSamples) {
     // Calculate the number of samples per emotion for equal distribution
     const samplesPerEmotion = Math.floor(totalSamples / emotionIds.length);
     let samplesCollected = 0;
@@ -36,5 +26,5 @@ export function getEqualDistributionSamples(frequency2Filename, totalSamples, nu
         samplesCollected += filenames.length;
     }
 
-    return selectedFilenames;
+    return _.shuffle(selectedFilenames);
 }

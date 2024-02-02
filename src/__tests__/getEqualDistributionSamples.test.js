@@ -1,11 +1,11 @@
 import mockFrequency2Filename from './__mock_data__/mockFrequency2Filename.json';
-import {getFilesForEmotionId} from "../services/sampling2/getFilesForEmotionId";
-import {getEqualDistributionSamples} from "../services/sampling2/getEqualDistributionSamples";
+import {getFilesForEmotionId} from "../services/survey/sampling2/getFilesForEmotionId";
+import {getEqualDistributionSamples} from "../services/survey/sampling2/getEqualDistributionSamples";
 import {updateProjectMetadata} from "../services/metadataManager";
 import mockProjectMetadata from "./__mock_data__/mockProjectMetadata.json";
 
 // Mocking getFilesForEmotionId function
-jest.mock("../services/sampling2/getFilesForEmotionId", () => ({
+jest.mock("../services/survey/sampling2/getFilesForEmotionId", () => ({
     getFilesForEmotionId: jest.fn()
 }));
 
@@ -24,10 +24,10 @@ describe('getEqualDistributionSamples', () => {
             return Array.from({ length: count }, (_, index) => `file_${emotion}_${index + 1}.mp4`);
         });
 
-        const emotions = 3; // Example emotion IDs
+        const emotions = [12, 33, 34]; // Example emotion IDs
         const totalSamples = 9; // Total samples to distribute among the emotions
 
-        const result = getEqualDistributionSamples(mockFrequency2Filename, totalSamples, emotions);
+        const result = getEqualDistributionSamples(mockFrequency2Filename, emotions, totalSamples);
         expect(result.length).toBe(totalSamples);
 
         // Expect 3 samples per emotion
@@ -47,7 +47,7 @@ describe('getEqualDistributionSamples', () => {
         const emotions = [12, 33, 34]; // Example emotion IDs
         const totalSamples = 10; // Total samples, not evenly divisible by the number of emotions
 
-        const result = getEqualDistributionSamples(mockFrequency2Filename, totalSamples, emotions);
+        const result = getEqualDistributionSamples(mockFrequency2Filename, emotions, totalSamples);
         expect(result.length).toBe(totalSamples);
 
         // Expect 3 samples for the last emotion and 3 or 4 for others

@@ -38,6 +38,7 @@ But I would need:
 
 - To present the different emotion combinations, this might as well be implemented dynamically to begin with. 
 
+Need to implement some kind of functionality for intro_files, maybe put in a different dir? Or in subdir? 
 
 
 ## Available Scripts

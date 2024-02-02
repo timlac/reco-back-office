@@ -24,3 +24,12 @@ export const getEmotionIdFromFilename = (filename) => {
 export const mapFilenamesToEmotionIds = (filenames) => {
     return filenames.map(filename => projectMetadata[filename].emotion_1_id);
 }
+
+export const getAllEmotionIdsInData = () => {
+    console.log(projectMetadata)
+
+    const allEmotionIds = Object.values(projectMetadata).map(item => item.emotion_1_id);
+
+    console.log(allEmotionIds)
+    return Array.from(new Set(allEmotionIds)); // Convert to Set and back to Array to ensure uniqueness
+}
