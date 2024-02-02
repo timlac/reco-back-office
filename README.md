@@ -22,8 +22,21 @@ I could potentially create an api endpoint later on to add files to a bucket.
   Metadata could then be added in the GET request in lambda. 
 - some information about the response format, e.g. the scales or the emotion alternatives. 
 
+### TESTING 
 
-### Hardcoded solution
+Encountering some weird error with the App.test.js, so I will for now remove this file. 
+
+
+### Mixed emotions 
+
+For mixed emotions it would be sufficient to:
+
+- Get rid of all kind of sampling (we simply take all files available)
+- Add some kind of switch for sampling strategies (e.g. number of samples and number of emotions, if this is turned off just take all files in folder)
+
+But I would need:
+
+- To present the different emotion combinations, this might as well be implemented dynamically to begin with. 
 
 
 
@@ -93,3 +106,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+

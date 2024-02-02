@@ -10,6 +10,7 @@ import EmotionAlternativesDisplay from "../display/EmotionAlternativesDisplay";
 import {message} from "antd";
 import {filterFrequency2Filename} from "../../../services/filenameHandling/filterFilenames";
 import {getFilenameMetadata} from "../../../services/metadataManager";
+import {getEqualDistributionSamples} from "../../../services/sampling2/getEqualDistributionSamples";
 
 
 const CreateSurvey = () => {
@@ -29,7 +30,7 @@ const CreateSurvey = () => {
         let samples = {}
 
         const filteredFrequency2Filename = filterFrequency2Filename(frequency2Filename, values.subset)
-        samples = generateSamples(filteredFrequency2Filename,
+        samples = getEqualDistributionSamples(filteredFrequency2Filename,
             Number(projectData.emotions_per_survey),
             Number(projectData.samples_per_survey))
 

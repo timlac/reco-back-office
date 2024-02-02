@@ -1,6 +1,6 @@
 import {getEmotionIdFromFilename} from "../metadataManager";
 
-export function getFilenamesForEmotion(frequency2Filename, emotion, count) {
+export function getFilesForEmotionId(frequency2Filename, emotion, count) {
     // Initialize an array to hold the selected filenames
     const selectedFilenames = [];
 
