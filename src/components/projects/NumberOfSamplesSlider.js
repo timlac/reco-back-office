@@ -1,8 +1,13 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Col, InputNumber, Row, Slider} from 'antd';
 
 const NumberOfSamplesSlider = ({numberOfSamples, onValueChange, emotionSamplingEnabled}) => {
-    const [inputValue, setInputValue] = useState(1);
+    const [inputValue, setInputValue] = useState(numberOfSamples);
+
+    useEffect(() => {
+        setInputValue(numberOfSamples); // Update inputValue when numberOfSamples changes
+    }, [numberOfSamples]);
+
     const onChange = (newValue) => {
         setInputValue(newValue);
         if (onValueChange) {

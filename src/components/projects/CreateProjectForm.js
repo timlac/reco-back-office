@@ -5,6 +5,23 @@ import {surveyTypes} from "../../config";
 import {capitalizeFirstLetter} from "../../services/utils";
 import NumberOfSamplesSlider from "./NumberOfSamplesSlider";
 
+const getEmotionsCount = (folderDict, folder) => {
+    return folderDict[folder]["experiment_metadata"]?.emotion_ids?.length || 0;
+};
+
+const getSamplesCount = (folderDict, folder) => {
+    return folderDict[folder]["experiment"]?.length || 0;
+};
+
+const getExperimentObjects = (folderDict, folder) => {
+    return folderDict[folder]["experiment"] || [];
+};
+
+const getIntroObjects = (folderDict, folder) => {
+    return folderDict[folder]["intro"] || [];
+};
+
+
 const CreateProjectForm = ({ folderDict, onFormFinish }) => {
     const [form] = Form.useForm();
     const [selectedFolder, setSelectedFolder] = useState(null);
@@ -20,8 +37,8 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
     const handleFolderChange = (e) => {
         const folder = e.target.value;
         setSelectedFolder(folder);
-        setNumberOfEmotions(folderDict[folder]?.emotion_ids?.length || 0);
-        setNumberOfSamples(folderDict[folder]?.objects?.length || 0);
+        setNumberOfEmotions(getEmotionsCount(folderDict, folder));
+        setNumberOfSamples(getSamplesCount(folderDict, folder));
     };
 
     const handleEmotionSamplingChange = (checked) => {
@@ -38,7 +55,8 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
     const onFinish = (values) => {
         const payload = {
             "s3_folder": selectedFolder,
-            "s3_objects": folderDict[selectedFolder]?.objects || [],
+            "s3_experiment_objects": getExperimentObjects(folderDict, selectedFolder),
+            "s3_intro_objects": getIntroObjects(folderDict, selectedFolder),
             ...values
         };
 
