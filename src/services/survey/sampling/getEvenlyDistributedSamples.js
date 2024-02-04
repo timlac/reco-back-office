@@ -3,7 +3,7 @@ import {getFilesForEmotionId} from "./getFilesForEmotionId";
 
 
 
-export function getEqualDistributionSamples(frequency2Filename, emotionIds, totalSamples) {
+export function getEvenlyDistributedSamples(frequency2Filename, emotionIds, totalSamples) {
     // Calculate the number of samples per emotion for equal distribution
     const samplesPerEmotion = Math.floor(totalSamples / emotionIds.length);
     let samplesCollected = 0;

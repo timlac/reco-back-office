@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Col, InputNumber, Row, Slider} from 'antd';
 
-const NumberOfSamplesSlider = ({numberOfSamples, onValueChange, emotionSamplingEnabled}) => {
+const NumberOfSamplesSlider = ({numberOfSamples, onValueChange}) => {
     const [inputValue, setInputValue] = useState(numberOfSamples);
 
     useEffect(() => {
@@ -19,7 +19,6 @@ const NumberOfSamplesSlider = ({numberOfSamples, onValueChange, emotionSamplingE
         <Row>
             <Col span={18}>
                 <Slider
-                    disabled={!emotionSamplingEnabled}
                     min={1}
                     max={numberOfSamples}
                     marks={{
@@ -32,7 +31,6 @@ const NumberOfSamplesSlider = ({numberOfSamples, onValueChange, emotionSamplingE
             </Col>
             <Col span={4}>
                 <InputNumber
-                    disabled={!emotionSamplingEnabled}
                     min={1}
                     max={numberOfSamples}
                     style={{

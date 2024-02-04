@@ -2,7 +2,9 @@
 import React, {useEffect, useState} from 'react';
 import {api} from '../../services/api';
 import CreateProjectForm from './CreateProjectForm';
-import {message} from "antd"; // Import the extracted form component
+import {message} from "antd";
+import {replyTemplates} from "../../templates/replyTemplates";
+import {instructionTemplates} from "../../templates/intructionTemplates";
 
 const CreateProject = () => {
     const [folderDict, setFolderDict] = useState([]);
@@ -18,14 +20,25 @@ const CreateProject = () => {
 
         console.log(payload)
 
+        const templateName = payload.survey_type
+
+        const replyFormat = replyTemplates[templateName]
+        const instructions = instructionTemplates[templateName]
+
+        payload = {
+            reply_format: replyFormat,
+            instructions: instructions,
+            ...payload
+        }
+
         api.post("/projects", payload)
             .then(response => {
                 console.log(response)
-                message.success("Survey successfully created!")
+                message.success("Project successfully created!")
             })
             .catch(error => {
                 console.log(error)
-                message.error(`Error creating the survey: ${error.message}`);
+                message.error(`Error creating the project: ${error.message}`);
             })
     };
 

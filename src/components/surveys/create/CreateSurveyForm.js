@@ -66,9 +66,9 @@ const CreateSurveyForm = ({createSurvey, isLoading}) => {
             </Form.Item>
 
             <Form.Item
-                label="Subset"
-                name="subset"
-                rules={[{required: true, message: 'Please select subset!'}]}
+                label="Valence"
+                name="valence"
+                rules={[{required: true, message: 'Please select valence!'}]}
             >
                 <Radio.Group>
                     <Tooltip></Tooltip>

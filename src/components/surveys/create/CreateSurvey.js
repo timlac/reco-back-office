@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {SCALES, emotionScales} from "../../../config"
+import {SCALES, appraisalDimensions, emotionDimensions} from "../../../config"
 import CreateSurveyForm from "./CreateSurveyForm";
 import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 import {api} from "../../../services/api";
@@ -21,26 +21,30 @@ const CreateSurvey = () => {
 
         setIsLoading(true)
 
+        console.log("projectData: ", projectData)
+
+        console.log("EmotionSamplingEnabled", projectData.emotion_sampling_enabled)
+
+
         const { surveyItems, emotionIds } = generateSurveyItems(
             frequency2Filename,
             Number(projectData.emotions_per_survey),
-            values);
-
-        let replyFormat = []
-        if (projectData.survey_type === SCALES) {
-            replyFormat = emotionScales
-        }
+            Number(projectData.samples_per_survey),
+            projectData.emotion_sampling_enabled,
+            values.valence);
 
         let body = {
             "survey_type": projectData.survey_type,
             "s3_folder": projectData.s3_folder,
             "user_id": values.user_id,
             "survey_items": surveyItems,
+            "example_items": projectData.s3_intro_objects,
             "emotion_alternatives": emotionIds,
             "valence": values.valence,
             "sex": values.sex,
             "date_of_birth": values.dateString,
-            "reply_format": replyFormat
+            "reply_format": projectData.reply_format,
+            "instructions": projectData.instructions
         }
 
         console.log("body:")

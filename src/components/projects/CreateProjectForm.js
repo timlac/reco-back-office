@@ -1,9 +1,10 @@
 // CreateProjectForm.js
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Form, Input, Radio, Select, Slider, Switch} from 'antd';
 import {surveyTypes} from "../../config";
 import {capitalizeFirstLetter} from "../../services/utils";
 import NumberOfSamplesSlider from "./NumberOfSamplesSlider";
+import {replyTemplates} from "../../templates/replyTemplates";
 
 const getEmotionsCount = (folderDict, folder) => {
     return folderDict[folder]["experiment_metadata"]?.emotion_ids?.length || 0;
@@ -29,10 +30,15 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
     const [numberOfSamples, setNumberOfSamples] = useState(10000);
     const [emotionSamplingEnabled, setEmotionSamplingEnabled] = useState(false);
 
-    const surveyTypeOptions = surveyTypes.map(surveyType => ({
-        value: surveyType,
-        label: capitalizeFirstLetter(surveyType)
-    }));
+    useEffect(() => {
+        // This effect updates the form's samples_per_survey field whenever numberOfSamples changes
+        form.setFieldsValue({ samples_per_survey: numberOfSamples });
+    }, [numberOfSamples, form]);
+
+    const surveyTypeOptions = Object.keys(replyTemplates).map(replyFormat => ({
+        value: replyFormat,
+        label: capitalizeFirstLetter(replyFormat)
+    }))
 
     const handleFolderChange = (e) => {
         const folder = e.target.value;
@@ -58,8 +64,8 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
 
     // Update onFinish to construct the body and call onFormFinish
     const onFinish = (values) => {
-        console.log(values.emotions_per_survey)
-        console.log(numberOfEmotions)
+        console.log(values.samples_per_survey)
+
 
         const payload = {
             "s3_folder": selectedFolder,
@@ -79,7 +85,11 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
             wrapperCol={{span: 14}}
             layout="horizontal"
             style={{maxWidth: 800}}
-            initialValues={{survey_type: surveyTypeOptions[0].value, emotions_per_survey: numberOfEmotions}}
+            initialValues={{
+                survey_type: surveyTypeOptions[0].value,
+                emotions_per_survey: numberOfEmotions,
+                samples_per_survey: numberOfSamples
+        }}
             onFinish={onFinish}
         >
             <Form.Item name="s3_folder" label="Select a data source">
@@ -99,6 +109,11 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
                 <Select style={{width: 200}} options={surveyTypeOptions}/>
             </Form.Item>
 
+            <Form.Item label="No. samples per survey" name="samples_per_survey">
+                <NumberOfSamplesSlider numberOfSamples={numberOfSamples}
+                                       onValueChange={handleNumberOfSamplesChange}/>
+            </Form.Item>
+
           <Form.Item label="Enable Emotion Sampling" valuePropName="checked">
                 <Switch onChange={handleEmotionSamplingChange} />
             </Form.Item>
@@ -106,11 +121,6 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
             <Form.Item label="No. emotions per survey" name="emotions_per_survey">
                 <Slider disabled={!emotionSamplingEnabled} min={1} max={numberOfEmotions}
                         marks={{1: 1, [numberOfEmotions]: numberOfEmotions}}/>
-            </Form.Item>
-
-            <Form.Item label="No. samples per survey" name="samples_per_survey">
-                <NumberOfSamplesSlider emotionSamplingEnabled={emotionSamplingEnabled} numberOfSamples={numberOfSamples}
-                                       onValueChange={handleNumberOfSamplesChange}/>
             </Form.Item>
 
             <Form.Item>

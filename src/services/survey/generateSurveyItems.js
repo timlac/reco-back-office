@@ -1,8 +1,9 @@
 import {filterFrequency2Filename} from "../filenameHandling/filterFilenames";
 import {getAllEmotionIdsInData, getFilenameMetadata} from "../metadataManager";
 import {sampleEmotionIds} from "./sampling/sampleEmotionIds";
-import {getEqualDistributionSamples} from "./sampling/getEqualDistributionSamples";
+import {getEvenlyDistributedSamples} from "./sampling/getEvenlyDistributedSamples";
 import {ALL} from "../../config";
+import {getRandomlyDistributedSamples} from "./sampling/getRandomlyDistributedSamples";
 
 
 function getEmotionIds(frequency2Filename, emotionsPerSurvey){
@@ -20,17 +21,34 @@ function getEmotionIds(frequency2Filename, emotionsPerSurvey){
 }
 
 
-export const generateSurveyItems = (frequency2Filename, emotionsPerSurvey, valence = ALL) => {
+export const generateSurveyItems = (frequency2Filename,
+                                    emotionsPerSurvey,
+                                    samplesPerSurvey,
+                                    EmotionSamplingEnabled,
+                                    valence = ALL,
+                                    ) => {
+
+
+    console.log("EmotionSamplingEnabled", EmotionSamplingEnabled)
+    console.log("samples per survey: ", samplesPerSurvey)
+
     // Filter filenames based on the subset selection
     const filteredFrequency2Filename = filterFrequency2Filename(frequency2Filename, valence);
 
-    const emotionIds = getEmotionIds(frequency2Filename, emotionsPerSurvey)
+    let samples = []
+    let emotionIds = []
 
-    // Get a balanced sample of filenames based on the selected emotion IDs and the desired number of samples per survey
-    const samples = getEqualDistributionSamples(
-        filteredFrequency2Filename,
-        emotionIds,
-        emotionsPerSurvey);
+    if (EmotionSamplingEnabled){
+        emotionIds = getEmotionIds(frequency2Filename, emotionsPerSurvey, samplesPerSurvey)
+
+        // Get a balanced sample of filenames based on the selected emotion IDs and the desired number of samples per survey
+        samples = getEvenlyDistributedSamples(
+            filteredFrequency2Filename,
+            emotionIds,
+            emotionsPerSurvey);
+    } else{
+        samples = getRandomlyDistributedSamples(frequency2Filename, samplesPerSurvey)
+    }
 
     // Construct survey items with the necessary metadata
     const surveyItems = samples.map(filename => {
@@ -38,7 +56,9 @@ export const generateSurveyItems = (frequency2Filename, emotionsPerSurvey, valen
         return {
             "filename": filename,
             "video_id": metaData.video_id,
-            "emotion_id": metaData.emotion_1_id,
+            "mix": metaData.mix,
+            "emotion_1_id": metaData.emotion_1_id,
+            "emotion_2_id": metaData.emotion_2_id
         };
     });
 

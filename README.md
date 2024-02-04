@@ -31,14 +31,18 @@ Encountering some weird error with the App.test.js, so I will for now remove thi
 
 For mixed emotions it would be sufficient to:
 
-- Get rid of all kind of sampling (we simply take all files available)
-- Add some kind of switch for sampling strategies (e.g. number of samples and number of emotions, if this is turned off just take all files in folder)
+- Get rid of all kind of sampling (we simply take all files available) - DONE
+- Add some kind of switch for sampling strategies (e.g. number of samples and number of emotions, if this is turned off just take all files in folder) - DONE
 
 But I would need:
 
 - To present the different emotion combinations, this might as well be implemented dynamically to begin with. 
 
-Need to implement some kind of functionality for intro_files, maybe put in a different dir? Or in subdir? 
+Need to implement some kind of functionality for intro_files, maybe put in a different dir? Or in subdir? -DONE USING SUBDIR
+
+### Reply format:
+
+The replyTemplates format should encode both the instructions and the replyTemplates format
 
 
 ## Available Scripts

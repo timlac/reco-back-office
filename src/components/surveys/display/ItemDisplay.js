@@ -15,7 +15,7 @@ const ItemDisplay = ({survey}) => {
     );
 
 
-    const uniqueEmotionIds = new Set(survey?.survey_items.map(item => item.emotion_id));
+    const uniqueEmotionIds = new Set(survey?.survey_items.map(item => item.emotion_1_id));
 
     // Function to generate unique filter options for emotion_id
     const generateEmotionIdFilters = () => {
@@ -41,18 +41,18 @@ const ItemDisplay = ({survey}) => {
         },
         {
             title: 'Emotion',
-            dataIndex: 'emotion_id',
+            dataIndex: 'emotion_1_id',
             key: 'emotion',
             render: (emotionId) => getEmotionFromId(emotionId),
             filters: generateEmotionFilters(),
-            onFilter: (value, record) => record.emotion_id === value
+            onFilter: (value, record) => record.emotion_1_id === value
         },
         {
             title: 'Emotion Id',
-            dataIndex: 'emotion_id',
+            dataIndex: 'emotion_1_id',
             key: 'emotion_id',
             filters: generateEmotionIdFilters(),
-            onFilter: (value, record) => record.emotion_id === value
+            onFilter: (value, record) => record.emotion_1_id === value
         },
         {
             title: 'Has Reply',
@@ -65,19 +65,19 @@ const ItemDisplay = ({survey}) => {
             key: 'reply',
             render: (reply, record) => {
 
-                console.log(reply)
-                console.log(Array.isArray(reply))
-                console.log(reply.length > 1)
+                // console.log(reply)
+                // console.log(Array.isArray(reply))
+                // console.log(reply.length > 1)
 
                 if (reply && Array.isArray(reply) && reply.length > 1) {
-                    console.log("in if")
+                    // console.log("in if")
                     return (
                         <Popover content={scalesDisplay(reply)} title="Scales" trigger="hover">
                             <Button>Replies</Button>
                         </Popover>
                     )
                 } else {
-                    console.log("in else")
+                    // console.log("in else")
                     return reply
                 }
             }
