@@ -14,9 +14,7 @@ const NumberOfSamplesSlider = ({numberOfSamples, onValueChange, emotionSamplingE
             onValueChange(newValue); // Call the passed callback function with the new value
         }
     };
-
-    // Would be good to find a way to set slider and input number to max value by default...
-
+    
     return (
         <Row>
             <Col span={18}>
