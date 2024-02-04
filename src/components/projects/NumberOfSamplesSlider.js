@@ -14,7 +14,7 @@ const NumberOfSamplesSlider = ({numberOfSamples, onValueChange, emotionSamplingE
             onValueChange(newValue); // Call the passed callback function with the new value
         }
     };
-    
+
     return (
         <Row>
             <Col span={18}>

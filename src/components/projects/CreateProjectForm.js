@@ -53,10 +53,14 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
 
     // Update onFinish to construct the body and call onFormFinish
     const onFinish = (values) => {
+        console.log(values.emotions_per_survey)
+        console.log(numberOfEmotions)
+
         const payload = {
             "s3_folder": selectedFolder,
             "s3_experiment_objects": getExperimentObjects(folderDict, selectedFolder),
             "s3_intro_objects": getIntroObjects(folderDict, selectedFolder),
+            "emotion_sampling_enabled": emotionSamplingEnabled,
             ...values
         };
 

@@ -15,11 +15,11 @@ const CreateProject = () => {
 
     const onFormFinish = (payload) => {
 
-        // console.log(folderDict[selectedFolder]["objects"])
-        api.post("/projects", payload)
-            .then(response => console.log(response))
-            .catch(error => console.log(error))
-        // Handle the selected folder value
+        console.log(payload)
+        //
+        // api.post("/projects", payload)
+        //     .then(response => console.log(response))
+        //     .catch(error => console.log(error))
     };
 
     return (
