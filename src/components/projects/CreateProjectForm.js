@@ -37,8 +37,13 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
     const handleFolderChange = (e) => {
         const folder = e.target.value;
         setSelectedFolder(folder);
-        setNumberOfEmotions(getEmotionsCount(folderDict, folder));
+        const newNumberOfEmotions = getEmotionsCount(folderDict, folder)
+
+        setNumberOfEmotions(newNumberOfEmotions);
         setNumberOfSamples(getSamplesCount(folderDict, folder));
+
+        form.setFieldsValue({ emotions_per_survey: newNumberOfEmotions });
+
     };
 
     const handleEmotionSamplingChange = (checked) => {
@@ -68,7 +73,7 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
     };
 
     return (
-        <Form
+        <Form form={form}
             size="small"
             labelCol={{span: 6}}
             wrapperCol={{span: 14}}

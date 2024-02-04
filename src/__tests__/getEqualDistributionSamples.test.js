@@ -1,11 +1,11 @@
 import mockFrequency2Filename from './__mock_data__/mockFrequency2Filename.json';
-import {getFilesForEmotionId} from "../services/survey/sampling2/getFilesForEmotionId";
-import {getEqualDistributionSamples} from "../services/survey/sampling2/getEqualDistributionSamples";
+import {getFilesForEmotionId} from "../services/survey/sampling/getFilesForEmotionId";
+import {getEqualDistributionSamples} from "../services/survey/sampling/getEqualDistributionSamples";
 import {updateProjectMetadata} from "../services/metadataManager";
 import mockProjectMetadata from "./__mock_data__/mockProjectMetadata.json";
 
 // Mocking getFilesForEmotionId function
-jest.mock("../services/survey/sampling2/getFilesForEmotionId", () => ({
+jest.mock("../services/survey/sampling/getFilesForEmotionId", () => ({
     getFilesForEmotionId: jest.fn()
 }));
 

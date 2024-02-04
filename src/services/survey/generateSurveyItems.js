@@ -1,7 +1,7 @@
 import {filterFrequency2Filename} from "../filenameHandling/filterFilenames";
 import {getAllEmotionIdsInData, getFilenameMetadata} from "../metadataManager";
-import {sampleEmotionIds} from "./sampling2/sampleEmotionIds";
-import {getEqualDistributionSamples} from "./sampling2/getEqualDistributionSamples";
+import {sampleEmotionIds} from "./sampling/sampleEmotionIds";
+import {getEqualDistributionSamples} from "./sampling/getEqualDistributionSamples";
 import {ALL} from "../../config";
 
 

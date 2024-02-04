@@ -1,6 +1,6 @@
 import mockProjectMetadata from './__mock_data__/mockProjectMetadata.json'
 import mockFrequency2Filename from './__mock_data__/mockFrequency2Filename.json'
-import {getFilesForEmotionId} from "../services/survey/sampling2/getFilesForEmotionId";
+import {getFilesForEmotionId} from "../services/survey/sampling/getFilesForEmotionId";
 import {mapFilenamesToEmotionIds, updateProjectMetadata} from "../services/metadataManager";
 
 

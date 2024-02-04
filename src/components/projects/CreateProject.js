@@ -1,7 +1,8 @@
 // CreateProject.js
 import React, {useEffect, useState} from 'react';
 import {api} from '../../services/api';
-import CreateProjectForm from './CreateProjectForm'; // Import the extracted form component
+import CreateProjectForm from './CreateProjectForm';
+import {message} from "antd"; // Import the extracted form component
 
 const CreateProject = () => {
     const [folderDict, setFolderDict] = useState([]);
@@ -16,10 +17,16 @@ const CreateProject = () => {
     const onFormFinish = (payload) => {
 
         console.log(payload)
-        //
-        // api.post("/projects", payload)
-        //     .then(response => console.log(response))
-        //     .catch(error => console.log(error))
+
+        api.post("/projects", payload)
+            .then(response => {
+                console.log(response)
+                message.success("Survey successfully created!")
+            })
+            .catch(error => {
+                console.log(error)
+                message.error(`Error creating the survey: ${error.message}`);
+            })
     };
 
     return (

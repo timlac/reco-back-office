@@ -1,7 +1,7 @@
 import {updateProjectMetadata} from "../services/metadataManager";
 import mockProjectMetadata from "./__mock_data__/mockProjectMetadata.json";
 import mockFrequency2Filename from "./__mock_data__/mockFrequency2Filename.json";
-import {sampleEmotionIds} from "../services/survey/sampling2/sampleEmotionIds";
+import {sampleEmotionIds} from "../services/survey/sampling/sampleEmotionIds";
 
 describe('getFilenamesForEmotion', () => {
     // Initialize the project metadata before each test

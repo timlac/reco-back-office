@@ -26,7 +26,7 @@ export const SurveyDataProvider = ({children }) => {
 
         // Ensure both surveyData and projectData are loaded and not loading
         if (!surveysIsLoading && !projectsIsLoading && projectData) {
-            const filename2Freq = createFilename2Frequency(surveyData, projectData.s3_objects);
+            const filename2Freq = createFilename2Frequency(surveyData, projectData.s3_experiment_objects);
             setFrequency2Filename(invertFilename2Frequency(filename2Freq));
             setIsFrequencyLoading(false); // Indicate that frequency calculation is done
 
