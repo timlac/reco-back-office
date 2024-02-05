@@ -1,7 +1,9 @@
 import _ from 'lodash';
 import {getFilesForEmotionId} from "./getFilesForEmotionId";
 
+// TODO: SOMETHING SEEMS TO BE WRONG WITH THIS COMPONENT
 
+// ONLY SAMPLES ONE OF EACH EMOTION....
 
 export function getEvenlyDistributedSamples(frequency2Filename, emotionIds, totalSamples) {
     // Calculate the number of samples per emotion for equal distribution

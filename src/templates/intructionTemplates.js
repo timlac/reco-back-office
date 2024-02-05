@@ -32,7 +32,7 @@ export const instructionTemplates = {
                     1 motsvarar "Nej inte alls" och 5 motsvarar "Ja absolut!"`
                 }
             ],
-            experiment_round_instructions: [
+            experiment_round_instructions_2: [
                 {
                     type: "text",
                     content: `Svara på följande frågor om den händelse som har orsakat känslan: 
@@ -93,7 +93,7 @@ export const instructionTemplates = {
                     10 = Mycket framträdande, 5 = Ganska framträdande, 0 = Inte alls framträdande.`
                 }
             ],
-            experiment_round_instructions: [
+            experiment_round_instructions_2: [
                 {
                     type: "text",
                     content: `Vilka två känslor uttrycktes? Ange hur tydligt du uppfattade att de två olika känslorna framträdde med hjälp av skjutknapparna för respektive känslokategori. 
@@ -101,7 +101,7 @@ export const instructionTemplates = {
                 }
             ]
         },
-    emotionAlternatives: {
+    emotionCategories: {
         instructions_1: [
             {
                 type: "text",
@@ -156,12 +156,5 @@ export const instructionTemplates = {
             },
 
         ],
-        experiment_round_instructions: [
-            {
-                type: "text",
-                content: `Vilka två känslor uttrycktes? Ange hur tydligt du uppfattade att de två olika känslorna framträdde med hjälp av skjutknapparna för respektive känslokategori. 
-                    10 = Mycket framträdande, 5 = Ganska framträdande, 0 = Inte alls framträdande.`
-            }
-        ]
     },
 };

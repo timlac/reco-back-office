@@ -35,7 +35,7 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
         form.setFieldsValue({ samples_per_survey: numberOfSamples });
     }, [numberOfSamples, form]);
 
-    const surveyTypeOptions = Object.keys(replyTemplates).map(replyFormat => ({
+    const templateOptions = Object.keys(replyTemplates).map(replyFormat => ({
         value: replyFormat,
         label: capitalizeFirstLetter(replyFormat)
     }))
@@ -86,7 +86,7 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
             layout="horizontal"
             style={{maxWidth: 800}}
             initialValues={{
-                survey_type: surveyTypeOptions[0].value,
+                survey_type: templateOptions[0].value,
                 emotions_per_survey: numberOfEmotions,
                 samples_per_survey: numberOfSamples
         }}
@@ -105,8 +105,8 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
                 <Input/>
             </Form.Item>
 
-            <Form.Item name="survey_type" label="Survey Type">
-                <Select style={{width: 200}} options={surveyTypeOptions}/>
+            <Form.Item name="template_name" label="Survey Template">
+                <Select style={{width: 200}} options={templateOptions}/>
             </Form.Item>
 
             <Form.Item label="No. samples per survey" name="samples_per_survey">

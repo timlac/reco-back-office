@@ -18,9 +18,7 @@ const CreateProject = () => {
 
     const onFormFinish = (payload) => {
 
-        console.log(payload)
-
-        const templateName = payload.survey_type
+        const templateName = payload.template_name
 
         const replyFormat = replyTemplates[templateName]
         const instructions = instructionTemplates[templateName]

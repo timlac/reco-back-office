@@ -2,7 +2,7 @@ export const replyTemplates = {
 
     appraisalDimensions: {
         reply_structure: "dimensions",
-        requiredReplies: 6,
+        required_replies: 6,
         dimensions:
             [
                 {
@@ -39,7 +39,7 @@ export const replyTemplates = {
     },
     emotionDimensions: {
         reply_structure: "dimensions",
-        requiredReplies: 2,
+        required_replies: 2,
         dimensions:
             [
                 {
@@ -70,6 +70,6 @@ export const replyTemplates = {
             ]
     },
     emotionCategories: {
-        reply_structure: "alternatives"
+        reply_structure: "categories"
     }
 }

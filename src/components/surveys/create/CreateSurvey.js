@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {SCALES, appraisalDimensions, emotionDimensions} from "../../../config"
 import CreateSurveyForm from "./CreateSurveyForm";
 import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 import {api} from "../../../services/api";

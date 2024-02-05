@@ -6,7 +6,7 @@ const ItemDisplay = ({survey}) => {
     const scalesDisplay = (reply) => (
         <div>
             <ul>
-                {survey.reply_format.map((element, index) => (
+                {survey.reply_format.dimensions.map((element, index) => (
                     <li key={index}>
                         {element.label}:  {reply[index] || null}</li>
                 ))}
@@ -64,10 +64,6 @@ const ItemDisplay = ({survey}) => {
             dataIndex: 'reply',
             key: 'reply',
             render: (reply, record) => {
-
-                // console.log(reply)
-                // console.log(Array.isArray(reply))
-                // console.log(reply.length > 1)
 
                 if (reply && Array.isArray(reply) && reply.length > 1) {
                     // console.log("in if")
