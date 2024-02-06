@@ -45,7 +45,7 @@ export const generateSurveyItems = (frequency2Filename,
         samples = getEvenlyDistributedSamples(
             filteredFrequency2Filename,
             emotionIds,
-            emotionsPerSurvey);
+            samplesPerSurvey);
     } else{
         samples = getRandomlyDistributedSamples(frequency2Filename, samplesPerSurvey)
     }

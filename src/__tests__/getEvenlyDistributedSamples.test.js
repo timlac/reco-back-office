@@ -9,7 +9,7 @@ jest.mock("../services/survey/sampling/getFilesForEmotionId", () => ({
     getFilesForEmotionId: jest.fn()
 }));
 
-describe('getEqualDistributionSamples', () => {
+describe('getEvenlyDistributedSamples', () => {
     beforeEach(() => {
         // Reset mocks before each test
         getFilesForEmotionId.mockReset();

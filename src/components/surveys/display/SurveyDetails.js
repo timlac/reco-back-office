@@ -16,7 +16,7 @@ function getProgress(surveyItems) {
 }
 
 function getAccuracy(surveyItems) {
-    const numberOfCorrect = surveyItems.filter(obj => obj.emotion_id === obj.reply).length
+    const numberOfCorrect = surveyItems.filter(obj => obj.emotion_1_id === obj.reply).length
     const numberOfReplies = getNumberOfReplies(surveyItems)
 
     if (numberOfReplies > 0) {
