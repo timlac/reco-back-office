@@ -8,7 +8,7 @@ import ItemDisplay from "./ItemDisplay";
 
 
 function getNumberOfReplies(surveyItems) {
-    return surveyItems.filter(obj => obj.has_reply === '1').length
+    return surveyItems.filter(obj => obj.has_reply === 1).length
 }
 
 function getProgress(surveyItems) {
@@ -16,7 +16,7 @@ function getProgress(surveyItems) {
 }
 
 function getAccuracy(surveyItems) {
-    const numberOfCorrect = surveyItems.filter(obj => obj.emotion_1_id === obj.reply).length
+    const numberOfCorrect = surveyItems.filter(obj => obj.metadata.emotion_1_id === obj.reply).length
     const numberOfReplies = getNumberOfReplies(surveyItems)
 
     if (numberOfReplies > 0) {
@@ -45,7 +45,7 @@ function getSurvey(surveyData, surveyId) {
 
 const SurveyDetails = () => {
 
-    const {surveyData, isLoading} = useSurveyData()
+    const {surveyData, projectData, isLoading} = useSurveyData()
     const {surveyId} = useParams();
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -86,9 +86,9 @@ const SurveyDetails = () => {
                             <Progress type="circle" percent={(getAccuracy(data?.survey_items) * 100).toFixed(1)}/>
                         </Card>
                     </Space>
-                    <ItemDisplay survey={data}></ItemDisplay>
+                    <ItemDisplay survey={data} projectdata={projectData} ></ItemDisplay>
 
-                    <EmotionAlternativesDisplay emotionAlternatives={data.emotion_alternatives}/>
+                    <EmotionAlternativesDisplay emotionAlternatives={data.emotion_ids}/>
                 </div>
             }
 

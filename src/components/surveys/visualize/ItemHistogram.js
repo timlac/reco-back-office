@@ -4,13 +4,26 @@ import {Radio, Space} from "antd";
 import {ALL, NEGATIVE_VALENCE, POSITIVE_VALENCE} from "../../../config";
 import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 import {filterFrequency2Filename} from "../../../services/filenameHandling/filterFilenames";
+import {
+    createFilename2Frequency,
+    invertFilename2Frequency
+} from "../../../services/filenameHandling/createFilename2Frequency";
 
 
 const ItemHistogram = () => {
 
-    const { frequency2Filename, isLoading } = useSurveyData()
+    const { isLoading, projectData, surveyData } = useSurveyData()
 
-    console.log(frequency2Filename)
+    const [frequency2Filename, setFrequency2Filename] = useState({});
+    const [isFrequencyLoading, setIsFrequencyLoading] = useState(true);
+
+    useEffect(() => {
+        if (!isLoading){
+            const filename2Freq = createFilename2Frequency(surveyData, projectData.s3_experiment_objects);
+            setFrequency2Filename(invertFilename2Frequency(filename2Freq));
+            setIsFrequencyLoading(false); // Indicate that frequency calculation is done
+        }
+    }, [projectData, surveyData, isLoading]);
 
     const [value, setValue] = useState(ALL);
     const [chartData, setChartData] = useState({})
@@ -36,7 +49,7 @@ const ItemHistogram = () => {
 
     return (
         <div>
-        {isLoading ?
+        {isLoading || isFrequencyLoading ?
                 <div>Loading...</div>
                 :
 

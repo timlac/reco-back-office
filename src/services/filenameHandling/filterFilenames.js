@@ -1,10 +1,10 @@
 import {ALL, NEGATIVE_VALENCE, NEUTRAL_VALENCE, POSITIVE_VALENCE} from "../../config";
-import {getEmotionIdFromFilename} from "../metadataManager";
 import {getValenceFromEmotionId} from "nexa-js-sentimotion-mapper";
 
 
 function getValence(filename) {
-    const emotionId = getEmotionIdFromFilename(filename);
+    // TODO: FIX THIS
+    const emotionId = 1
     return getValenceFromEmotionId(emotionId);
 }
 

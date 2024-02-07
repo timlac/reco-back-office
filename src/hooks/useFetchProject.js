@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import { api } from "../services/api";
 
 export const useFetchProject = (projectName) => {
@@ -20,6 +20,11 @@ export const useFetchProject = (projectName) => {
             setIsLoading(false);
         }
     }, [projectName]);
+
+    // Automatically fetch the project data when the hook is used
+    useEffect(() => {
+        fetchProject();
+    }, [fetchProject]);
 
     return { projectData, isLoading, error, fetchProject };
 };

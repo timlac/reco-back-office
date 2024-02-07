@@ -1,26 +1,30 @@
 import React, {useEffect, useState} from 'react';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
-import {mapFilenamesToEmotionIds} from "../../../services/metadataManager";
 import {getEmotionFromId} from "nexa-js-sentimotion-mapper";
+import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 
 const EmotionHistogram = ({filenames}) => {
+
+    const { surveyData } = useSurveyData()
 
     const [chartData, setChartData] = useState({})
 
 
     useEffect(() => {
 
-        const emotionIds = mapFilenamesToEmotionIds(filenames);
-
-        // Step 2: Count each emotion ID
         const emotionIdCounts = {};
-        emotionIds.forEach(emotionId => {
-            if (emotionId in emotionIdCounts) {
-                emotionIdCounts[emotionId]++;
-            } else {
-                emotionIdCounts[emotionId] = 1;
+
+        for (const survey of surveyData) {
+            for (const surveyItem of survey.survey_items) {
+                const emotionId = surveyItem.metadata.emotion_1_id
+                if (emotionId in emotionIdCounts) {
+                    emotionIdCounts[emotionId]++;
+                } else {
+                    emotionIdCounts[emotionId] = 1;
+                }
+
             }
-        });
+        }
         const histData = Object.entries(emotionIdCounts).map(([key, val]) => ({
             emotion: getEmotionFromId(key),
             count: val
@@ -28,7 +32,7 @@ const EmotionHistogram = ({filenames}) => {
 
         setChartData(histData)
 
-    }, [filenames]);
+    }, [filenames, surveyData]);
 
     return (
         <div>

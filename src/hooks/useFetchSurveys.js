@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import { api } from "../services/api";
 
 export const useFetchSurveys = (projectName) => {
@@ -24,6 +24,11 @@ export const useFetchSurveys = (projectName) => {
             setIsLoading(false);
         }
     }, [projectName]);
+
+    // Automatically fetch the surveys when the hook is used
+    useEffect(() => {
+        fetchSurveys();
+    }, [fetchSurveys]);
 
     return { surveyData, isLoading, error, fetchSurveys };
 };

@@ -1,21 +1,21 @@
 import {Button, Collapse, Popover, Table} from 'antd';
 import {getEmotionFromId} from "nexa-js-sentimotion-mapper";
 
-const ItemDisplay = ({survey}) => {
+const ItemDisplay = ({survey, projectdata}) => {
 
     const scalesDisplay = (reply) => (
         <div>
             <ul>
-                {survey.reply_format.dimensions.map((element, index) => (
+                {projectdata.reply_format.dimensions.map((element, index) => (
                     <li key={index}>
-                        {element.label}:  {reply[index] || null}</li>
+                        {element.label}: {reply[index] || null}</li>
                 ))}
             </ul>
         </div>
     );
 
 
-    const uniqueEmotionIds = new Set(survey?.survey_items.map(item => item.emotion_1_id));
+    const uniqueEmotionIds = new Set(survey?.survey_items.map(item => item.metadata.emotion_1_id));
 
     // Function to generate unique filter options for emotion_id
     const generateEmotionIdFilters = () => {
@@ -41,18 +41,23 @@ const ItemDisplay = ({survey}) => {
         },
         {
             title: 'Emotion',
-            dataIndex: 'emotion_1_id',
             key: 'emotion',
-            render: (emotionId) => getEmotionFromId(emotionId),
+            // render: (emotionId) => getEmotionFromId(emotionId),
+            render: (record) => {
+                const emotionId = record.metadata?.emotion_1_id; // Safely access nested property
+                return getEmotionFromId(emotionId); // Use the emotionId to get and display the emotion
+            },
             filters: generateEmotionFilters(),
-            onFilter: (value, record) => record.emotion_1_id === value
+            onFilter: (value, record) => record.metadata.emotion_1_id === value
         },
         {
             title: 'Emotion Id',
-            dataIndex: 'emotion_1_id',
             key: 'emotion_id',
+            render: (record) => {
+                return record.metadata?.emotion_1_id; // Use the emotionId to get and display the emotion
+            },
             filters: generateEmotionIdFilters(),
-            onFilter: (value, record) => record.emotion_1_id === value
+            onFilter: (value, record) => record.metadata.emotion_1_id === value
         },
         {
             title: 'Has Reply',
@@ -64,7 +69,6 @@ const ItemDisplay = ({survey}) => {
             dataIndex: 'reply',
             key: 'reply',
             render: (reply, record) => {
-
                 if (reply && Array.isArray(reply) && reply.length > 1) {
                     // console.log("in if")
                     return (
