@@ -7,6 +7,7 @@ import ItemDisplay from "../display/ItemDisplay";
 import EmotionAlternativesDisplay from "../display/EmotionAlternativesDisplay";
 import {message} from "antd";
 import {generateSurveyItems} from "../../../services/survey/generateSurveyItems";
+import {VALENCES} from "../../../config";
 
 
 const CreateSurvey = () => {
@@ -27,14 +28,17 @@ const CreateSurvey = () => {
             frequency2Filename,
             Number(projectData.emotions_per_survey),
             Number(projectData.samples_per_survey),
-            projectData.emotion_sampling_enabled,
+            projectData.balanced_sampling_enabled,
             values.valence);
+
+        // Make sure valence is either positive, negative or null
+        const valence = [VALENCES.POSITIVE, VALENCES.NEGATIVE].includes(values.valence) ? values.valence : null;
 
         let body = {
             "user_id": values.user_id,
-            "survey_items": surveyItems,
-            "emotion_alternatives": emotionIds,
-            "valence": values.valence,
+            // "survey_items": surveyItems,
+            // "emotion_alternatives": emotionIds,
+            "valence": valence,
             "sex": values.sex,
             "date_of_birth": values.dateString,
         }
@@ -71,7 +75,7 @@ const CreateSurvey = () => {
                         <SurveySummary data={survey}></SurveySummary>
                         <ItemDisplay survey={survey}></ItemDisplay>
                         <EmotionAlternativesDisplay
-                            emotionAlternatives={survey.emotion_alternatives}></EmotionAlternativesDisplay>
+                            emotionAlternatives={survey.emotion_ids}></EmotionAlternativesDisplay>
                     </div>
 
                 )}

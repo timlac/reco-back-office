@@ -28,7 +28,7 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
     const [selectedFolder, setSelectedFolder] = useState(null);
     const [numberOfEmotions, setNumberOfEmotions] = useState(44);
     const [numberOfSamples, setNumberOfSamples] = useState(10000);
-    const [emotionSamplingEnabled, setEmotionSamplingEnabled] = useState(false);
+    const [balancedSamplingEnabled, setBalancedSamplingEnabled] = useState(false);
 
     useEffect(() => {
         // This effect updates the form's samples_per_survey field whenever numberOfSamples changes
@@ -52,8 +52,8 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
 
     };
 
-    const handleEmotionSamplingChange = (checked) => {
-        setEmotionSamplingEnabled(checked);
+    const handleBalancedSamplingChange = (checked) => {
+        setBalancedSamplingEnabled(checked);
         // Optional: Reset sliders if needed...
     };
 
@@ -71,7 +71,7 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
             "s3_folder": selectedFolder,
             "s3_experiment_objects": getExperimentObjects(folderDict, selectedFolder),
             "s3_intro_objects": getIntroObjects(folderDict, selectedFolder),
-            "emotion_sampling_enabled": emotionSamplingEnabled,
+            "balanced_sampling_enabled": balancedSamplingEnabled,
             ...values
         };
 
@@ -80,17 +80,17 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
 
     return (
         <Form form={form}
-            size="small"
-            labelCol={{span: 6}}
-            wrapperCol={{span: 14}}
-            layout="horizontal"
-            style={{maxWidth: 800}}
-            initialValues={{
-                survey_type: templateOptions[0].value,
-                emotions_per_survey: numberOfEmotions,
-                samples_per_survey: numberOfSamples
-        }}
-            onFinish={onFinish}
+              size="small"
+              labelCol={{span: 6}}
+              wrapperCol={{span: 14}}
+              layout="horizontal"
+              style={{maxWidth: 800}}
+              initialValues={{
+                  survey_type: templateOptions[0].value,
+                  emotions_per_survey: numberOfEmotions,
+                  samples_per_survey: numberOfSamples
+              }}
+              onFinish={onFinish}
         >
             <Form.Item name="s3_folder" label="Select a data source">
                 <Radio.Group onChange={handleFolderChange} value={selectedFolder}>
@@ -114,12 +114,16 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
                                        onValueChange={handleNumberOfSamplesChange}/>
             </Form.Item>
 
-          <Form.Item label="Enable Emotion Sampling" valuePropName="checked">
-                <Switch onChange={handleEmotionSamplingChange} />
+            <Form.Item label="Enable Balanced Sampling" valuePropName="checked"
+                       tooltip={<p>Balanced Sampling means that
+                survey items will have an equal distribution of emotion ids, not applicable
+                for items with mixed emotions</p>}>
+
+                <Switch onChange={handleBalancedSamplingChange}/>
             </Form.Item>
 
             <Form.Item label="No. emotions per survey" name="emotions_per_survey">
-                <Slider disabled={!emotionSamplingEnabled} min={1} max={numberOfEmotions}
+                <Slider disabled={!balancedSamplingEnabled} min={1} max={numberOfEmotions}
                         marks={{1: 1, [numberOfEmotions]: numberOfEmotions}}/>
             </Form.Item>
 
