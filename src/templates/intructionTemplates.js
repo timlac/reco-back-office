@@ -86,6 +86,12 @@ export const instructionTemplates = {
                     Starta övningsomgången genom att klicka på "Gå Vidare".`
                 }
             ],
+            example_round_instructions_1: [
+            {
+                type: "text",
+                content: `Observera att du endast kan skicka svaret om du fyllt i två skjutknappar. Om du råkat fylla i mer än två skjutknappar så dra tillbaka de du inte vill ha med till 0.`
+            },
+        ],
             example_round_instructions_2: [
                 {
                     type: "text",

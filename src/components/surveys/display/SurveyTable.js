@@ -1,10 +1,18 @@
-import {Table} from "antd";
+import {FloatButton, Table} from "antd";
 import {Link} from "react-router-dom";
 import {useSurveyData} from "../../../contexts/SurveyDataProvider";
+import {exportToCsv} from "../../../services/exportToCsv";
 
 export const SurveyTable = () => {
 
-    const { surveyData } = useSurveyData()
+    const {surveyData, projectName} = useSurveyData()
+
+    // Generate a unique list of user_id values for filtering
+    const userIdFilters = Array.from(new Set(surveyData.map(item => item.user_id)))
+        .map(user_id => ({
+            text: user_id,
+            value: user_id,
+        }));
 
     const columns = [
         {
@@ -17,6 +25,8 @@ export const SurveyTable = () => {
             title: 'User Id',
             dataIndex: 'user_id',
             key: 'user_id',
+            filters: userIdFilters,
+            onFilter: (value, record) => record.user_id === value,
         },
         {
             title: 'Valence',
@@ -46,6 +56,14 @@ export const SurveyTable = () => {
         },
     ];
     return (
-        <Table dataSource={surveyData} rowKey="survey_id" columns={columns}/>
+        <div>
+            <Table dataSource={surveyData} rowKey="survey_id" columns={columns}/>
+            <FloatButton tooltip={<div>Export</div>} onClick={() => {
+                console.log('onClick')
+                exportToCsv(projectName, surveyData, 'export.csv', ["survey_id", "user_id"]);
+
+            }
+            }/>;
+        </div>
     )
 }

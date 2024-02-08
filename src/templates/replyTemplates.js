@@ -3,6 +3,7 @@ export const replyTemplates = {
     appraisalDimensions: {
         reply_structure: "dimensions",
         required_replies: 6,
+        maximum_replies: 6,
         dimensions:
             [
                 {
@@ -40,6 +41,7 @@ export const replyTemplates = {
     emotionDimensions: {
         reply_structure: "dimensions",
         required_replies: 2,
+        maximum_replies: 2,
         dimensions:
             [
                 {

@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {List, Card} from 'antd';
 import {api} from "../../services/api";
-import {Link} from "react-router-dom"; // Assuming you're using axios for API calls
+import {Link} from "react-router-dom";
+import {CheckCircleOutlined, CloseOutlined} from "@ant-design/icons"; // Assuming you're using axios for API calls
 
 const ViewProjects = () => {
     const [projects, setProjects] = useState([]);
@@ -30,8 +31,12 @@ const ViewProjects = () => {
                             <Card title={project.project_name}>
 
                                 <p>Survey Type: {project.survey_type}</p>
-                                <p>Emotions per survey: {project.emotions_per_survey}</p>
                                 <p>Samples per survey: {project.samples_per_survey}</p>
+                                <p>Balanced Sampling: {project.balanced_sampling_enabled ?
+                                    <CheckCircleOutlined /> : <CloseOutlined /> }</p>
+                                {project.balanced_sampling_enabled &&
+                                    <p>Emotions per survey: {project.emotions_per_survey}</p>
+                                }
 
                             </Card>
                         </Link>

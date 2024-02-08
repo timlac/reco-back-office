@@ -35,6 +35,9 @@ const ItemHistogram = () => {
 
     useEffect(() => {
         const filteredFrequency2Filename = filterFrequency2Filename(frequency2Filename, value)
+
+        console.log("frequency2Filename ", frequency2Filename)
+
         setChartData( getChartData(filteredFrequency2Filename) )
     }, [value, frequency2Filename]);
 
