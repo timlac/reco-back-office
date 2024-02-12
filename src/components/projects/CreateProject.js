@@ -18,10 +18,8 @@ const CreateProject = () => {
 
     const onFormFinish = (payload) => {
 
-        const templateName = payload.template_name
-
-        const replyFormat = replyTemplates[templateName]
-        const instructions = instructionTemplates[templateName]
+        const replyFormat = replyTemplates[payload.reply_template_name]
+        const instructions = instructionTemplates[payload.instruction_template_name]
 
         payload = {
             reply_format: replyFormat,

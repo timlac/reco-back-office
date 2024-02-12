@@ -29,6 +29,7 @@ function filterByValence(frequency2Filename, targetValence) {
 export function filterFrequency2Filename(frequency2Filename, filterOn) {
     switch (filterOn) {
         case POSITIVE_VALENCE:
+            return filterByValence(frequency2Filename, filterOn)
         case NEGATIVE_VALENCE:
             return filterByValence(frequency2Filename, filterOn)
         case ALL:

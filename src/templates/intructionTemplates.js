@@ -129,14 +129,110 @@ export const instructionTemplates = {
             {
                 type: "text",
                 content: `Efter varje inspelning måste du välja ett (men inte fler) känslo-ord för
-                        att gå vidare. Det kan vara så att du är osäker, oroa dig inte för det, det händer alla.`
+                        att gå vidare. Det bästa sättet att göra det är att ge ditt spontana svar utan att fundera för mycket.
+                        Notera att personerna talar ett låtsasspråk, så du behöver inte försöka förstå vad de säger.
+                        Fokusera istället på vad de uttrycker med ansikte, röst och kroppsrörelser.
+                        Du kan spela upp samma video så många gånger som du vill och när du har valt den känsla som
+                        du tror visas av skådespelaren så trycker du på skicka för att komma till nästa video!`
             },
+            {
+                type: "text",
+                content: `Testet är uppbyggt enligt följande: Först kommer 3 exempel, efter varje videoklipp ska du välja
+                        en känsla, och efter du har sett exempelfilmerna kommer det riktiga testet att börja.`
+            },
+        ],
+        example_round_instructions_1: [
+            {
+                type: "text",
+                content: `Välj den känsla du ser i videon nedan. Du kommer att få skicka in svar på tre videor
+                    i syfte att öva på hur det går till. När du svarat på tre video kommer du att kunna gå vidare till det verkliga experimentet.
+                    Tänk på att:`
+            },
+            {
+                type: "list",
+                content: ["Genom att hålla musen över ett svarsalternativ så får du en beskrivning av känslan.",
+                    "Du kan inte skicka svaret förrän du spelat hela videon från början till slut.",
+                    "Du kan inte skicka svaret förrän du valt svarsalternativ."
+                ]
+            },
+
+        ],
+    },
+    emotionCategoriesAudio: {
+        instructions_1: [
+            {
+                type: "text",
+                content: `Detta test har för avsikt att mäta din förmåga att känna igen känslouttryck i människors
+                        röster. Din uppgift är att lyssna på en serie med korta audio inspelningar av personer
+                        som uttrycker ett urval av olika känslor.`
+            },
+            {
+                type: "text",
+                content: `Efter varje uppspelning av dessa inspelningar du tittat på,
+                        ombeds du att välja namnet på den känsla som personen uttrycker.
+                        I just detta experiment kommer du att få välja mellan dessa känslor.
+
+                        Känslorna presenteras som knappar där man kan välja svar genom att klicka.
+                        Om man håller muspekaren över knappen så visas en kort beskrivning av känslan, se exempel:`
+            }
+        ],
+        instructions_2: [
             {
                 type: "text",
                 content: `Efter varje inspelning måste du välja ett (men inte fler) känslo-ord för
                         att gå vidare. Det bästa sättet att göra det är att ge ditt spontana svar utan att fundera för mycket.
                         Notera att personerna talar ett låtsasspråk, så du behöver inte försöka förstå vad de säger.
-                        Fokusera istället på vad de uttrycker med ansikte, röst och kroppsrörelser.
+                        Fokusera istället på vad de uttrycker med röst, tonläge etc.
+                        Du kan spela upp samma klipp så många gånger som du vill och när du har valt den känsla som
+                        du tror visas av skådespelaren så trycker du på skicka för att komma till nästa klipp!`
+            },
+            {
+                type: "text",
+                content: `Testet är uppbyggt enligt följande: Först kommer 3 exempel, efter varje klipp ska du välja
+                        en känsla, och efter du har sett exempelfilmerna kommer det riktiga testet att börja.`
+            },
+        ],
+        example_round_instructions_1: [
+            {
+                type: "text",
+                content: `Välj den känsla du ser i klippet nedan. Du kommer att få skicka in svar på tre klipp
+                    i syfte att öva på hur det går till. När du svarat på tre klipp kommer du att kunna gå vidare till det verkliga experimentet.
+                    Tänk på att:`
+            },
+            {
+                type: "list",
+                content: ["Genom att hålla musen över ett svarsalternativ så får du en beskrivning av känslan.",
+                    "Du kan inte skicka svaret förrän du spelat hela klippet från början till slut.",
+                    "Du kan inte skicka svaret förrän du valt svarsalternativ."
+                ]
+            },
+
+        ],
+    },
+    emotionCategoriesVideo: {
+        instructions_1: [
+            {
+                type: "text",
+                content: `Detta test har för avsikt att mäta din förmåga att känna igen känslouttryck i människors
+                        ansikten och röster. Din uppgift är att titta på en serie med korta video inspelningar av personer
+                        som uttrycker ett urval av olika känslor.`
+            },
+            {
+                type: "text",
+                content: `Efter varje uppspelning av dessa inspelningar du tittat på,
+                        ombeds du att välja namnet på den känsla som personen uttrycker.
+                        I just detta experiment kommer du att få välja mellan dessa känslor.
+
+                        Känslorna presenteras som knappar där man kan välja svar genom att klicka.
+                        Om man håller muspekaren över knappen så visas en kort beskrivning av känslan, se exempel:`
+            }
+        ],
+        instructions_2: [
+            {
+                type: "text",
+                content: `Efter varje inspelning måste du välja ett (men inte fler) känslo-ord för
+                        att gå vidare. Det bästa sättet att göra det är att ge ditt spontana svar utan att fundera för mycket.
+                        Fokusera istället på vad de uttrycker med ansikte och kroppsrörelser.
                         Du kan spela upp samma video så många gånger som du vill och när du har valt den känsla som
                         du tror visas av skådespelaren så trycker du på skicka för att komma till nästa video!`
             },

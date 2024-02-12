@@ -1,4 +1,4 @@
-import {FloatButton, Table} from "antd";
+import {FloatButton, Progress, Table} from "antd";
 import {Link} from "react-router-dom";
 import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 import {exportToCsv} from "../../../services/exportToCsv";
@@ -6,6 +6,8 @@ import {exportToCsv} from "../../../services/exportToCsv";
 export const SurveyTable = () => {
 
     const {surveyData, projectName} = useSurveyData()
+
+    console.log(surveyData)
 
     // Generate a unique list of user_id values for filtering
     const userIdFilters = Array.from(new Set(surveyData.map(item => item.user_id)))
@@ -54,13 +56,24 @@ export const SurveyTable = () => {
                 return a.created_at - b.created_at
             }
         },
+        {
+            title: 'Progress',
+            dataIndex: 'progress',
+            key: 'progress',
+            render: (progress) => {
+                return <Progress steps={4} percent={(progress * 100).toFixed(1)} size="small" />
+            },
+            sorter: (a, b) => {
+                return a.progress - b.progress
+            }
+        },
     ];
     return (
         <div>
             <Table dataSource={surveyData} rowKey="survey_id" columns={columns}/>
             <FloatButton tooltip={<div>Export</div>} onClick={() => {
                 console.log('onClick')
-                exportToCsv(projectName, surveyData, 'export.csv', ["survey_id", "user_id"]);
+                exportToCsv(projectName, surveyData, 'export.csv', ["survey_id", "user_id", "url", "number_of_items"]);
 
             }
             }/>;

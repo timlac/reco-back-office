@@ -35,9 +35,6 @@ const ItemHistogram = () => {
 
     useEffect(() => {
         const filteredFrequency2Filename = filterFrequency2Filename(frequency2Filename, value)
-
-        console.log("frequency2Filename ", frequency2Filename)
-
         setChartData( getChartData(filteredFrequency2Filename) )
     }, [value, frequency2Filename]);
 
@@ -66,7 +63,7 @@ const ItemHistogram = () => {
                     </Radio.Group>
 
 
-                    <BarChart width={800} height={400} data={chartData}>
+                    <BarChart width={400} height={400} data={chartData}>
                         <CartesianGrid strokeDasharray="3 3"/>
                         <XAxis dataKey="numOccurrences"
                                label={{value: 'Number of Occurrences', position: 'insideBottomRight', dy: 10}}/>

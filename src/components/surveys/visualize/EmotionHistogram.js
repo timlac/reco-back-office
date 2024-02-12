@@ -5,7 +5,7 @@ import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 
 const EmotionHistogram = ({filenames}) => {
 
-    const { surveyData } = useSurveyData()
+    const {surveyData, isLoading} = useSurveyData()
 
     const [chartData, setChartData] = useState({})
 
@@ -34,21 +34,20 @@ const EmotionHistogram = ({filenames}) => {
 
     }, [filenames, surveyData]);
 
-    return (
-        <div>
-            <div>
-                <BarChart width={800} height={400} data={chartData}>
-                    <CartesianGrid strokeDasharray="3 3"/>
-                    <XAxis dataKey="emotion" label={{value: 'Emotion ID', position: 'insideBottomRight', dy: 10}}/>
+    if (isLoading) {
+        return <div>Loading...</div>
+    } else {
+        return <div>
+            <BarChart width={400} height={400} data={chartData}>
+                <CartesianGrid strokeDasharray="3 3"/>
+                <XAxis dataKey="emotion" label={{value: 'Emotion ID', position: 'insideBottomRight', dy: 10}}/>
 
-                    <YAxis label={{value: 'Count', angle: -90, position: 'insideLeft'}}/>
-                    <Tooltip/>
-                    <Bar dataKey="count" fill="#8884d8"/>
-                </BarChart>
-            </div>
-
+                <YAxis label={{value: 'Count', angle: -90, position: 'insideLeft'}}/>
+                <Tooltip/>
+                <Bar dataKey="count" fill="#8884d8"/>
+            </BarChart>
         </div>
-    );
+    }
 };
 
 export default EmotionHistogram;

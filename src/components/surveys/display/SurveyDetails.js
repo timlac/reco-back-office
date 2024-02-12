@@ -16,7 +16,7 @@ function getProgress(surveyItems) {
 }
 
 function getAccuracy(surveyItems) {
-    const numberOfCorrect = surveyItems.filter(obj => obj.metadata.emotion_1_id === obj.reply).length
+    const numberOfCorrect = surveyItems.filter(obj => obj.metadata.emotion_1_id === parseInt(obj.reply[0])).length
     const numberOfReplies = getNumberOfReplies(surveyItems)
 
     if (numberOfReplies > 0) {
@@ -28,11 +28,7 @@ function getAccuracy(surveyItems) {
 
 function getSurvey(surveyData, surveyId) {
 
-    console.log("survey data in getSurvey: ", surveyData)
-
     const ret = surveyData.filter(obj => obj?.survey_id === surveyId)
-
-    console.log(ret)
 
     if (ret.length > 1)
         throw new Error(`Something went wrong, more than one survey matches survey id: ${surveyId}`)

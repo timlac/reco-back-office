@@ -5,6 +5,7 @@ import {surveyTypes} from "../../config";
 import {capitalizeFirstLetter} from "../../services/utils";
 import NumberOfSamplesSlider from "./NumberOfSamplesSlider";
 import {replyTemplates} from "../../templates/replyTemplates";
+import {instructionTemplates} from "../../templates/intructionTemplates";
 
 const getEmotionsCount = (folderDict, folder) => {
     return folderDict[folder]["experiment_metadata"]?.emotion_ids?.length || 0;
@@ -35,7 +36,12 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
         form.setFieldsValue({ samples_per_survey: numberOfSamples });
     }, [numberOfSamples, form]);
 
-    const templateOptions = Object.keys(replyTemplates).map(replyFormat => ({
+    const replyTemplateOptions = Object.keys(replyTemplates).map(replyFormat => ({
+        value: replyFormat,
+        label: capitalizeFirstLetter(replyFormat)
+    }))
+
+    const InstructionTemplateOptions = Object.keys(instructionTemplates).map(replyFormat => ({
         value: replyFormat,
         label: capitalizeFirstLetter(replyFormat)
     }))
@@ -86,7 +92,7 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
               layout="horizontal"
               style={{maxWidth: 800}}
               initialValues={{
-                  survey_type: templateOptions[0].value,
+                  survey_type: replyTemplateOptions[0].value,
                   emotions_per_survey: numberOfEmotions,
                   samples_per_survey: numberOfSamples
               }}
@@ -105,8 +111,12 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
                 <Input/>
             </Form.Item>
 
-            <Form.Item name="template_name" label="Survey Template">
-                <Select style={{width: 200}} options={templateOptions}/>
+            <Form.Item name="reply_template_name" label="Reply Template">
+                <Select style={{width: 200}} options={replyTemplateOptions}/>
+            </Form.Item>
+
+            <Form.Item name="instruction_template_name" label="Instruction Template">
+                <Select style={{width: 200}} options={InstructionTemplateOptions}/>
             </Form.Item>
 
             <Form.Item label="No. samples per survey" name="samples_per_survey">

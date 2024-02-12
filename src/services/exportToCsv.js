@@ -4,7 +4,8 @@ export const exportToCsv = (projectName, data, filename = 'export.csv', fields) 
         // Preprocess data to modify survey_id by prepending a URL
     const modifiedData = data.map(item => ({
         ...item,
-        survey_id: `${process.env.REACT_APP_SURVEY_PAGE_URL}${projectName}/${item.survey_id}` // Modify the survey_id attribute
+        url: `${process.env.REACT_APP_SURVEY_PAGE_URL}${projectName}/${item.survey_id}`, // Modify the survey_id attribute
+        number_of_items: item.survey_items.length
     }));
 
     // Use Papa Parse to convert the data to CSV
