@@ -16,6 +16,9 @@ export const SurveyDataProvider = ({children }) => {
 
     const { projectData, isLoading: projectsIsLoading} = useFetchProject(projectName);
 
+    function getSurveyUrl(surveyId) {
+        return `${process.env.REACT_APP_SURVEY_PAGE_URL}${projectName}/${surveyId}`
+    }
 
     const isLoading = surveysIsLoading || projectsIsLoading;
 
@@ -27,7 +30,8 @@ export const SurveyDataProvider = ({children }) => {
                     surveyData,
                     isLoading,
                     projectName,
-                    projectData
+                    projectData,
+                    getSurveyUrl
                 }
             }>
             {children}

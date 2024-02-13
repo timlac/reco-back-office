@@ -2,10 +2,11 @@ import {FloatButton, Progress, Table} from "antd";
 import {Link} from "react-router-dom";
 import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 import {exportToCsv} from "../../../services/exportToCsv";
+import ExportDrawer from "../export/ExportDrawer";
 
 export const SurveyTable = () => {
 
-    const {surveyData, projectName} = useSurveyData()
+    const {surveyData, projectData} = useSurveyData()
 
     console.log(surveyData)
 
@@ -61,7 +62,7 @@ export const SurveyTable = () => {
             dataIndex: 'progress',
             key: 'progress',
             render: (progress) => {
-                return <Progress steps={4} percent={(progress * 100).toFixed(1)} size="small" />
+                return <Progress steps={4} percent={(progress * 100).toFixed(1)} size="small"/>
             },
             sorter: (a, b) => {
                 return a.progress - b.progress
@@ -71,12 +72,13 @@ export const SurveyTable = () => {
     return (
         <div>
             <Table dataSource={surveyData} rowKey="survey_id" columns={columns}/>
-            <FloatButton tooltip={<div>Export</div>} onClick={() => {
-                console.log('onClick')
-                exportToCsv(projectName, surveyData, 'export.csv', ["survey_id", "user_id", "url", "number_of_items"]);
+            {/*<FloatButton tooltip={<div>Export</div>} onClick={() => {*/}
+            {/*    console.log('onClick')*/}
+            {/*    exportToCsv(projectName, surveyData, 'export.csv', ["survey_id", "user_id", "url", "number_of_items"]);*/}
 
-            }
-            }/>;
+            {/*}*/}
+            {/*}/>;*/}
+            <ExportDrawer/>
         </div>
     )
 }

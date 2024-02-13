@@ -3,9 +3,9 @@ import {Descriptions} from 'antd';
 import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 
 const App = ({data}) => {
-    const {projectName} = useSurveyData()
+    const {getSurveyUrl} = useSurveyData()
 
-    const url = `${process.env.REACT_APP_SURVEY_PAGE_URL}${projectName}/${data.survey_id}`
+    const url = getSurveyUrl(data.survey_id)
 
     return (
         <div>

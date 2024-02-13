@@ -1,17 +1,17 @@
 import Papa from 'papaparse';
 
-export const exportToCsv = (projectName, data, filename = 'export.csv', fields) => {
+export const exportToCsv = (data, filename = 'export.csv') => {
         // Preprocess data to modify survey_id by prepending a URL
-    const modifiedData = data.map(item => ({
-        ...item,
-        url: `${process.env.REACT_APP_SURVEY_PAGE_URL}${projectName}/${item.survey_id}`, // Modify the survey_id attribute
-        number_of_items: item.survey_items.length
-    }));
+    // const modifiedData = data.map(item => ({
+    //     ...item,
+    //     url: `${process.env.REACT_APP_SURVEY_PAGE_URL}${projectName}/${item.survey_id}`, // Modify the survey_id attribute
+    //     number_of_items: item.survey_items.length
+    // }));
 
     // Use Papa Parse to convert the data to CSV
     const csv = Papa.unparse({
-        data: modifiedData,
-        fields: fields, // Specify fields to include in the CSV
+        data: data,
+        // fields: fields, // Specify fields to include in the CSV
     });
 
     // Create a Blob and trigger the download as before
