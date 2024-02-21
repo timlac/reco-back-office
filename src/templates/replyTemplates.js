@@ -4,6 +4,7 @@ export const replyTemplates = {
         reply_structure: "dimensions",
         required_replies: 6,
         maximum_replies: 6,
+        zero_is_valid_reply: true,
         dimensions:
             [
                 {
@@ -42,6 +43,7 @@ export const replyTemplates = {
         reply_structure: "dimensions",
         required_replies: 2,
         maximum_replies: 2,
+        zero_is_valid_reply: false,
         dimensions:
             [
                 {

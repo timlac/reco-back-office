@@ -214,7 +214,7 @@ export const instructionTemplates = {
             {
                 type: "text",
                 content: `Detta test har för avsikt att mäta din förmåga att känna igen känslouttryck i människors
-                        ansikten och röster. Din uppgift är att titta på en serie med korta video inspelningar av personer
+                        ansikten och kroppsspråk. Din uppgift är att titta på en serie med korta video inspelningar av personer
                         som uttrycker ett urval av olika känslor.`
             },
             {
