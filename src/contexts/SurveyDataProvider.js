@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useEffect} from 'react';
+import React, {createContext, useContext} from 'react';
 import {useParams} from "react-router-dom";
 import {useFetchSurveys} from "../hooks/useFetchSurveys";
 import {useFetchProject} from "../hooks/useFetchProject";

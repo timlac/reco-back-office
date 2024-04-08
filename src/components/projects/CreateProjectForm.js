@@ -1,11 +1,9 @@
 // CreateProjectForm.js
 import React, {useEffect, useState} from 'react';
 import {Button, Form, Input, Radio, Select, Slider, Switch} from 'antd';
-import {surveyTypes} from "../../config";
 import {capitalizeFirstLetter} from "../../services/utils";
 import NumberOfSamplesSlider from "./NumberOfSamplesSlider";
-import {replyTemplates} from "../../templates/replyTemplates";
-import {instructionTemplates} from "../../templates/intructionTemplates";
+
 
 const getEmotionsCount = (folderDict, folder) => {
     return folderDict[folder]["experiment_metadata"]?.emotion_ids?.length || 0;
@@ -24,27 +22,31 @@ const getIntroObjects = (folderDict, folder) => {
 };
 
 
-const CreateProjectForm = ({ folderDict, onFormFinish }) => {
+const CreateProjectForm = ({folderDict, onFormFinish, replyTemplates, instructionTemplates}) => {
     const [form] = Form.useForm();
     const [selectedFolder, setSelectedFolder] = useState(null);
     const [numberOfEmotions, setNumberOfEmotions] = useState(44);
     const [numberOfSamples, setNumberOfSamples] = useState(10000);
     const [balancedSamplingEnabled, setBalancedSamplingEnabled] = useState(false);
 
+
+    console.log(replyTemplates)
+    console.log(instructionTemplates)
+
     useEffect(() => {
         // This effect updates the form's samples_per_survey field whenever numberOfSamples changes
-        form.setFieldsValue({ samples_per_survey: numberOfSamples });
+        form.setFieldsValue({samples_per_survey: numberOfSamples});
     }, [numberOfSamples, form]);
 
-    const replyTemplateOptions = Object.keys(replyTemplates).map(replyFormat => ({
-        value: replyFormat,
-        label: capitalizeFirstLetter(replyFormat)
-    }))
+    const replyFormatOptions = replyTemplates.length > 0 ? replyTemplates.map(item => ({
+        value: item.template_name,
+        label: capitalizeFirstLetter(item.template_name)
+    })) : [];
 
-    const InstructionTemplateOptions = Object.keys(instructionTemplates).map(replyFormat => ({
-        value: replyFormat,
-        label: capitalizeFirstLetter(replyFormat)
-    }))
+    const InstructionTemplateOptions = instructionTemplates.length > 0 ? instructionTemplates.map(item => ({
+        value: item.template_name,
+        label: capitalizeFirstLetter(item.template_name)
+    })) : [];
 
     const handleFolderChange = (e) => {
         const folder = e.target.value;
@@ -54,7 +56,7 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
         setNumberOfEmotions(newNumberOfEmotions);
         setNumberOfSamples(getSamplesCount(folderDict, folder));
 
-        form.setFieldsValue({ emotions_per_survey: newNumberOfEmotions });
+        form.setFieldsValue({emotions_per_survey: newNumberOfEmotions});
 
     };
 
@@ -64,7 +66,7 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
     };
 
     const handleNumberOfSamplesChange = (newValue) => {
-        form.setFieldsValue({ samples_per_survey: newValue });
+        form.setFieldsValue({samples_per_survey: newValue});
     };
 
 
@@ -92,7 +94,7 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
               layout="horizontal"
               style={{maxWidth: 800}}
               initialValues={{
-                  survey_type: replyTemplateOptions[0].value,
+                  // survey_type: replyFormatOptions[0].value,
                   emotions_per_survey: numberOfEmotions,
                   samples_per_survey: numberOfSamples
               }}
@@ -111,8 +113,8 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
                 <Input/>
             </Form.Item>
 
-            <Form.Item name="reply_template_name" label="Reply Template">
-                <Select style={{width: 200}} options={replyTemplateOptions}/>
+            <Form.Item name="reply_format_name" label="Reply Template">
+                <Select style={{width: 200}} options={replyFormatOptions}/>
             </Form.Item>
 
             <Form.Item name="instruction_template_name" label="Instruction Template">
@@ -126,8 +128,8 @@ const CreateProjectForm = ({ folderDict, onFormFinish }) => {
 
             <Form.Item label="Enable Balanced Sampling" valuePropName="checked"
                        tooltip={<p>Balanced Sampling means that
-                survey items will have an equal distribution of emotion ids, not applicable
-                for items with mixed emotions</p>}>
+                           survey items will have an equal distribution of emotion ids, not applicable
+                           for items with mixed emotions</p>}>
 
                 <Switch onChange={handleBalancedSamplingChange}/>
             </Form.Item>

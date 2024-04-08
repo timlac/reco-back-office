@@ -6,7 +6,7 @@ const ItemDisplay = ({survey, projectdata}) => {
     const scalesDisplay = (reply) => (
         <div>
             <ul>
-                {projectdata.reply_format.dimensions.map((element, index) => (
+                {projectdata.reply_format.template_json.dimensions.map((element, index) => (
                     <li key={index}>
                         {element.label}: {reply[index] || null}</li>
                 ))}

@@ -5,6 +5,7 @@ import CreateSurvey from "../surveys/create/CreateSurvey";
 import {Visualizations} from "../surveys/visualize/Visualizations";
 import React from "react";
 import SurveyDetails from "../surveys/display/SurveyDetails";
+import './SurveyLayout.css'
 
 const {
     Header,
@@ -16,10 +17,10 @@ const SurveyLayout = () => {
 
 
     return (
-        <Layout className="surveyLayout">
+        <Layout className="custom-header-padding" >
             <Header
             >
-                <Menu theme="light" mode="horizontal" defaultSelectedKeys={['1']}>
+                <Menu theme="light" mode="horizontal" defaultSelectedKeys={['1']} >
                     <Menu.Item key="1"><Link to="">Survey Overview</Link></Menu.Item>
                     <Menu.Item key="2"><Link to="create-survey">Create Survey</Link></Menu.Item>
                     <Menu.Item key="3"><Link to="statistics">Statistics</Link></Menu.Item>
