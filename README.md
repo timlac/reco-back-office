@@ -49,6 +49,14 @@ The replyTemplates format should encode both the instructions and the replyTempl
 
 In the project directory, you can run:
 
+Deploy to stage: 
+`npm run build:stage && npm run s3-deploy:stage`
+
+Deploy to prod:
+`npm run build:prod && npm run s3-deploy:prod`
+
+
+
 ### `npm start`
 
 Runs the app in the development mode.\

@@ -23,7 +23,7 @@ const ExportDrawer = () => {
         }
 
         if (values.includeSurveyItems) {
-            exportData = flattenSurveyItems(exportData, projectData.reply_format)
+            exportData = flattenSurveyItems(exportData, projectData.reply_format.template_json)
         } else {
             exportData = exportData.map(item => {
                 // Use the spread operator to clone the item if you want to avoid mutating the original data
