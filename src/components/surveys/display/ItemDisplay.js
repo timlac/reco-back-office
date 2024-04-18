@@ -1,5 +1,6 @@
 import {Button, Collapse, Popover, Table} from 'antd';
 import {getEmotionFromId} from "nexa-js-sentimotion-mapper";
+import {formatTimeToSeconds} from "../../../services/utils";
 
 const ItemDisplay = ({survey, projectdata}) => {
 
@@ -14,6 +15,8 @@ const ItemDisplay = ({survey, projectdata}) => {
         </div>
     );
 
+
+    console.log(survey?.survey_items)
 
     const uniqueEmotionIds = new Set(survey?.survey_items.map(item => item.metadata.emotion_1_id));
 
@@ -81,6 +84,12 @@ const ItemDisplay = ({survey, projectdata}) => {
                     return reply
                 }
             }
+        },
+        {
+            title: 'Time Spent',
+            dataIndex: 'time_spent_on_item',
+            key: 'time_spent_on_item',
+            render: time => formatTimeToSeconds(time)
         }
 
     ]
