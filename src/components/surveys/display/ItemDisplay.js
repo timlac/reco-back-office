@@ -86,12 +86,17 @@ const ItemDisplay = ({survey, projectdata}) => {
             }
         },
         {
+            title: 'Video Duration',
+            dataIndex: 'video_duration',
+            key: 'video_duration',
+            render: time => formatTimeToSeconds(time)
+        },
+        {
             title: 'Time Spent',
             dataIndex: 'time_spent_on_item',
             key: 'time_spent_on_item',
             render: time => formatTimeToSeconds(time)
         }
-
     ]
     return <Collapse>
         <Collapse.Panel key={1} header={"Survey Items"}>

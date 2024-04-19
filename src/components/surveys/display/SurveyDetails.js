@@ -5,6 +5,7 @@ import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 import SurveySummary from "./SurveySummary";
 import EmotionAlternativesDisplay from "./EmotionAlternativesDisplay";
 import ItemDisplay from "./ItemDisplay";
+import UserTimeGraph from "../visualize/UserTimeGraph";
 
 
 function getNumberOfReplies(surveyItems) {
@@ -84,7 +85,9 @@ const SurveyDetails = () => {
                     </Space>
                     <ItemDisplay survey={data} projectdata={projectData} ></ItemDisplay>
 
+                    <UserTimeGraph data={data?.survey_items}/>
                     <EmotionAlternativesDisplay emotionAlternatives={data.emotion_ids}/>
+
                 </div>
             }
 
