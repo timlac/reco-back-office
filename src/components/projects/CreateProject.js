@@ -32,6 +32,8 @@ const CreateProject = () => {
 
     const onFormFinish = (payload) => {
 
+        console.log(payload)
+
         // Find the selected reply template based on template_name
         const replyFormat = replyTemplates.find(item => item.template_name === payload.reply_format_name);
 

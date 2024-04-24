@@ -1,6 +1,8 @@
 // CreateProjectForm.js
 import React, {useEffect, useState} from 'react';
 import {Button, Form, Input, Radio, Select, Slider, Switch} from 'antd';
+import {InputNumber} from 'antd';
+
 import {capitalizeFirstLetter} from "../../services/utils";
 import NumberOfSamplesSlider from "./NumberOfSamplesSlider";
 
@@ -28,7 +30,6 @@ const CreateProjectForm = ({folderDict, onFormFinish, replyTemplates, instructio
     const [numberOfEmotions, setNumberOfEmotions] = useState(44);
     const [numberOfSamples, setNumberOfSamples] = useState(10000);
     const [balancedSamplingEnabled, setBalancedSamplingEnabled] = useState(false);
-
 
     console.log(replyTemplates)
     console.log(instructionTemplates)
@@ -96,11 +97,12 @@ const CreateProjectForm = ({folderDict, onFormFinish, replyTemplates, instructio
               initialValues={{
                   // survey_type: replyFormatOptions[0].value,
                   emotions_per_survey: numberOfEmotions,
-                  samples_per_survey: numberOfSamples
+                  samples_per_survey: numberOfSamples,
+                  days_to_deactivation: null
               }}
               onFinish={onFinish}
         >
-            <Form.Item name="s3_folder" label="Select a data source">
+            <Form.Item name="s3_folder" label="Select a data source" rules={[{required: true}]}>
                 <Radio.Group onChange={handleFolderChange} value={selectedFolder}>
                     {Object.keys(folderDict).map((folder, index) => (
                         <Radio key={index} value={folder}>{folder}</Radio>
@@ -109,16 +111,26 @@ const CreateProjectForm = ({folderDict, onFormFinish, replyTemplates, instructio
             </Form.Item>
 
             <Form.Item name="project_name" label="Project Name"
-                       rules={[{required: true, message: 'Please enter the survey name!'}]}>
-                <Input/>
+                       rules={[{required: true}]}>
+                <Input placeholder="Enter project name"
+                />
             </Form.Item>
 
-            <Form.Item name="reply_format_name" label="Reply Template">
+            <Form.Item name="reply_format_name" label="Reply Template" rules={[{required: true}]}>
                 <Select style={{width: 200}} options={replyFormatOptions}/>
             </Form.Item>
 
-            <Form.Item name="instruction_template_name" label="Instruction Template">
+            <Form.Item name="instruction_template_name" label="Instruction Template" rules={[{required: true}]}>
                 <Select style={{width: 200}} options={InstructionTemplateOptions}/>
+            </Form.Item>
+
+            <Form.Item name="days_to_deactivation" label="Days to Deactivation">
+                <InputNumber
+                    min={1} // Minimum value
+                    max={365} // Maximum value
+                    placeholder="Enter a number, leave blank for infinite"
+                    style={{width: '100%'}} // Optional: Adjust width as needed
+                />
             </Form.Item>
 
             <Form.Item label="No. samples per survey" name="samples_per_survey">

@@ -13,6 +13,8 @@ const ViewProjects = () => {
             .then(response => {
                 // Assume the response contains an array of projects
                 setProjects(response.data);
+                console.log(response.data)
+
             })
             .catch(error => {
                 console.error('There was an error fetching the projects:', error);
