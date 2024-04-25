@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Input, Button, Radio, DatePicker, Tooltip} from 'antd';
+import {Form, Input, Button, Radio, DatePicker, Tooltip, Switch} from 'antd';
 import {ALL, NEGATIVE_VALENCE, POSITIVE_VALENCE} from "../../../config";
 import moment from "moment";
 
@@ -14,13 +14,14 @@ const CreateSurveyForm = ({createSurvey, isLoading}) => {
         createSurvey(values)
     };
 
-
     return (
         <Form
             initialValues={{
                 user_id: 'default', // Set default value for "User Id"
-                sex: 'male',                 // Set default value for "Sex"
-                dob: initialDateOfBirth,                   // Set default value for "Date of Birth"
+                // sex: 'male',                 // Set default value for "Sex"
+                // dob: initialDateOfBirth,                   // Set default value for "Date of Birth"
+                valence: ALL,
+                consent: false
             }}
             size={"small"}
             labelCol={{
@@ -48,7 +49,6 @@ const CreateSurveyForm = ({createSurvey, isLoading}) => {
             <Form.Item
                 label="Sex"
                 name="sex"
-                rules={[{required: true, message: 'Please select your gender!'}]}
             >
                 <Radio.Group>
                     <Radio value="male">Male</Radio>
@@ -60,9 +60,17 @@ const CreateSurveyForm = ({createSurvey, isLoading}) => {
             <Form.Item
                 label="Date of Birth"
                 name="dob"
-                rules={[{required: true, message: 'Please select date of birth!'}]}
             >
                 <DatePicker/>
+            </Form.Item>
+
+            <Form.Item
+                label="Consent"
+                name="consent"
+            >
+                <Switch>
+
+                </Switch>
             </Form.Item>
 
             <Form.Item

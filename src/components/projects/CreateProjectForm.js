@@ -126,8 +126,8 @@ const CreateProjectForm = ({folderDict, onFormFinish, replyTemplates, instructio
 
             <Form.Item name="days_to_deactivation" label="Days to Deactivation">
                 <InputNumber
-                    min={1} // Minimum value
-                    max={365} // Maximum value
+                    min={1}
+                    max={365}
                     placeholder="Enter a number, leave blank for infinite"
                     style={{width: '100%'}} // Optional: Adjust width as needed
                 />

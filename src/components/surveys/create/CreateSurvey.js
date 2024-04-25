@@ -30,6 +30,7 @@ const CreateSurvey = () => {
             "valence": valence,
             "sex": values.sex,
             "date_of_birth": values.dateString,
+            "consent": values.consent
         }
 
         console.log("body:")
