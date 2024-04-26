@@ -1,8 +1,7 @@
 import ItemHistogram from "./ItemHistogram";
 import EmotionHistogram from "./EmotionHistogram";
-import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 import React, {useState} from 'react';
-import {Card, Col, Row, Space} from 'antd';
+import {Card, Col, Row} from 'antd';
 import {ProgressView} from "./ProgressView";
 
 const tabList = [

@@ -19,6 +19,9 @@ export const SurveyDataProvider = ({children }) => {
     function getSurveyUrl(surveyId) {
         return `${process.env.REACT_APP_SURVEY_PAGE_URL}${projectName}/${surveyId}`
     }
+    function getSurveyHttpsUrl(surveyId) {
+        return `${process.env.REACT_APP_SURVEY_PAGE_HTTPS_URL}${projectName}/${surveyId}`
+    }
 
     const isLoading = surveysIsLoading || projectsIsLoading;
 
@@ -31,7 +34,8 @@ export const SurveyDataProvider = ({children }) => {
                     isLoading,
                     projectName,
                     projectData,
-                    getSurveyUrl
+                    getSurveyUrl,
+                    getSurveyHttpsUrl
                 }
             }>
             {children}
