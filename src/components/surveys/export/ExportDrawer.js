@@ -6,7 +6,7 @@ import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 
 const ExportDrawer = () => {
 
-    const {surveyData, projectData, getSurveyUrl} = useSurveyData()
+    const {surveyData, projectData, getSurveyUrl, getSurveyHttpsUrl} = useSurveyData()
 
 
     const [open, setOpen] = useState(false);
@@ -37,7 +37,8 @@ const ExportDrawer = () => {
             exportData = exportData.map(item => (
                     {
                         ...item,
-                        url: getSurveyUrl(item.survey_id)
+                        url: getSurveyUrl(item.survey_id),
+                        https_url: getSurveyHttpsUrl(item.survey_id)
                     }
                 )
             );

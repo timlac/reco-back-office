@@ -6,6 +6,7 @@ import SurveySummary from "./SurveySummary";
 import EmotionAlternativesDisplay from "./EmotionAlternativesDisplay";
 import ItemDisplay from "./ItemDisplay";
 import UserTimeGraph from "../visualize/UserTimeGraph";
+import {VisualizeSliderValues} from "../visualize/sliderVisualization/VisualizeSliderValues";
 
 
 function getNumberOfReplies(surveyItems) {
@@ -83,9 +84,12 @@ const SurveyDetails = () => {
                             <Progress type="circle" percent={(getAccuracy(data?.survey_items) * 100).toFixed(1)}/>
                         </Card>
                     </Space>
-                    <ItemDisplay survey={data} projectdata={projectData} ></ItemDisplay>
+                    <ItemDisplay survey={data} projectData={projectData} ></ItemDisplay>
 
                     <UserTimeGraph data={data?.survey_items}/>
+
+                    <VisualizeSliderValues survey={data} project={projectData}></VisualizeSliderValues>
+
                     <EmotionAlternativesDisplay emotionAlternatives={data.emotion_ids}/>
 
                 </div>

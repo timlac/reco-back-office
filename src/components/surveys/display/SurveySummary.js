@@ -2,7 +2,7 @@ import React from 'react';
 import {Descriptions} from 'antd';
 import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 
-const App = ({data}) => {
+const SurveySummary = ({data}) => {
     const {getSurveyUrl, getSurveyHttpsUrl} = useSurveyData()
 
     const url = getSurveyUrl(data.survey_id)
@@ -24,4 +24,4 @@ const App = ({data}) => {
     )
 }
 
-export default App;
+export default SurveySummary;

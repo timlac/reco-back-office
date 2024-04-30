@@ -1,12 +1,11 @@
-import {FloatButton, Progress, Table} from "antd";
+import {Progress, Table} from "antd";
 import {Link} from "react-router-dom";
 import {useSurveyData} from "../../../contexts/SurveyDataProvider";
-import {exportToCsv} from "../../../services/exportToCsv";
 import ExportDrawer from "../export/ExportDrawer";
 
 export const SurveyTable = () => {
 
-    const {surveyData, projectData} = useSurveyData()
+    const {surveyData} = useSurveyData()
 
     console.log(surveyData)
 

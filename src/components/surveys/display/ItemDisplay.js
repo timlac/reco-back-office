@@ -1,13 +1,13 @@
 import {Button, Collapse, Popover, Table} from 'antd';
 import {getEmotionFromId} from "nexa-js-sentimotion-mapper";
-import {formatTimeToSeconds} from "../../../services/utils";
+import {formatTimeToSeconds, getSliderNames} from "../../../services/utils";
 
-const ItemDisplay = ({survey, projectdata}) => {
+const ItemDisplay = ({survey, projectData}) => {
 
     const scalesDisplay = (reply) => (
         <div>
             <ul>
-                {projectdata.reply_format.template_json.dimensions.map((element, index) => (
+                {getSliderNames(projectData).map((element, index) => (
                     <li key={index}>
                         {element.label}: {reply[index] || null}</li>
                 ))}
