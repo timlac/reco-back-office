@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -35,3 +37,8 @@ export function getStarted(surveys) {
     // Filter surveys where progress is greater than 0 and less than 1
     return surveys.filter(obj => obj.progress > 0 && obj.progress < 1);
 }
+
+export function customStd(array) {
+        const avg = _.sum(array) / array.length;
+        return Math.sqrt(_.sum(_.map(array, (i) => Math.pow((i - avg), 2))) / array.length);
+    }

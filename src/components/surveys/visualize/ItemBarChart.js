@@ -11,14 +11,13 @@ import {
 import {getFinished} from "../../../services/utils";
 
 
-const ItemHistogram = () => {
+const ItemBarChart = ({filterOnFinished}) => {
 
     const {isLoading, projectData, surveyData} = useSurveyData()
 
     const [frequency2Filename, setFrequency2Filename] = useState({});
     const [isFrequencyLoading, setIsFrequencyLoading] = useState(true);
     const [filterOnValence, setFilterOnValence] = useState(ALL);
-    const [filterOnFinished, setFilterOnFinished] = useState(false)
 
     const [chartData, setChartData] = useState({})
 
@@ -43,10 +42,6 @@ const ItemHistogram = () => {
         setFilterOnValence(e.target.value);
     };
 
-    const onFilterOnFinishedChange = (checked) => {
-        setFilterOnFinished(checked)
-    }
-
 
     useEffect(() => {
         const filteredFrequency2Filename = filterFrequency2Filename(frequency2Filename, filterOnValence)
@@ -57,18 +52,14 @@ const ItemHistogram = () => {
     function getChartData(frequency2Filename) {
         return Object.entries(frequency2Filename).map(([key, val]) => ({
             numOccurrences: key,
-            count: val.length
+            count: val.length,
         }));
     }
 
     return (
         <div>
-            {isLoading || isFrequencyLoading ?
-                <div>Loading...</div>
-                :
-
+            {chartData &&
                 <div>
-                    <Row>
                         {/*<Col>*/}
                         {/*    <Card title="Valence Filter">*/}
                         {/*        <Radio.Group onChange={onValenceChange} value={filterOnValence}>*/}
@@ -80,21 +71,12 @@ const ItemHistogram = () => {
                         {/*        </Radio.Group>*/}
                         {/*    </Card>*/}
                         {/*</Col>*/}
-                        <Col>
-                            <Card title="Survey Progress Filter">
-                                <p>Toggle between displaying items present in all surveys or only finished surveys</p>
-                                <Switch checkedChildren="Finished" unCheckedChildren="All" onChange={onFilterOnFinishedChange} />
-                            </Card>
-                        </Col>
-                    </Row>
-                    <p></p>
-                    <BarChart width={400} height={400} data={chartData}>
-                        <CartesianGrid strokeDasharray="3 3"/>
+                    <BarChart width={400} height={400} data={chartData} margin={{ top: 20, right: 30, bottom: 30, left: 20 }}>
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} />
                         <XAxis dataKey="numOccurrences"
-                               label={{value: 'Number of Occurrences', position: 'insideBottomRight', dy: 10}}/>
-                        <YAxis label={{value: 'Count of Filenames', angle: -90, position: 'insideLeft'}}/>
+                               label={{value: 'Survey Occurrences', position: 'insideBottomRight', dy: 10}}/>
+                        <YAxis label={{value: 'Number of Items', angle: -90, position: 'insideLeft'}}/>
                         <Tooltip/>
-                        {/*<Legend/>*/}
                         <Bar dataKey="count" fill="#8884d8"/>
                     </BarChart>
                 </div>
@@ -103,4 +85,4 @@ const ItemHistogram = () => {
     );
 };
 
-export default ItemHistogram;
+export default ItemBarChart;

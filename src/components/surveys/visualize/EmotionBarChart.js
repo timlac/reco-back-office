@@ -3,9 +3,9 @@ import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
 import {getEmotionFromId} from "nexa-js-sentimotion-mapper";
 import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 
-const EmotionHistogram = ({filenames}) => {
+const EmotionBarChart = ({filterOnFinished}) => {
 
-    const {surveyData, isLoading} = useSurveyData()
+    const {surveyData} = useSurveyData()
 
     const [chartData, setChartData] = useState({})
 
@@ -15,6 +15,13 @@ const EmotionHistogram = ({filenames}) => {
         const emotionIdCounts = {};
 
         for (const survey of surveyData) {
+
+            if (filterOnFinished) {
+                if (survey.progress !== 0) {
+                    continue
+                }
+            }
+
             for (const surveyItem of survey.survey_items) {
                 const emotionId = surveyItem.metadata.emotion_1_id
                 if (emotionId in emotionIdCounts) {
@@ -32,22 +39,25 @@ const EmotionHistogram = ({filenames}) => {
 
         setChartData(histData)
 
-    }, [filenames, surveyData]);
+        console.log(histData)
 
-    if (isLoading) {
-        return <div>Loading...</div>
-    } else {
-        return <div>
-            <BarChart width={400} height={400} data={chartData}>
-                <CartesianGrid strokeDasharray="3 3"/>
+    }, [surveyData, filterOnFinished]);
+
+
+    return <div>
+        {chartData &&
+
+            <BarChart width={400} height={400} data={chartData} margin={{top: 20, right: 30, bottom: 30, left: 20}}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false}/>
                 <XAxis dataKey="emotion" label={{value: 'Emotion ID', position: 'insideBottomRight', dy: 10}}/>
 
-                <YAxis label={{value: 'Count', angle: -90, position: 'insideLeft'}}/>
+                <YAxis label={{value: 'Survey Occurrences', angle: -90, position: 'insideLeft'}}/>
                 <Tooltip/>
-                <Bar dataKey="count" fill="#8884d8"/>
+                <Bar dataKey="count" fill="#008080"/>
             </BarChart>
-        </div>
-    }
+        }
+    </div>
+
 };
 
-export default EmotionHistogram;
+export default EmotionBarChart;

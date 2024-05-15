@@ -14,3 +14,5 @@ export const CATEGORIES = "categories"
 
 export const surveyTypes = ["categories", "scales", "fmri"]
 
+export const TIME_SPENT_CUT_OFF = 80000
+

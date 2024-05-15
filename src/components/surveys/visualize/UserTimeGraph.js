@@ -1,8 +1,27 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label} from 'recharts';
 import {Card} from "antd";
+import {TIME_SPENT_CUT_OFF} from "../../../config";
 
 const UserTimeGraph = ({data}) => {
+
+    // const [modifiedData, setModifiedData] = useState([])
+    //
+    // useEffect(() => {
+    //
+    //     const timeData = []
+    //
+    //     for (const item of data) {
+    //         if (item.time_spent_on_item > TIME_SPENT_CUT_OFF){
+    //             timeData.push(TIME_SPENT_CUT_OFF)
+    //         } else {
+    //             timeData.push(item.time_spent_on_item)
+    //         }
+    //     }
+    //     setModifiedData(timeData)
+    //
+    // }, [data]);
+    //
     return (
         <Card title={"Time Spent Analysis"}>
             <LineChart
@@ -18,6 +37,7 @@ const UserTimeGraph = ({data}) => {
                         offset={-5}
                         position="insideBottom"/>
                 </XAxis>
+                {/* TODO: Need to set cutoff here somehow... */}
                 <YAxis>
                     <Label
                         value="Time in ms"

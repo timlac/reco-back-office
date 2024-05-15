@@ -6,7 +6,7 @@ import {getFinished, getStarted} from "../../../services/utils";
 
 
 export const ProgressView = () => {
-    const { surveyData, isLoading } = useSurveyData();
+    const { surveyData } = useSurveyData();
     const [chartData, setChartData] = useState([]);
 
     useEffect(() => {
@@ -25,14 +25,14 @@ export const ProgressView = () => {
 
     return (
         <div>
-            {!isLoading && chartData.length > 0 && (
-                <BarChart width={300} height={400} data={chartData}>
-                    <CartesianGrid strokeDasharray="3 3" />
+            {chartData && (
+                <BarChart width={300} height={400} data={chartData} >
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="count" fill="#8884d8" />
+                    <Bar dataKey="count" fill="#0088FE" />
                 </BarChart>
             )}
         </div>
