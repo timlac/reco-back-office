@@ -17,8 +17,8 @@ const SurveyLayout = () => {
 
 
     return (
-        <Layout className="custom-header-padding" >
-            <Header
+        <Layout>
+            <Header style={{height: '40px', lineHeight: '40px', padding: '0 0px'}}
             >
                 <Menu theme="light" mode="horizontal" defaultSelectedKeys={['1']} >
                     <Menu.Item key="1"><Link to="">Survey Overview</Link></Menu.Item>

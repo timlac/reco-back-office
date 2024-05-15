@@ -4,18 +4,8 @@ import {getSliderNames} from "../../../../services/utils";
 import {MultipleSelect} from "./MultipleSelect";
 import {ScatterDisplay} from "./ScatterDisplay";
 import {AxisSelect} from "./AxisSelect";
-// import {ScatterDisplay} from "./ScatterDisplay";
-// import {parseCSV} from "../services/parseCsv";
-// import {MultipleSelect} from "./MultipleSelect";
-// import {getUniqueInstances} from "../services/getUniqueInstances";
-// import {AxisSelect} from "./AxisSelect";
-// import {getAxes} from "../services/getHeaders";
-// import {useSurveyData} from "../../../../contexts/SurveyDataProvider";
+import { getEmotionFromId } from "nexa-js-sentimotion-mapper";
 
-
-function getHeaders() {
-
-}
 
 function getUniqueInstances(data) {
     const allInstances = data.map(row => row.filterColumn);
@@ -25,11 +15,9 @@ function getUniqueInstances(data) {
 
 export const VisualizeSliderValues = ({survey, project}) => {
 
-    const initialFilterOn = ["emotion_1_id"];
+    const filterOptions = ["emotion_1_id", "emotion_2_id"]
 
-    const [filterOn, setFilterOn] = useState(initialFilterOn)
-
-    const [headers, setHeaders] = useState(["emotion_1_id", "emotion_2_id"])
+    const [filterOn, setFilterOn] = useState(["emotion_1_id"])
 
     const [data, setData] = useState([])
     const [dataWithFilterOn, setDataWithFilterOn] = useState([])
@@ -46,7 +34,7 @@ export const VisualizeSliderValues = ({survey, project}) => {
 
     useEffect(() => {
         const fetchData = () => {
-            setData(survey?.survey_items)
+            setData([...survey?.survey_items] )
             // setHeaders(getHeaders(survey))
             setAvailableAxes(getSliderNames(project))
         };
@@ -56,12 +44,10 @@ export const VisualizeSliderValues = ({survey, project}) => {
     useEffect(() => {
         const dataWithFilterColumn = data.map(item => ({
             ...item,
-            filterColumn: filterOn.map(key => item.metadata[key]).join('-')
+            filterColumn: filterOn.map( key => getEmotionFromId(item.metadata[key]) ).join('-')
         }))
         setDataWithFilterOn(dataWithFilterColumn)
         setFilteredData(dataWithFilterColumn)
-
-        console.log("data with filter column: ", dataWithFilterColumn)
 
         let uniqueInstances = getUniqueInstances(dataWithFilterColumn)
         setUniqueInstances(uniqueInstances)
@@ -97,15 +83,12 @@ export const VisualizeSliderValues = ({survey, project}) => {
     // Handler function to update selectedEmotions
     const handleInstanceChange = (newSelectedInstances) => {
         setSelectedInstances(newSelectedInstances);
-        setFilteredData(filterDataByInstances(dataWithFilterOn, newSelectedInstances))
+        setFilteredData(
+            dataWithFilterOn.filter(item => newSelectedInstances.includes(item.filterColumn))
+        )
     };
-
     const handleFilterOnChange = (newSelectedHeaders) => {
         setFilterOn(newSelectedHeaders)
-    }
-
-    const filterDataByInstances = (data, instancesToInclude) => {
-        return data.filter(item => instancesToInclude.includes(item.filterColumn));
     }
 
     return (
@@ -115,8 +98,8 @@ export const VisualizeSliderValues = ({survey, project}) => {
             <div style={{textAlign: 'left'}}>
                 <p>Select columns to aggregate by</p>
 
-                {headers.length > 0 && <MultipleSelect
-                    selectionOptions={headers}
+                {filterOptions.length > 0 && <MultipleSelect
+                    selectionOptions={filterOptions}
                     onChange={handleFilterOnChange}
                     defaultValue={filterOn}>
                 </MultipleSelect>}

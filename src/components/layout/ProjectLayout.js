@@ -10,8 +10,8 @@ const {Header, Content} = Layout;
 
 const ProjectLayout = () => {
     return (
-        <Layout className="projectLayout">
-            <Header
+        <Layout>
+            <Header style={{height: '40px', lineHeight: '40px', padding: '0 0px'}}
             >
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
                     <Menu.Item key="1">

@@ -14,6 +14,24 @@ export function getSliderNames (projectData){
     return projectData.reply_format.template_json.dimensions
 }
 
-export function SliderNameToIndex(sliderName, sliderNames) {
+export function getReplyFormat(projectData) {
+    return projectData.reply_format.reply_structure
+}
 
+export function getTotalTimeSpent(surveyItems){
+    let totalTimeSpent = 0
+    for (const item of surveyItems){
+        totalTimeSpent += item.time_spent_on_item
+    }
+    return totalTimeSpent
+}
+
+
+export function getFinished(surveys) {
+    return surveys.filter(obj => obj.progress === 1);
+}
+
+export function getStarted(surveys) {
+    // Filter surveys where progress is greater than 0 and less than 1
+    return surveys.filter(obj => obj.progress > 0 && obj.progress < 1);
 }

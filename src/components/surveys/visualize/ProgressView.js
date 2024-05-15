@@ -2,17 +2,8 @@ import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 import {useEffect, useState} from "react";
 
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from 'recharts';
+import {getFinished, getStarted} from "../../../services/utils";
 
-
-
-function getFinished(surveys) {
-    return surveys.filter(obj => obj.progress === 1).length;
-}
-
-function getStarted(surveys) {
-    // Filter surveys where progress is greater than 0 and less than 1
-    return surveys.filter(obj => obj.progress > 0 && obj.progress < 1).length;
-}
 
 export const ProgressView = () => {
     const { surveyData, isLoading } = useSurveyData();
@@ -20,8 +11,8 @@ export const ProgressView = () => {
 
     useEffect(() => {
         if (surveyData) {
-            const finishedCount = getFinished(surveyData);
-            const startedCount = getStarted(surveyData)
+            const finishedCount = getFinished(surveyData).length
+            const startedCount = getStarted(surveyData).length
             const unStartedCount = surveyData.length - finishedCount - startedCount;
             const data = [
                 { name: 'Not Started', count: unStartedCount },

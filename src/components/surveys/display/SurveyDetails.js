@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
-import {Card, Progress, Space} from "antd";
+import {Card, Collapse, Progress, Space} from "antd";
 import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 import SurveySummary from "./SurveySummary";
-import EmotionAlternativesDisplay from "./EmotionAlternativesDisplay";
 import ItemDisplay from "./ItemDisplay";
 import UserTimeGraph from "../visualize/UserTimeGraph";
 import {VisualizeSliderValues} from "../visualize/sliderVisualization/VisualizeSliderValues";
+import {getReplyFormat} from "../../../services/utils";
 
 
 function getNumberOfReplies(surveyItems) {
@@ -80,21 +80,30 @@ const SurveyDetails = () => {
                         <Card size="small" title="Progress">
                             <Progress type="circle" percent={(getProgress(data?.survey_items) * 100).toFixed(1)}/>
                         </Card>
+
+                        {getReplyFormat(projectData) === "categories" &&
                         <Card size="small" title="Accuracy">
                             <Progress type="circle" percent={(getAccuracy(data?.survey_items) * 100).toFixed(1)}/>
                         </Card>
+                        }
                     </Space>
-                    <ItemDisplay survey={data} projectData={projectData} ></ItemDisplay>
 
-                    <UserTimeGraph data={data?.survey_items}/>
-
-                    <VisualizeSliderValues survey={data} project={projectData}></VisualizeSliderValues>
-
-                    <EmotionAlternativesDisplay emotionAlternatives={data.emotion_ids}/>
-
+                    <Collapse>
+                        <Collapse.Panel key={1} header={"Survey Items"}>
+                            <ItemDisplay survey={data} projectData={projectData}></ItemDisplay>
+                        </Collapse.Panel>
+                        {/*<Collapse.Panel key={2} header={"Emotion Options"}>*/}
+                        {/*    <EmotionAlternativesDisplay emotionAlternatives={data.emotion_ids}/>*/}
+                        {/*</Collapse.Panel>*/}
+                        <Collapse.Panel key={3} header={"Time Analysis"}>
+                            <UserTimeGraph data={data?.survey_items}/>
+                        </Collapse.Panel>
+                        <Collapse.Panel key={4} header={"Visualize slider replies"}>
+                            <VisualizeSliderValues survey={data} project={projectData}></VisualizeSliderValues>
+                        </Collapse.Panel>
+                    </Collapse>
                 </div>
             }
-
         </div>
     );
 };

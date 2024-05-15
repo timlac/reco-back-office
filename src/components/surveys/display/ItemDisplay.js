@@ -98,10 +98,6 @@ const ItemDisplay = ({survey, projectData}) => {
             render: time => formatTimeToSeconds(time)
         }
     ]
-    return <Collapse>
-        <Collapse.Panel key={1} header={"Survey Items"}>
-            <Table dataSource={survey?.survey_items} rowKey="filename" columns={columns} size="small"/>
-        </Collapse.Panel>
-    </Collapse>;
+    return <Table dataSource={survey?.survey_items} rowKey="filename" columns={columns} size="small"/>
 };
 export default ItemDisplay;

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Collapse, Table} from 'antd';
+import {Table} from 'antd';
 import {getEmotionFromId} from "nexa-js-sentimotion-mapper";
 
 const EmotionAlternativesDisplay = ({emotionAlternatives}) => {
@@ -31,10 +31,7 @@ const EmotionAlternativesDisplay = ({emotionAlternatives}) => {
         }
     ]
 
-    return <Collapse>
-        <Collapse.Panel key={2} header={"Emotion Options"}>
-            <Table dataSource={emotionData} rowKey="emotion_id" columns={columns} size="small"/>
-        </Collapse.Panel>
-    </Collapse>;
+    return <Table dataSource={emotionData} rowKey="emotion_id" columns={columns} size="small"/>
+
 };
 export default EmotionAlternativesDisplay;

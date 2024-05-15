@@ -36,5 +36,21 @@ export function filterFrequency2Filename(frequency2Filename, filterOn) {
             return frequency2Filename
         default:
             console.log("no valid option for valence selected in create user")
-        }
+    }
 }
+
+// export function filterFrequency2FilenameByFinished(frequency2Filename) {
+//     const filtered = {};
+//
+//     // Iterate through the keys of the object
+//     Object.keys(frequency2Filename).forEach((key) => {
+//         const filteredFiles = frequency2Filename[key].filter((filename) => {
+//             const progress = getValence(filename)
+//             return valence === (targetValence || NEUTRAL_VALENCE);
+//         });
+//         // Add the key-value pair to the filtered object if there are filtered files
+//         if (filteredFiles.length > 0) {
+//             filtered[key] = filteredFiles;
+//         }
+//     }
+// }
