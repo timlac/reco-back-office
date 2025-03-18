@@ -2,6 +2,8 @@ import {Progress, Table} from "antd";
 import {Link} from "react-router-dom";
 import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 import ExportDrawer from "../export/ExportDrawer";
+import _ from "lodash";
+import {TIME_SPENT_CUT_OFF} from "../../../config";
 
 export const SurveyTable = () => {
 
@@ -57,6 +59,14 @@ export const SurveyTable = () => {
             }
         },
         {
+            title: "Last Modified",
+            dataIndex: "last_modified",
+            key: "last_modified",
+            sorter: (a, b) => {
+                return a.last_modified - b.last_modified
+            }
+        },
+        {
             title: 'Progress',
             dataIndex: 'progress',
             key: 'progress',
@@ -65,6 +75,24 @@ export const SurveyTable = () => {
             },
             sorter: (a, b) => {
                 return a.progress - b.progress
+            }
+        },
+        {
+            title: 'Mean Time / Item',
+            dataIndex: 'survey_items',
+            key: 'mean_time',
+            render: survey_items => {
+                // Apply cut-off logic and calculate mean
+                const cappedTimes = survey_items.map(item => {
+                    if (item.time_spent_on_item > TIME_SPENT_CUT_OFF) {
+                        return TIME_SPENT_CUT_OFF / 1000;
+                    } else {
+                        return item.time_spent_on_item / 1000;
+                    }
+                });
+
+                const meanTimeSpent = _.mean(cappedTimes);
+                return meanTimeSpent ? meanTimeSpent.toFixed(2) : 'N/A'; // Format to 2 decimal places or show 'N/A'
             }
         },
     ];

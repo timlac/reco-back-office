@@ -8,24 +8,38 @@ export function capitalizeFirstLetter(string) {
 // Function to format milliseconds into seconds
 export function formatTimeToSeconds(milliseconds) {
     if (milliseconds == null) return '';
-    return `${(milliseconds / 1000).toFixed(2)} seconds`;
+    return `${(milliseconds / 1000).toFixed(2)} s`;
 }
 
 
-export function getSliderNames (projectData){
+export function getSliderNames(projectData) {
     return projectData.reply_format.template_json.dimensions
 }
 
 export function getReplyFormat(projectData) {
-    return projectData.reply_format.reply_structure
+    console.log(projectData)
+
+    return projectData.reply_format.template_json.reply_structure
 }
 
-export function getTotalTimeSpent(surveyItems){
+export function getTotalTimeSpent(surveyItems) {
     let totalTimeSpent = 0
-    for (const item of surveyItems){
+    for (const item of surveyItems) {
         totalTimeSpent += item.time_spent_on_item
     }
     return totalTimeSpent
+}
+
+export function secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+
+    var hDisplay = h > 0 ? h + (h == 1 ? " h, " : " h, ") : "";
+    var mDisplay = m > 0 ? m + (m == 1 ? " m, " : " m, ") : "";
+    var sDisplay = s > 0 ? s + (s == 1 ? " s" : " s") : "";
+    return hDisplay + mDisplay + sDisplay;
 }
 
 
@@ -39,6 +53,6 @@ export function getStarted(surveys) {
 }
 
 export function customStd(array) {
-        const avg = _.sum(array) / array.length;
-        return Math.sqrt(_.sum(_.map(array, (i) => Math.pow((i - avg), 2))) / array.length);
-    }
+    const avg = _.sum(array) / array.length;
+    return Math.sqrt(_.sum(_.map(array, (i) => Math.pow((i - avg), 2))) / array.length);
+}

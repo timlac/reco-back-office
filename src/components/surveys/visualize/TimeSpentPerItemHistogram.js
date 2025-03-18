@@ -11,7 +11,7 @@ import {customStd} from "../../../services/utils";
 import {TIME_SPENT_CUT_OFF} from "../../../config";
 
 
-export const TimeSpentHistogram = () => {
+export const TimeSpentPerItemHistogram = () => {
     const {surveyData} = useSurveyData()
     const [histData, setHistData] = useState({})
     const [timeSpentArray, setTimeSpentArray] = useState([])
@@ -21,7 +21,7 @@ export const TimeSpentHistogram = () => {
             survey.survey_items
                 .filter(item => item.time_spent_on_item !== null)
                 .map(item => {
-                    return item.time_spent_on_item > TIME_SPENT_CUT_OFF ? TIME_SPENT_CUT_OFF : item.time_spent_on_item;
+                    return item.time_spent_on_item > TIME_SPENT_CUT_OFF ? TIME_SPENT_CUT_OFF / 1000 : item.time_spent_on_item / 1000;
                 })
         );
 
@@ -31,6 +31,9 @@ export const TimeSpentHistogram = () => {
 
     useEffect(() => {
         const histogramBins = bin().thresholds(40)(timeSpentArray);
+
+        console.log(histogramBins)
+
         setHistData(
             histogramBins.map(
                 (d) => (
@@ -50,18 +53,18 @@ export const TimeSpentHistogram = () => {
             {histData &&
                 (<>
                         <Row>
-                            <Col span={3}>
-                <Statistic title="Mean:" value={(_.mean(timeSpentArray)).toFixed() + " ms"} />
+                            <Col span={4}>
+                <Statistic title="Mean:" value={(_.mean(timeSpentArray)).toFixed(2) + " s"} />
                                 </Col>
-                            <Col span={3}>
-                                <Statistic title="Std:" value={(customStd(timeSpentArray)).toFixed() + " ms"} />
+                            <Col span={4}>
+                                <Statistic title="Std:" value={(customStd(timeSpentArray)).toFixed(2) + " s"} />
 
                             </Col>
                             </Row>
                 <BarChart width={600} height={400} data={histData} margin={{top: 40, right: 30, bottom: 30, left: 20}}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false}/>
                     <XAxis dataKey="value"
-                           label={{value: 'Time Spent (ms)', position: 'insideBottomRight', dy: 10}}/>
+                           label={{value: 'Time Spent (s)', position: 'insideBottomRight', dy: 10}}/>
                     <YAxis label={{value: 'Number of Items', angle: -90, position: 'insideLeft'}}/>
                     <Tooltip/>
                     <Bar dataKey="count" fill="#FFBB28"/>

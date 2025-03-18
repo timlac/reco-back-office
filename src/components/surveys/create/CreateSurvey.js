@@ -5,7 +5,7 @@ import {api} from "../../../services/api";
 import SurveySummary from "../display/SurveySummary";
 import ItemDisplay from "../display/ItemDisplay";
 import EmotionAlternativesDisplay from "../display/EmotionAlternativesDisplay";
-import {message} from "antd";
+import {Card, message} from "antd";
 import {VALENCES} from "../../../config";
 
 
@@ -37,7 +37,7 @@ const CreateSurvey = () => {
         console.log(body)
 
         // Need to make sure fetchUsers is invoked after the post request
-        api.post(`projects/${projectName}/surveys/` , body)
+        api.post(`projects/${projectName}/surveys/`, body)
             .then(response => {
                 console.log("returned data: ", response)
                 setSurvey(response.data)
@@ -54,9 +54,9 @@ const CreateSurvey = () => {
 
     return (
         <div>
-            <h1>Create New Survey</h1>
-
-            <CreateSurveyForm createSurvey={createSurvey} isLoading={isLoading}/>
+            <Card title="Create New Survey">
+                <CreateSurveyForm createSurvey={createSurvey} isLoading={isLoading}/>
+            </Card>
             <div>
                 {survey && (
 
@@ -64,8 +64,6 @@ const CreateSurvey = () => {
                     <div>
                         <SurveySummary data={survey}></SurveySummary>
                         <ItemDisplay survey={survey}></ItemDisplay>
-                        <EmotionAlternativesDisplay
-                            emotionAlternatives={survey.emotion_ids}></EmotionAlternativesDisplay>
                     </div>
 
                 )}

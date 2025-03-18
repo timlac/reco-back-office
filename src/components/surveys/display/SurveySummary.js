@@ -19,6 +19,7 @@ const SurveySummary = ({data}) => {
                 <Descriptions.Item label="Valence">
                     {data.valence}
                 </Descriptions.Item>
+                {/*<Descriptions.Item label="Last modified">{data.date_of_birth}</Descriptions.Item>*/}
             </Descriptions>
         </div>
     )

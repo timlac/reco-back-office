@@ -3,7 +3,8 @@ import EmotionBarChart from "./EmotionBarChart";
 import React, {useState} from 'react';
 import {Card, Col, Row, Switch} from 'antd';
 import {ProgressView} from "./ProgressView";
-import {TimeSpentHistogram} from "./TimeSpentHistogram";
+import {TimeSpentPerItemHistogram} from "./TimeSpentPerItemHistogram";
+import {TotalTimeSpentHistogram} from "./TotalTimeSpentHistogram";
 
 
 export const Visualizations = () => {
@@ -47,8 +48,10 @@ export const Visualizations = () => {
                     </Card>
 
                     <Card title="Time Consumption Analysis">
-                        <TimeSpentHistogram/>
-
+                        <h3>Time Spent per Item</h3>
+                        <TimeSpentPerItemHistogram/>
+                        <h3>Total Time Spent</h3>
+                        <TotalTimeSpentHistogram/>
                     </Card>
 
                 </Col>

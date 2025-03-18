@@ -43,6 +43,8 @@ function getSurvey(surveyData, surveyId) {
 
 const SurveyDetails = () => {
 
+    // TODO: visualize slider replies should not be available if not reply dimensions
+
     const {surveyData, projectData, isLoading} = useSurveyData()
     const {surveyId} = useParams();
     const [data, setData] = useState(null);
@@ -63,6 +65,7 @@ const SurveyDetails = () => {
             setLoading(false);
         }
     }, [surveyId, surveyData, isLoading]); // Dependency array includes surveyId and userData
+
 
     return (
         <div>
@@ -98,9 +101,13 @@ const SurveyDetails = () => {
                         <Collapse.Panel key={3} header={"Time Analysis"}>
                             <UserTimeGraph data={data?.survey_items}/>
                         </Collapse.Panel>
+
+                        {getReplyFormat(projectData) === "dimensions" &&
+
                         <Collapse.Panel key={4} header={"Visualize slider replies"}>
                             <VisualizeSliderValues survey={data} project={projectData}></VisualizeSliderValues>
                         </Collapse.Panel>
+                        }
                     </Collapse>
                 </div>
             }

@@ -42,6 +42,11 @@ Need to implement some kind of functionality for intro_files, maybe put in a dif
 
 ### Reply format:
 
+### TODO
+
+// TODO: visualize slider replies should not be available if not reply dimensions 
+TODO: emotion alternatives should not be visualized on create survey. 
+
 The replyTemplates format should encode both the instructions and the replyTemplates format
 
 

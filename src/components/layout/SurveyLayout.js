@@ -15,7 +15,6 @@ const {
 
 const SurveyLayout = () => {
 
-
     return (
         <Layout>
             <Header style={{height: '40px', lineHeight: '40px', padding: '0 0px'}}
