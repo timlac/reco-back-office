@@ -22,12 +22,12 @@ export const TotalTimeSpentHistogram = () => {
 
         for (const survey of surveyData) {
             if (survey.progress === 1) {
-                const itemTimes = survey.survey_items.map(item => {
-                    return item.time_spent_on_item > TIME_SPENT_CUT_OFF ?
-                        TIME_SPENT_CUT_OFF / 1000 :
-                        item.time_spent_on_item / 1000;
-                })
-                const totalTime = _.sum(itemTimes)
+                // const itemTimes = survey.survey_items.map(item => {
+                //     return item.time_spent_on_item > TIME_SPENT_CUT_OFF ?
+                //         TIME_SPENT_CUT_OFF / 1000 :
+                //         item.time_spent_on_item / 1000;
+                // })
+                const totalTime = survey.total_time_spent / 1000
 
                 timeSpentPerUser.push({
                     surveyId: survey.survey_id,

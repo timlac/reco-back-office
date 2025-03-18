@@ -7,6 +7,7 @@ import ItemDisplay from "./ItemDisplay";
 import UserTimeGraph from "../visualize/UserTimeGraph";
 import {VisualizeSliderValues} from "../visualize/sliderVisualization/VisualizeSliderValues";
 import {getReplyFormat} from "../../../services/utils";
+import {api} from "../../../services/api";
 
 
 function getNumberOfReplies(surveyItems) {
@@ -28,44 +29,37 @@ function getAccuracy(surveyItems) {
     }
 }
 
-function getSurvey(surveyData, surveyId) {
-
-    const ret = surveyData.filter(obj => obj?.survey_id === surveyId)
-
-    if (ret.length > 1)
-        throw new Error(`Something went wrong, more than one survey matches survey id: ${surveyId}`)
-    else if (ret.length === 0) {
-        throw new Error(`Something went wrong, no survey found for: ${surveyId}`)
-    } else {
-        return ret[0]
-    }
-}
-
 const SurveyDetails = () => {
 
     // TODO: visualize slider replies should not be available if not reply dimensions
 
-    const {surveyData, projectData, isLoading} = useSurveyData()
+    const {projectData, projectName} = useSurveyData()
     const {surveyId} = useParams();
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
 
     useEffect(() => {
-        if (isLoading) {
-            // If userData is not yet loaded, don't do anything
-            return;
-        }
-        try {
-            setLoading(true);
-            setData(getSurvey(surveyData, surveyId)) // Fetching survey data
-        } catch (error) {
-            console.error('Error:', error);
-            // Handle the error as needed
-        } finally {
-            setLoading(false);
-        }
-    }, [surveyId, surveyData, isLoading]); // Dependency array includes surveyId and userData
+        if (!surveyId) return;
 
+        const fetchSurvey = async () => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response = await api.get(`projects/${projectName}/surveys/${surveyId}`);
+                setData(response.data);
+            } catch (err) {
+                setError(err.response?.data?.message || "Failed to fetch survey");
+                console.error("Error fetching survey:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchSurvey();
+    }, [surveyId, projectName]);
 
     return (
         <div>
@@ -85,9 +79,9 @@ const SurveyDetails = () => {
                         </Card>
 
                         {getReplyFormat(projectData) === "categories" &&
-                        <Card size="small" title="Accuracy">
-                            <Progress type="circle" percent={(getAccuracy(data?.survey_items) * 100).toFixed(1)}/>
-                        </Card>
+                            <Card size="small" title="Accuracy">
+                                <Progress type="circle" percent={(getAccuracy(data?.survey_items) * 100).toFixed(1)}/>
+                            </Card>
                         }
                     </Space>
 
@@ -104,9 +98,9 @@ const SurveyDetails = () => {
 
                         {getReplyFormat(projectData) === "dimensions" &&
 
-                        <Collapse.Panel key={4} header={"Visualize slider replies"}>
-                            <VisualizeSliderValues survey={data} project={projectData}></VisualizeSliderValues>
-                        </Collapse.Panel>
+                            <Collapse.Panel key={4} header={"Visualize slider replies"}>
+                                <VisualizeSliderValues survey={data} project={projectData}></VisualizeSliderValues>
+                            </Collapse.Panel>
                         }
                     </Collapse>
                 </div>

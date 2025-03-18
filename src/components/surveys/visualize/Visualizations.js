@@ -33,10 +33,10 @@ export const Visualizations = () => {
                             It is usually desirable that all items occur the same number of times when data collection
                             is finished </p>
                         <ItemBarChart filterOnFinished={filterOnFinished}/>
-                        <h3>Emotion Counts</h3>
-                        <p>This chart displays how often different emotions occur in existing surveys.
-                            It is usually desirable that this distribution reflects the distribution of emotions in the full dataset. </p>
-                        <EmotionBarChart filterOnFinished={filterOnFinished}/>
+                        {/*<h3>Emotion Counts</h3>*/}
+                        {/*<p>This chart displays how often different emotions occur in existing surveys.*/}
+                        {/*    It is usually desirable that this distribution reflects the distribution of emotions in the full dataset. </p>*/}
+                        {/*<EmotionBarChart filterOnFinished={filterOnFinished}/>*/}
                     </Card>
                 </Col>
                 <Col span={12}>
@@ -48,8 +48,8 @@ export const Visualizations = () => {
                     </Card>
 
                     <Card title="Time Consumption Analysis">
-                        <h3>Time Spent per Item</h3>
-                        <TimeSpentPerItemHistogram/>
+                        {/*<h3>Time Spent per Item</h3>*/}
+                        {/*<TimeSpentPerItemHistogram/>*/}
                         <h3>Total Time Spent</h3>
                         <TotalTimeSpentHistogram/>
                     </Card>

@@ -77,24 +77,24 @@ export const SurveyTable = () => {
                 return a.progress - b.progress
             }
         },
-        {
-            title: 'Mean Time / Item',
-            dataIndex: 'survey_items',
-            key: 'mean_time',
-            render: survey_items => {
-                // Apply cut-off logic and calculate mean
-                const cappedTimes = survey_items.map(item => {
-                    if (item.time_spent_on_item > TIME_SPENT_CUT_OFF) {
-                        return TIME_SPENT_CUT_OFF / 1000;
-                    } else {
-                        return item.time_spent_on_item / 1000;
-                    }
-                });
-
-                const meanTimeSpent = _.mean(cappedTimes);
-                return meanTimeSpent ? meanTimeSpent.toFixed(2) : 'N/A'; // Format to 2 decimal places or show 'N/A'
-            }
-        },
+        // {
+        //     title: 'Mean Time / Item',
+        //     dataIndex: 'survey_items',
+        //     key: 'mean_time',
+        //     render: survey_items => {
+        //         // Apply cut-off logic and calculate mean
+        //         const cappedTimes = survey_items.map(item => {
+        //             if (item.time_spent_on_item > TIME_SPENT_CUT_OFF) {
+        //                 return TIME_SPENT_CUT_OFF / 1000;
+        //             } else {
+        //                 return item.time_spent_on_item / 1000;
+        //             }
+        //         });
+        //
+        //         const meanTimeSpent = _.mean(cappedTimes);
+        //         return meanTimeSpent ? meanTimeSpent.toFixed(2) : 'N/A'; // Format to 2 decimal places or show 'N/A'
+        //     }
+        // },
     ];
     return (
         <div>

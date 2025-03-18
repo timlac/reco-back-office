@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
-import {Card, Col, Radio, Row, Space, Switch} from "antd";
-import {ALL, NEGATIVE_VALENCE, POSITIVE_VALENCE} from "../../../config";
 import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 import {filterFrequency2Filename} from "../../../services/filenameHandling/filterFilenames";
 import {
@@ -17,7 +15,6 @@ const ItemBarChart = ({filterOnFinished}) => {
 
     const [frequency2Filename, setFrequency2Filename] = useState({});
     const [isFrequencyLoading, setIsFrequencyLoading] = useState(true);
-    const [filterOnValence, setFilterOnValence] = useState(ALL);
 
     const [chartData, setChartData] = useState({})
 
@@ -37,17 +34,6 @@ const ItemBarChart = ({filterOnFinished}) => {
     }, [filterOnFinished, projectData, surveyData, isLoading]);
 
 
-    const onValenceChange = (e) => {
-        console.log('radio checked', e.target.value);
-        setFilterOnValence(e.target.value);
-    };
-
-
-    useEffect(() => {
-        const filteredFrequency2Filename = filterFrequency2Filename(frequency2Filename, filterOnValence)
-        setChartData(getChartData(filteredFrequency2Filename))
-    }, [filterOnValence, frequency2Filename]);
-
     // Convert frequencyDistribution to array format for recharts
     function getChartData(frequency2Filename) {
         return Object.entries(frequency2Filename).map(([key, val]) => ({
@@ -60,17 +46,6 @@ const ItemBarChart = ({filterOnFinished}) => {
         <div>
             {chartData &&
                 <div>
-                        {/*<Col>*/}
-                        {/*    <Card title="Valence Filter">*/}
-                        {/*        <Radio.Group onChange={onValenceChange} value={filterOnValence}>*/}
-                        {/*            <Space direction="vertical">*/}
-                        {/*                <Radio value={ALL}>All</Radio>*/}
-                        {/*                <Radio value={POSITIVE_VALENCE}>Negative</Radio>*/}
-                        {/*                <Radio value={NEGATIVE_VALENCE}>Positive</Radio>*/}
-                        {/*            </Space>*/}
-                        {/*        </Radio.Group>*/}
-                        {/*    </Card>*/}
-                        {/*</Col>*/}
                     <BarChart width={400} height={400} data={chartData} margin={{ top: 20, right: 30, bottom: 30, left: 20 }}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} />
                         <XAxis dataKey="numOccurrences"
