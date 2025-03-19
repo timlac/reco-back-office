@@ -52,6 +52,10 @@ The replyTemplates format should encode both the instructions and the replyTempl
 
 ## Available Scripts
 
+use node version 16
+
+`export AWS_PROFILE=rackspaceAcc`
+
 In the project directory, you can run:
 
 Deploy to stage: 

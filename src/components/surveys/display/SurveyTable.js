@@ -4,6 +4,7 @@ import {useSurveyData} from "../../../contexts/SurveyDataProvider";
 import ExportDrawer from "../export/ExportDrawer";
 import _ from "lodash";
 import {TIME_SPENT_CUT_OFF} from "../../../config";
+import ExportItemsDrawer from "../export/ExportItemsDrawer";
 
 export const SurveyTable = () => {
 
@@ -106,6 +107,7 @@ export const SurveyTable = () => {
             {/*}*/}
             {/*}/>;*/}
             <ExportDrawer/>
+            <ExportItemsDrawer/>
         </div>
     )
 }
